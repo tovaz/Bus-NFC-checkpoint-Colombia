@@ -1,0 +1,2 @@
+include ':app', ':GreenDao-Generator', ':GreenDaoGenerator'
+rootProject.name='Route Check App'
