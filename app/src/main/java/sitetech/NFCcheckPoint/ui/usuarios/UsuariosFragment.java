@@ -30,7 +30,7 @@ public class UsuariosFragment extends Fragment {
     private Button bagregar;
     private RecyclerView ulista;
     private TextView lnotificar;
-
+    private Fragment fragmento;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         usuariosViewModel = ViewModelProviders.of(this).get(UsuariosViewModel.class);
 
@@ -41,10 +41,11 @@ public class UsuariosFragment extends Fragment {
 
         vista = root;
 
+        fragmento = this;
         bagregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityHelper.cargarFragmento(vista, new Usuario_AgregarFragment());
+                activityHelper.cargarFragmento(fragmento, new Usuario_AgregarFragment());
             }
         });
 

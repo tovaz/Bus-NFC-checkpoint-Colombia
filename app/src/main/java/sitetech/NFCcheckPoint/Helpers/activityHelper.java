@@ -21,12 +21,14 @@ public class activityHelper {
         main.startActivity(listar);
     }
 
-    public static void cargarFragmento(View vista, Fragment fragmento){
-        AppCompatActivity activity = (AppCompatActivity) vista.getContext();
+    public static void cargarFragmento(Fragment back, Fragment fragmento){
+        AppCompatActivity activity = (AppCompatActivity)back.getActivity();
+        activity.getSupportFragmentManager().popBackStack();
         activity.getSupportFragmentManager().beginTransaction()
+                .remove(back)
                 .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right)
-                .replace(R.id.nav_host_fragment, fragmento)
-                .addToBackStack(fragmento.getTag())
+                .replace(R.id.nav_host_fragment, fragmento, "agregar_usuario")
+                //.addToBackStack(fragmento.getTag())
                 .commit();
     }
 

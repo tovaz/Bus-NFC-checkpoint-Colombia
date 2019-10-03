@@ -45,6 +45,7 @@ public class Usuario_AgregarFragment extends Fragment {
         return vista;
     }
 
+
     private void cargarControles(){
         selRol = vista.findViewById(R.id.selRol);
         bcancelar = vista.findViewById(R.id.bcancelar);
@@ -71,6 +72,7 @@ public class Usuario_AgregarFragment extends Fragment {
                 user.setCedula(tcedula.getText().toString());
                 user.setTelefono(ttelefono.getText().toString());
                 user.setRol(selRol.getSelectedItem().toString());
+
                 userManager.insert(user);
                 activityHelper.goBackStack(vista);
             }

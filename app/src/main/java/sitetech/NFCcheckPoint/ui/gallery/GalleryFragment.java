@@ -39,7 +39,7 @@ public class GalleryFragment extends Fragment {
                         .setMessage("Esta mierda aqui si funciona...")
                         .show();
 
-                activityHelper.cargarFragmento(vista, new Usuario_AgregarFragment());
+                //activityHelper.cargarFragmento(vista, null, new Usuario_AgregarFragment());
             }
         });
 
