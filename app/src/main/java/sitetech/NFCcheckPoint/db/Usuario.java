@@ -19,12 +19,13 @@ public class Usuario {
 
     @NotNull
     private String nombre;
+    private String password;
     private String telefono;
 
     @NotNull
     private String rol;
-    private boolean activo = true;
-    private boolean eliminado = false;
+    private boolean activo;
+    private boolean eliminado;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -38,10 +39,11 @@ public class Usuario {
     }
 
     @Generated
-    public Usuario(Long id, String cedula, String nombre, String telefono, String rol, boolean activo, boolean eliminado) {
+    public Usuario(Long id, String cedula, String nombre, String password, String telefono, String rol, boolean activo, boolean eliminado) {
         this.id = id;
         this.cedula = cedula;
         this.nombre = nombre;
+        this.password = password;
         this.telefono = telefono;
         this.rol = rol;
         this.activo = activo;
@@ -72,6 +74,14 @@ public class Usuario {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setNombre(@NotNull String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getTelefono() {

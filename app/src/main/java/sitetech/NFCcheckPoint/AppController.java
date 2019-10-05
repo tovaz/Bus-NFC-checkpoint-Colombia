@@ -1,6 +1,8 @@
 package sitetech.NFCcheckPoint;
 
 import android.app.Application;
+import android.content.Context;
+
 import org.greenrobot.greendao.database.Database;
 
 import sitetech.NFCcheckPoint.db.DaoMaster;
@@ -13,6 +15,7 @@ import sitetech.NFCcheckPoint.db.DaoSession;
 public class AppController extends Application {
     public static final boolean ENCRYPTED = true;
     public static DaoSession daoSession;
+    private static Context context;
 
     @Override
     public void onCreate() {
@@ -22,13 +25,14 @@ public class AppController extends Application {
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
 
-        ///// Using the below lines of code we can toggle ENCRYPTED to true or false in other to use either an encrypted database or not.
-      //DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, ENCRYPTED ? "NFCcheckPoint-encripted" : "NFCcheckPoint");
-      //Database db = ENCRYPTED ? helper.getEncryptedWritableDb("correr123") : helper.getWritableDb();
-      //daoSession = new DaoMaster(db).newSession();
+        AppController.context = getApplicationContext();
     }
 
     public DaoSession getDaoSession() {
         return daoSession;
+    }
+
+    public static Context getAppContext() {
+        return AppController.context;
     }
 }

@@ -3,13 +3,13 @@
     <string name="navigation_drawer_open">Abrir opciones</string>
     <string name="navigation_drawer_close">Cerrar navegation Dragable</string>
     <string name="nav_header_title">NFC Check Point</string>
-    <string name="nav_header_subtitle">williamvaldez@outlook.com</string>
+    <string name="nav_header_subtitle">developed by williamvaldez@outlook.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Usuarios</string>
     <string name="menu_gallery">Buses</string>
-    <string name="menu_slideshow">Horarios</string>
+    <string name="menu_slideshow">Empresas</string>
     <string name="menu_tools">Rutas</string>
     <string name="menu_share">Registros</string>
     <string name="menu_send">Send</string>

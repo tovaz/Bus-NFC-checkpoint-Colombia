@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="110dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Fondo1"
         app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
+        app:cardElevation="1dp"
         app:cardUseCompatPadding="false"
-        app:contentPadding="10dp">
+        app:contentPadding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,31 +24,32 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <Switch
-                    android:id="@+id/activo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:autoText="true"
-                    android:text="activo" />
-
-                <TextView
-                    android:id="@+id/rol"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="15dp"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/SuccessColor"></TextView>
+                    app:srcCompat="@drawable/user" />
+
+                <ToggleButton
+                    android:id="@+id/activo"
+                    android:layout_width="80dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:textOff="Inactivo"
+                    android:textOn="Activo"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/nombre"
+                    android:id="@+id/tnombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -58,7 +59,7 @@
                     android:textStyle="bold"></TextView>
 
                 <TextView
-                    android:id="@+id/cedula"
+                    android:id="@+id/tcedula"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -71,7 +72,16 @@
                     android:layout_gravity="center_horizontal"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"></TextView>
 
+                <TextView
+                    android:id="@+id/empresa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/SuccessColor"
+                    android:textSize="12sp"></TextView>
+
             </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

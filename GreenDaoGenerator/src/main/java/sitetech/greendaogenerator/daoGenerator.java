@@ -8,7 +8,7 @@ import org.greenrobot.greendao.generator.Schema;
 import java.util.function.LongPredicate;
 
 public class daoGenerator {
-    private Entity user, empresa, bus, ruta, horario, horarioPorRuta, caja, registroCaja;
+    private Entity user, empresa, bus, ruta, horario, horarioPorRuta, turno, registroTurno;
 
     public  static void main(String[] args) {
         Schema schema = new Schema(1, "sitetech.NFCcheckPoint.db"); // Your app package name and the (.db) is the folder where the DAO files will be generated into.
@@ -31,7 +31,7 @@ public class daoGenerator {
         rutaEntity(schema);
         horarioEntity(schema);
         horariosPorRuta(schema);
-        cajaEntity(schema);
+        turnoEntity(schema);
         registroEntity(schema);
     }
 
@@ -42,6 +42,7 @@ public class daoGenerator {
         user.addIdProperty().primaryKey().autoincrement();
         user.addStringProperty("cedula");
         user.addStringProperty("nombre").notNull();
+        user.addStringProperty("password");
         user.addStringProperty("telefono");
         user.addStringProperty("rol").notNull();
         user.addBooleanProperty("activo").notNull();
@@ -114,35 +115,40 @@ public class daoGenerator {
         return horarioPorRuta;
     }
 
-    private Entity cajaEntity(final Schema schema){
-        caja = schema.addEntity("Caja");
+    private Entity turnoEntity(final Schema schema){
+        turno = schema.addEntity("Turno");
 
-        caja.addIdProperty().primaryKey().autoincrement();
-        caja.addDateProperty("fechaCreacion").notNull();
-        caja.addDateProperty("fechaCierre");
-        caja.addLongProperty("totalBuses");
-        caja.addBooleanProperty("eliminada").notNull();
-        Property operadorCierre = caja.addLongProperty("operadorCierre").notNull().getProperty();
+        turno.addIdProperty().primaryKey().autoincrement();
+        turno.addDateProperty("fechaCreacion").notNull();
+        turno.addDateProperty("fechaCierre");
+        turno.addLongProperty("totalBuses");
+        turno.addBooleanProperty("eliminada").notNull();
+        Property operadorCierre = turno.addLongProperty("operadorCierre").notNull().getProperty();
 
-        caja.addToOne(user, operadorCierre);
+        turno.addToOne(user, operadorCierre);
 
-        return caja;
+        return turno;
     }
 
     private Entity registroEntity(final Schema schema){
-        registroCaja = schema.addEntity("registroCaja");
+        registroTurno = schema.addEntity("Registro_Turno");
 
-        registroCaja.addIdProperty().primaryKey().autoincrement();
-        registroCaja.addDateProperty("fecha");
-        registroCaja.addBooleanProperty("eliminado");
-        Property busId = registroCaja.addLongProperty("busId").notNull().getProperty();
-        Property rutaId = registroCaja.addLongProperty("rutaId").notNull().getProperty();
-        Property cajaId = registroCaja.addLongProperty("cajaId").notNull().getProperty();
+        registroTurno.addIdProperty().primaryKey().autoincrement();
+        registroTurno.addDateProperty("fecha");
+        registroTurno.addBooleanProperty("eliminado");
+        registroTurno.addIntProperty("minAtrazado");
+        registroTurno.addIntProperty("minAdelantado");
+        registroTurno.addStringProperty("justificacion");
+        Property busId = registroTurno.addLongProperty("busId").notNull().getProperty();
+        Property rutaId = registroTurno.addLongProperty("rutaId").notNull().getProperty();
+        Property turnoId = registroTurno.addLongProperty("turnoId").notNull().getProperty();
+        Property userId = registroTurno.addLongProperty("operadorId").notNull().getProperty();
 
-        registroCaja.addToOne(bus, busId);
-        registroCaja.addToOne(ruta, rutaId);
-        registroCaja.addToOne(caja, cajaId);
+        registroTurno.addToOne(bus, busId);
+        registroTurno.addToOne(ruta, rutaId);
+        registroTurno.addToOne(turno, turnoId);
+        registroTurno.addToOne(user, userId);
 
-        return registroCaja;
+        return registroTurno;
     }
 }

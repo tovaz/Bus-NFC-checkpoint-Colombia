@@ -25,10 +25,11 @@ public class UsuarioDao extends AbstractDao<Usuario, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Cedula = new Property(1, String.class, "cedula", false, "CEDULA");
         public final static Property Nombre = new Property(2, String.class, "nombre", false, "NOMBRE");
-        public final static Property Telefono = new Property(3, String.class, "telefono", false, "TELEFONO");
-        public final static Property Rol = new Property(4, String.class, "rol", false, "ROL");
-        public final static Property Activo = new Property(5, boolean.class, "activo", false, "ACTIVO");
-        public final static Property Eliminado = new Property(6, boolean.class, "eliminado", false, "ELIMINADO");
+        public final static Property Password = new Property(3, String.class, "password", false, "PASSWORD");
+        public final static Property Telefono = new Property(4, String.class, "telefono", false, "TELEFONO");
+        public final static Property Rol = new Property(5, String.class, "rol", false, "ROL");
+        public final static Property Activo = new Property(6, boolean.class, "activo", false, "ACTIVO");
+        public final static Property Eliminado = new Property(7, boolean.class, "eliminado", false, "ELIMINADO");
     }
 
 
@@ -47,10 +48,11 @@ public class UsuarioDao extends AbstractDao<Usuario, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"CEDULA\" TEXT," + // 1: cedula
                 "\"NOMBRE\" TEXT NOT NULL ," + // 2: nombre
-                "\"TELEFONO\" TEXT," + // 3: telefono
-                "\"ROL\" TEXT NOT NULL ," + // 4: rol
-                "\"ACTIVO\" INTEGER NOT NULL ," + // 5: activo
-                "\"ELIMINADO\" INTEGER NOT NULL );"); // 6: eliminado
+                "\"PASSWORD\" TEXT," + // 3: password
+                "\"TELEFONO\" TEXT," + // 4: telefono
+                "\"ROL\" TEXT NOT NULL ," + // 5: rol
+                "\"ACTIVO\" INTEGER NOT NULL ," + // 6: activo
+                "\"ELIMINADO\" INTEGER NOT NULL );"); // 7: eliminado
     }
 
     /** Drops the underlying database table. */
@@ -74,13 +76,18 @@ public class UsuarioDao extends AbstractDao<Usuario, Long> {
         }
         stmt.bindString(3, entity.getNombre());
  
+        String password = entity.getPassword();
+        if (password != null) {
+            stmt.bindString(4, password);
+        }
+ 
         String telefono = entity.getTelefono();
         if (telefono != null) {
-            stmt.bindString(4, telefono);
+            stmt.bindString(5, telefono);
         }
-        stmt.bindString(5, entity.getRol());
-        stmt.bindLong(6, entity.getActivo() ? 1L: 0L);
-        stmt.bindLong(7, entity.getEliminado() ? 1L: 0L);
+        stmt.bindString(6, entity.getRol());
+        stmt.bindLong(7, entity.getActivo() ? 1L: 0L);
+        stmt.bindLong(8, entity.getEliminado() ? 1L: 0L);
     }
 
     @Override
@@ -98,13 +105,18 @@ public class UsuarioDao extends AbstractDao<Usuario, Long> {
         }
         stmt.bindString(3, entity.getNombre());
  
+        String password = entity.getPassword();
+        if (password != null) {
+            stmt.bindString(4, password);
+        }
+ 
         String telefono = entity.getTelefono();
         if (telefono != null) {
-            stmt.bindString(4, telefono);
+            stmt.bindString(5, telefono);
         }
-        stmt.bindString(5, entity.getRol());
-        stmt.bindLong(6, entity.getActivo() ? 1L: 0L);
-        stmt.bindLong(7, entity.getEliminado() ? 1L: 0L);
+        stmt.bindString(6, entity.getRol());
+        stmt.bindLong(7, entity.getActivo() ? 1L: 0L);
+        stmt.bindLong(8, entity.getEliminado() ? 1L: 0L);
     }
 
     @Override
@@ -118,10 +130,11 @@ public class UsuarioDao extends AbstractDao<Usuario, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // cedula
             cursor.getString(offset + 2), // nombre
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // telefono
-            cursor.getString(offset + 4), // rol
-            cursor.getShort(offset + 5) != 0, // activo
-            cursor.getShort(offset + 6) != 0 // eliminado
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // password
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // telefono
+            cursor.getString(offset + 5), // rol
+            cursor.getShort(offset + 6) != 0, // activo
+            cursor.getShort(offset + 7) != 0 // eliminado
         );
         return entity;
     }
@@ -131,10 +144,11 @@ public class UsuarioDao extends AbstractDao<Usuario, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setCedula(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setNombre(cursor.getString(offset + 2));
-        entity.setTelefono(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setRol(cursor.getString(offset + 4));
-        entity.setActivo(cursor.getShort(offset + 5) != 0);
-        entity.setEliminado(cursor.getShort(offset + 6) != 0);
+        entity.setPassword(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTelefono(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setRol(cursor.getString(offset + 5));
+        entity.setActivo(cursor.getShort(offset + 6) != 0);
+        entity.setEliminado(cursor.getShort(offset + 7) != 0);
      }
     
     @Override

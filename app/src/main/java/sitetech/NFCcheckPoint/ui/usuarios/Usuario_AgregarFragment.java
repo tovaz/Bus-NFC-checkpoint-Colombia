@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import sitetech.NFCcheckPoint.AppController;
@@ -24,16 +24,35 @@ import sitetech.routecheckapp.R;
  */
 public class Usuario_AgregarFragment extends Fragment {
 
+    private static final String MAINFRAGMENT_KEY = "mainFragment";
     private Spinner selRol;
     private Button bcancelar;
     private Button bguardar;
     private TextView tnombre;
     private TextView tcedula;
+    private TextView tpassword;
     private TextView ttelefono;
-
+    private TextView ttitulo;
+    private Switch sactivo;
     private View vista;
-    public Usuario_AgregarFragment() {
+    private UsuariosFragment mainFragment;
 
+    public Usuario_AgregarFragment(){}
+
+    public static Usuario_AgregarFragment newInstance(UsuariosFragment _main) {
+        Usuario_AgregarFragment fragment = new Usuario_AgregarFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(MAINFRAGMENT_KEY, _main);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mainFragment = (UsuariosFragment) getArguments().getSerializable(MAINFRAGMENT_KEY);
+        }
     }
 
     @Override
@@ -42,17 +61,31 @@ public class Usuario_AgregarFragment extends Fragment {
         cargarControles();
         onClick();
 
+        if (mainFragment.Useleccionado != null)
+            cargarInfo();
         return vista;
     }
 
+    private void cargarInfo(){
+        Usuario user = mainFragment.Useleccionado;
+        ttitulo.setText("Modificar Usuario");
+        tnombre.setText(user.getNombre());
+        tcedula.setText(user.getCedula());
+        tpassword.setText(user.getPassword());
+        ttelefono.setText(user.getTelefono());
+        sactivo.setChecked(user.getActivo());
+    }
 
     private void cargarControles(){
-        selRol = vista.findViewById(R.id.selRol);
+        ttitulo = vista.findViewById(R.id.ttitulo);
+        selRol = vista.findViewById(R.id.selempresa);
         bcancelar = vista.findViewById(R.id.bcancelar);
         bguardar = vista.findViewById(R.id.bguardar);
         tnombre = vista.findViewById(R.id.tnombre);
         tcedula = vista.findViewById(R.id.tcedula);
-        ttelefono = vista.findViewById(R.id.ttelefono);
+        tpassword = vista.findViewById(R.id.tpassword);
+        ttelefono = vista.findViewById(R.id.tcedula);
+        sactivo = vista.findViewById(R.id.sactivo);
     }
 
     private void onClick(){
@@ -67,16 +100,37 @@ public class Usuario_AgregarFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 UsuarioDao userManager = AppController.daoSession.getUsuarioDao();
+                long inserted = -1;
+
                 Usuario user = new Usuario();
+                if (mainFragment.Useleccionado != null)
+                    user = mainFragment.Useleccionado;
+
                 user.setNombre(tnombre.getText().toString());
                 user.setCedula(tcedula.getText().toString());
+                user.setPassword(tpassword.getText().toString());
                 user.setTelefono(ttelefono.getText().toString());
                 user.setRol(selRol.getSelectedItem().toString());
 
-                userManager.insert(user);
-                activityHelper.goBackStack(vista);
+
+                if (mainFragment.Useleccionado == null) {
+                    user.setActivo(true);
+                    user.setEliminado(false);
+                    inserted = userManager.insert(user);
+                }
+                else {
+                    user.setActivo(sactivo.isChecked());
+                    userManager.update(user);
+                    inserted = user.getId();
+                }
+
+                if (inserted > -1) {
+                    mainFragment.updateList(user);
+                    activityHelper.goBackStack(vista);
+                }
             }
         });
+
     }
 
 }

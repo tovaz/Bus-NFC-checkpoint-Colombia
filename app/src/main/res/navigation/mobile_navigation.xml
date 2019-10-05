@@ -12,16 +12,16 @@
         tools:layout="@layout/fragment_usuarios" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="sitetech.NFCcheckPoint.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_buses"
+        android:name="sitetech.NFCcheckPoint.ui.buses.BusesFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_buses" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="sitetech.NFCcheckPoint.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_empresas"
+        android:name="sitetech.NFCcheckPoint.ui.empresas.EmpresasFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_empresas" />
 
     <fragment
         android:id="@+id/nav_tools"
