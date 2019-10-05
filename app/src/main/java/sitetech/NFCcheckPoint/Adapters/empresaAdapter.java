@@ -11,6 +11,7 @@ import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.db.Empresa;
 import sitetech.NFCcheckPoint.db.EmpresaDao;
@@ -53,19 +54,19 @@ public class empresaAdapter extends OmegaRecyclerView.Adapter<empresaAdapter.Vie
                 lista.set(lista.indexOf(rx), bx);
                 nuevo = false;
             }
-            mostrarToast("Se a modificado la empresa: " + bx.getNombre());
+            ToastHelper.info("Se a modificado la empresa: " + bx.getNombre());
         }
 
         if (nuevo) {
             lista.add(bx);
-            mostrarToast("Se a creado la empresa: " + bx.getNombre());
+            ToastHelper.exito("Se a creado la empresa: " + bx.getNombre());
         }
 
         notifyDataSetChanged();
     }
 
     public void deleteData(Empresa rx) {
-        mostrarToast("Se a eliminado la empresa: " + rx.getNombre());
+        ToastHelper.normal("Se a eliminado la empresa: " + rx.getNombre());
         lista.remove(rx);
         notifyDataSetChanged();
     }
@@ -88,7 +89,7 @@ public class empresaAdapter extends OmegaRecyclerView.Adapter<empresaAdapter.Vie
                 @Override
                 public void onClick(View v) {
                     //smoothOpenLeftMenu();
-                    onItemClick.onClick(v, getAdapterPosition());
+                    onItemClick.onClickItem(v, getAdapterPosition());
                 }
             });
         }

@@ -1,5 +1,6 @@
 package sitetech.NFCcheckPoint.ui.buses;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
@@ -27,6 +29,7 @@ import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.routecheckapp.R;
 
 public class BusesFragment extends Fragment implements Serializable {
+
     private View vista;
     private Button bagregar;
     private OmegaRecyclerView ulista;
@@ -34,6 +37,8 @@ public class BusesFragment extends Fragment implements Serializable {
     private busAdapter bAdapter;
     private BusesFragment fragmento;
     public Bus Itemseleccionado;
+    public FragmentActivity fragmentContext;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_buses, container, false);
         bagregar = root.findViewById(R.id.bagregar);
@@ -64,25 +69,16 @@ public class BusesFragment extends Fragment implements Serializable {
 
         bAdapter = new busAdapter(lista, new onItemClick() {
             @Override
-            public void onClick(View v, int position) {
+            public void onClickItem(View v, int position) {
                 fragmento.Itemseleccionado = bAdapter.lista.get(position);
                 activityHelper.cargarFragmento(fragmento, new BusAgregarFragment());
             }
         });
 
-        /*for ( Bus b : BusDao.loadAll() ) {
-            Log.d(b.getPlaca(), b.getInterno());
-        }*/
-
         if (bAdapter.getItemCount() == 0) {
             ulista.setVisibility(View.GONE);
             lnotificar.setVisibility(View.VISIBLE);
         }
-        else {
-            ulista.setVisibility(View.VISIBLE);
-            lnotificar.setVisibility(View.GONE);
-        }
-
 
         ulista.setLayoutManager(new LinearLayoutManager(getContext()));
         ulista.setAdapter(bAdapter);
@@ -90,6 +86,7 @@ public class BusesFragment extends Fragment implements Serializable {
 
 
     public void updateList(Bus bx){
-        bAdapter.updateData(this.getView(), bx);
+        bAdapter.updateData(bx);
     }
+
 }

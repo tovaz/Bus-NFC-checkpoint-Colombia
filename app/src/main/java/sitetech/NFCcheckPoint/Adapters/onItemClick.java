@@ -3,5 +3,5 @@ package sitetech.NFCcheckPoint.Adapters;
 import android.view.View;
 
 public interface onItemClick {
-    void onClick(View v, int position);
+    void onClickItem(View v, int position);
 }

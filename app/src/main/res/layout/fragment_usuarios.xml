@@ -16,7 +16,6 @@
         android:layout_marginBottom="70dp"
         android:gravity="top"
         android:orientation="vertical"
-        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,8 +50,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="#888"
-            android:dividerHeight="1dp"
-            app:itemSpace="12dp"
+            android:dividerHeight="0dp"
+            app:itemSpace="0dp"
             tools:listitem="@layout/usuario_template" />
 
         <TextView

@@ -51,8 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="#888"
-            android:dividerHeight="1dp"
-            app:itemSpace="12dp"
+            android:dividerHeight="0dp"
+            app:itemSpace="3dp"
             tools:listitem="@layout/empresa_template" />
 
         <TextView

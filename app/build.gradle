@@ -36,4 +36,5 @@ dependencies {
     implementation 'com.github.onemandan:MaterialTextView:0.0.5'
     implementation 'com.github.Omega-R:OmegaRecyclerView:1.8.2@aar' // Android Support
     implementation 'info.androidhive:fontawesome:0.0.5'
+    implementation 'com.github.GrenderG:Toasty:1.4.2' //Notificaciones Toast
 }

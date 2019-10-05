@@ -13,12 +13,11 @@ import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
 import sitetech.routecheckapp.R;
-
-import static sitetech.NFCcheckPoint.Helpers.activityHelper.mostrarToast;
 
 public class userAdapter extends OmegaRecyclerView.Adapter<userAdapter.MyViewHolder>   {
     public List<Usuario> lista;
@@ -52,22 +51,23 @@ public class userAdapter extends OmegaRecyclerView.Adapter<userAdapter.MyViewHol
         boolean nuevo = true;
         for (Usuario u : lista){
             if (u.getId() == ux.getId()) { lista.set(lista.indexOf(u), ux); nuevo = false; }
-            mostrarToast("Se a modificado el usuario: " + ux.getNombre());
+            ToastHelper.info("Se a modificado el usuario: " + ux.getNombre());
         }
 
         if (nuevo) {
             lista.add(ux);
-            mostrarToast("Se a creado el usuario: " + ux.getNombre());
+            ToastHelper.exito("Se a creado el usuario: " + ux.getNombre());
         }
 
         notifyDataSetChanged();
     }
 
     public void deleteData(Usuario ux){
-        mostrarToast("Se a eliminado el usuario: " + ux.getNombre());
+        ToastHelper.normal("Se a eliminado el usuario: " + ux.getNombre());
         lista.remove(ux);
         notifyDataSetChanged();
     }
+
     public class MyViewHolder extends SwipeViewHolder implements View.OnClickListener {
         private final TextView rol;
         private final TextView nombre;
@@ -101,7 +101,7 @@ public class userAdapter extends OmegaRecyclerView.Adapter<userAdapter.MyViewHol
                 @Override
                 public void onClick(View v) {
                     //smoothOpenLeftMenu();
-                    onItemClick.onClick(v, getAdapterPosition());
+                    onItemClick.onClickItem(v, getAdapterPosition());
                 }
             });
 
@@ -118,13 +118,13 @@ public class userAdapter extends OmegaRecyclerView.Adapter<userAdapter.MyViewHol
         @Override
         public void onClick(final View v) {
             switch (v.getId()) {
-                case R.id.bestado:
+                /*case R.id.bestado:
                     currentItem.setActivo(!currentItem.getActivo());
                     userManager.update(currentItem);
                     updateData(currentItem);
                     smoothCloseMenu();
                     break;
-
+*/
                 case R.id.beliminar:
                     Dialog.showAsk2(v, "Eliminar usuario", "¿Desea realmente eliminar este usuario?",
                             "Eliminar", "Cancelar", new myDialogInterface() {

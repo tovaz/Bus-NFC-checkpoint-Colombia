@@ -36,7 +36,6 @@ public class activityHelper {
         bundle.putSerializable("mainFragment", back);
         fragmento.setArguments(bundle);
 
-        //activity.getSupportFragmentManager().popBackStack();
         ((Fragment)back).getFragmentManager().beginTransaction()
                 //.remove((Fragment)back)
                 .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right)
@@ -51,8 +50,6 @@ public class activityHelper {
     }
 
     public static void mostrarToast(String mensaje) {
-        //View layout = vista.getRootView().getLayoutInflater().inflate(R.layout.toast_layout,
-        //        (ViewGroup) vista.findViewById(R.id.toast_layout_root));
         Toast.makeText(AppController.getAppContext(), mensaje, Toast.LENGTH_SHORT).show();
 
     }

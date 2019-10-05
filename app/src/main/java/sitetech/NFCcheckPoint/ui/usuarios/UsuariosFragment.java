@@ -40,10 +40,8 @@ public class UsuariosFragment extends Fragment implements Serializable {
     private userAdapter uAdapter;
     private UsuariosFragment fragmento;
     public Usuario Useleccionado;
-    public FragmentActivity fragmentContext;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_usuarios, container, false);
         bagregar = root.findViewById(R.id.bagregar);
         ulista = root.findViewById(R.id.ulista);
@@ -73,7 +71,7 @@ public class UsuariosFragment extends Fragment implements Serializable {
 
         uAdapter = new userAdapter(lista, new onItemClick() {
             @Override
-            public void onClick(View v, int position) {
+            public void onClickItem(View v, int position) {
                 fragmento.Useleccionado = uAdapter.lista.get(position);
                 //NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 //navController.navigate(R.id.action_nav_usuarios_to_usuario_AgregarFragment);
@@ -82,17 +80,9 @@ public class UsuariosFragment extends Fragment implements Serializable {
             }
         });
 
-        for ( Usuario u : userDao.loadAll() ) {
-            Log.d(u.getNombre(), u.getCedula());
-        }
-
         if (uAdapter.getItemCount() == 0) {
             ulista.setVisibility(View.GONE);
             lnotificar.setVisibility(View.VISIBLE);
-        }
-        else {
-            ulista.setVisibility(View.VISIBLE);
-            lnotificar.setVisibility(View.GONE);
         }
 
 
@@ -106,9 +96,4 @@ public class UsuariosFragment extends Fragment implements Serializable {
         uAdapter.updateData(ux);
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        fragmentContext=(FragmentActivity) activity;
-        super.onAttach(activity);
-    }
 }

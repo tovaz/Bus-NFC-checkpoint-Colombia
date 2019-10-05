@@ -63,7 +63,7 @@ public class EmpresasFragment extends Fragment implements Serializable {
 
         bAdapter = new empresaAdapter(lista, new onItemClick() {
             @Override
-            public void onClick(View v, int position) {
+            public void onClickItem(View v, int position) {
                 fragmento.Itemseleccionado = bAdapter.lista.get(position);
                 activityHelper.cargarFragmento(fragmento, new EmpresaAgregarFragment());
             }
