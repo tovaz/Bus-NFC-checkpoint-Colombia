@@ -1,4 +1,4 @@
-package sitetech.NFCcheckPoint.ui.empresas;
+package sitetech.NFCcheckPoint.ui.rutas;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,26 +16,24 @@ import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
 import java.io.Serializable;
 import java.util.List;
 
-import sitetech.NFCcheckPoint.Adapters.empresaAdapter;
 import sitetech.NFCcheckPoint.Adapters.onItemClick;
+import sitetech.NFCcheckPoint.Adapters.rutaAdapter;
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
-import sitetech.NFCcheckPoint.db.Empresa;
-import sitetech.NFCcheckPoint.db.EmpresaDao;
+import sitetech.NFCcheckPoint.db.Ruta;
+import sitetech.NFCcheckPoint.db.RutaDao;
 import sitetech.routecheckapp.R;
 
-public class EmpresasFragment extends Fragment implements Serializable {
-
+public class RutasFragment extends Fragment implements Serializable {
     private View vista;
     private Button bagregar;
     private OmegaRecyclerView ulista;
     private TextView lnotificar;
-    private empresaAdapter bAdapter;
-    private EmpresasFragment fragmento;
-    public Empresa Itemseleccionado;
-
+    private rutaAdapter dataAdapter;
+    private RutasFragment fragmento;
+    public Ruta Itemseleccionado;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.empresas_fragment, container, false);
+        View root = inflater.inflate(R.layout.rutas_fragment, container, false);
         bagregar = root.findViewById(R.id.bagregar);
         ulista = root.findViewById(R.id.ulista);
         lnotificar = root.findViewById(R.id.lnotificar);
@@ -47,7 +45,7 @@ public class EmpresasFragment extends Fragment implements Serializable {
             @Override
             public void onClick(View v) {
                 Itemseleccionado = null;
-                activityHelper.cargarFragmento(fragmento, new EmpresaAgregarFragment());
+                activityHelper.cargarFragmento(fragmento, new RutaAgregarFragment());
             }
         });
 
@@ -57,16 +55,16 @@ public class EmpresasFragment extends Fragment implements Serializable {
     }
 
     private void showList(){
-        EmpresaDao empresaDao = AppController.daoSession.getEmpresaDao(); // QUERY PARA OBTENER TODOS MENOS LOS ELIMINADOS
-        List<Empresa> lista = empresaDao.queryBuilder()
-                .where(EmpresaDao.Properties.Eliminado.eq(false))
+        RutaDao rutaDao = AppController.daoSession.getRutaDao(); // QUERY PARA OBTENER TODOS MENOS LOS ELIMINADOS
+        List<Ruta> lista = rutaDao.queryBuilder()
+                .where(RutaDao.Properties.Eliminada.eq(false))
                 .list();
 
-        bAdapter = new empresaAdapter(lista, new onItemClick() {
+        dataAdapter = new rutaAdapter(lista, new onItemClick() {
             @Override
             public void onClickItemList(View v, int position) {
-                fragmento.Itemseleccionado = bAdapter.lista.get(position);
-                activityHelper.cargarFragmento(fragmento, new EmpresaAgregarFragment());
+                fragmento.Itemseleccionado = dataAdapter.lista.get(position);
+                activityHelper.cargarFragmento(fragmento, new RutaAgregarFragment());
             }
         });
 
@@ -74,7 +72,7 @@ public class EmpresasFragment extends Fragment implements Serializable {
             Log.d(b.getPlaca(), b.getInterno());
         }*/
 
-        if (bAdapter.getItemCount() == 0) {
+        if (dataAdapter.getItemCount() == 0) {
             ulista.setVisibility(View.GONE);
             lnotificar.setVisibility(View.VISIBLE);
         }
@@ -85,11 +83,11 @@ public class EmpresasFragment extends Fragment implements Serializable {
 
 
         ulista.setLayoutManager(new LinearLayoutManager(getContext()));
-        ulista.setAdapter(bAdapter);
+        ulista.setAdapter(dataAdapter);
     }
 
 
-    public void updateList(Empresa bx){
-        bAdapter.updateData(bx);
+    public void updateList(Ruta bx){
+        dataAdapter.updateData(bx);
     }
 }

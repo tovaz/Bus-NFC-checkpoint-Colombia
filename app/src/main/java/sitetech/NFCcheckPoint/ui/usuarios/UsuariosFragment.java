@@ -1,8 +1,6 @@
 package sitetech.NFCcheckPoint.ui.usuarios;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
 
@@ -42,7 +35,7 @@ public class UsuariosFragment extends Fragment implements Serializable {
     public Usuario Useleccionado;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_usuarios, container, false);
+        View root = inflater.inflate(R.layout.usuarios_fragment, container, false);
         bagregar = root.findViewById(R.id.bagregar);
         ulista = root.findViewById(R.id.ulista);
         lnotificar = root.findViewById(R.id.lnotificar);
@@ -71,7 +64,7 @@ public class UsuariosFragment extends Fragment implements Serializable {
 
         uAdapter = new userAdapter(lista, new onItemClick() {
             @Override
-            public void onClickItem(View v, int position) {
+            public void onClickItemList(View v, int position) {
                 fragmento.Useleccionado = uAdapter.lista.get(position);
                 //NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 //navController.navigate(R.id.action_nav_usuarios_to_usuario_AgregarFragment);

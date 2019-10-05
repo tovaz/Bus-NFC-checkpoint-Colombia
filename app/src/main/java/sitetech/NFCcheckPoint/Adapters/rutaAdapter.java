@@ -14,16 +14,18 @@ import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Dialog;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
-import sitetech.NFCcheckPoint.db.Empresa;
-import sitetech.NFCcheckPoint.db.EmpresaDao;
+import sitetech.NFCcheckPoint.db.HorarioDao;
+import sitetech.NFCcheckPoint.db.Ruta;
+import sitetech.NFCcheckPoint.db.RutaDao;
+import sitetech.NFCcheckPoint.db.horarioPorRutaDao;
 import sitetech.routecheckapp.R;
 
-public class empresaAdapter extends OmegaRecyclerView.Adapter<empresaAdapter.ViewHolder> {
-    public List<Empresa> lista;
+public class rutaAdapter extends OmegaRecyclerView.Adapter<rutaAdapter.ViewHolder>  {
+    public List<Ruta> lista;
     private onItemClick onItemClick;
 
 
-    public empresaAdapter(List<Empresa> l, onItemClick onclick) {
+    public rutaAdapter(List<Ruta> l, onItemClick onclick) {
         lista = l;
         this.onItemClick = onclick;
     }
@@ -34,55 +36,53 @@ public class empresaAdapter extends OmegaRecyclerView.Adapter<empresaAdapter.Vie
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        //View view = inflater.inflate(R.layout.usuario_template, parent, false);
-        return new ViewHolder(parent);
+    public rutaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new rutaAdapter.ViewHolder(parent);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Empresa dato = lista.get(position);
+    public void onBindViewHolder(rutaAdapter.ViewHolder holder, int position) {
+        Ruta dato = lista.get(position);
         holder.display(dato);
     }
 
-    public void updateData(Empresa bx) {
+    public void updateData(Ruta bx) {
         boolean nuevo = true;
-        for (Empresa rx : lista) {
+        for (Ruta rx : lista) {
             if (rx.getId() == bx.getId()) {
                 lista.set(lista.indexOf(rx), bx);
                 nuevo = false;
             }
-            ToastHelper.info("Se a modificado la empresa: " + bx.getNombre());
+            ToastHelper.info("Se a modificado la ruta: " + bx.getNombre());
         }
 
         if (nuevo) {
             lista.add(bx);
-            ToastHelper.exito("Se a creado la empresa: " + bx.getNombre());
+            ToastHelper.exito("Se a creado la ruta: " + bx.getNombre());
         }
 
         notifyDataSetChanged();
     }
 
-    public void deleteData(Empresa rx) {
-        ToastHelper.normal("Se a eliminado la empresa: " + rx.getNombre());
+    public void deleteData(Ruta rx) {
+        ToastHelper.normal("Se a eliminado la ruta: " + rx.getNombre());
         lista.remove(rx);
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends SwipeViewHolder implements View.OnClickListener {
         private final TextView tnombre;
-        private final TextView ttelefono;
+        private final TextView thorarios;
         private final ImageView beliminar;
-        EmpresaDao empresaManager = AppController.daoSession.getEmpresaDao();
+        RutaDao empresaManager = AppController.daoSession.getRutaDao();
 
-        private Empresa currentItem;
+        private Ruta currentItem;
 
         public ViewHolder(ViewGroup itemView) {
-            super(itemView, R.layout.empresa_template, SwipeViewHolder.NO_ID, R.layout.swipe_menu);
+            super(itemView, R.layout.ruta_template, SwipeViewHolder.NO_ID, R.layout.swipe_menu);
 
             tnombre = (findViewById(R.id.tnombre));
-            ttelefono = (findViewById(R.id.tcedula));
+            thorarios = (findViewById(R.id.thorarios));
             beliminar = (findViewById(R.id.beliminar));
             beliminar.setOnClickListener(this);
 
@@ -99,7 +99,7 @@ public class empresaAdapter extends OmegaRecyclerView.Adapter<empresaAdapter.Vie
         public void onClick(final View v) {
             switch (v.getId()) {
                 case R.id.beliminar:
-                    Dialog.showAsk2(v, "Eliminar Empresa", "¿Desea realmente eliminar esta empresa?",
+                    Dialog.showAsk2(v, "Eliminar Ruta", "¿Desea realmente eliminar esta ruta?",
                             "Eliminar", "Cancelar", new myDialogInterface() {
                                 @Override
                                 public View onBuildDialog() {
@@ -113,7 +113,7 @@ public class empresaAdapter extends OmegaRecyclerView.Adapter<empresaAdapter.Vie
 
                                 @Override
                                 public void onResult(View vista) {
-                                    currentItem.setEliminado(true);
+                                    currentItem.setEliminada(true);
                                     empresaManager.update(currentItem);
                                     deleteData(currentItem);
                                     smoothCloseMenu();
@@ -123,10 +123,17 @@ public class empresaAdapter extends OmegaRecyclerView.Adapter<empresaAdapter.Vie
             }
         }
 
-        public void display(Empresa rx) {
+        public void display(Ruta rx) {
             currentItem = rx;
             tnombre.setText(rx.getNombre().toString());
-            ttelefono.setText("Telefono: " + rx.getTelefono().toString());
+
+            horarioPorRutaDao hxruta= AppController.daoSession.getHorarioPorRutaDao();
+            int horarios = hxruta.queryBuilder()
+                    .where(horarioPorRutaDao.Properties.RutaId.eq(rx.getId()))
+                    .list().size();
+
+            thorarios.setText(String.valueOf(horarios));
         }
     }
+
 }

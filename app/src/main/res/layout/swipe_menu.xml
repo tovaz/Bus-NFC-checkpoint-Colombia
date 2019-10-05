@@ -23,7 +23,7 @@
         android:layout_gravity="center|center_horizontal"
         android:layout_marginLeft="10dp"
         android:layout_weight="1"
-        android:visibility="visible"
+        android:visibility="gone"
         app:srcCompat="@drawable/disable" />
 
 </LinearLayout>

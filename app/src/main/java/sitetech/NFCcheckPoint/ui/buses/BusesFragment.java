@@ -1,9 +1,6 @@
 package sitetech.NFCcheckPoint.ui.buses;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +37,7 @@ public class BusesFragment extends Fragment implements Serializable {
     public FragmentActivity fragmentContext;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_buses, container, false);
+        View root = inflater.inflate(R.layout.buses_fragment, container, false);
         bagregar = root.findViewById(R.id.bagregar);
         ulista = root.findViewById(R.id.ulista);
         lnotificar = root.findViewById(R.id.lnotificar);
@@ -69,7 +66,7 @@ public class BusesFragment extends Fragment implements Serializable {
 
         bAdapter = new busAdapter(lista, new onItemClick() {
             @Override
-            public void onClickItem(View v, int position) {
+            public void onClickItemList(View v, int position) {
                 fragmento.Itemseleccionado = bAdapter.lista.get(position);
                 activityHelper.cargarFragmento(fragmento, new BusAgregarFragment());
             }

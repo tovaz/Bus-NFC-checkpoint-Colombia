@@ -8,7 +8,7 @@
     android:paddingLeft="16dp">
 
     <ImageView
-        android:id="@+id/beliminar"
+        android:id="@+id/beliminar_bus"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center|center_horizontal"

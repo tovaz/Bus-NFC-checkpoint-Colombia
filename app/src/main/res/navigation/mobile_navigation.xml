@@ -9,25 +9,25 @@
         android:id="@+id/nav_usuarios"
         android:name="sitetech.NFCcheckPoint.ui.usuarios.UsuariosFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_usuarios" />
-
-    <fragment
-        android:id="@+id/nav_buses"
-        android:name="sitetech.NFCcheckPoint.ui.buses.BusesFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_buses" />
+        tools:layout="@layout/usuarios_fragment" />
 
     <fragment
         android:id="@+id/nav_empresas"
         android:name="sitetech.NFCcheckPoint.ui.empresas.EmpresasFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_empresas" />
+        tools:layout="@layout/empresas_fragment" />
+
+    <fragment
+        android:id="@+id/nav_buses"
+        android:name="sitetech.NFCcheckPoint.ui.buses.BusesFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/buses_fragment" />
 
     <fragment
         android:id="@+id/nav_tools"
-        android:name="sitetech.NFCcheckPoint.ui.tools.ToolsFragment"
+        android:name="sitetech.NFCcheckPoint.ui.rutas.RutasFragment"
         android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        tools:layout="@layout/rutas_fragment" />
 
     <fragment
         android:id="@+id/nav_share"

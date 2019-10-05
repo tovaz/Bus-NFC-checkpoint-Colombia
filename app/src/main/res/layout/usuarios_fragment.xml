@@ -34,17 +34,6 @@
             android:textSize="20sp"
             android:visibility="gone" />
 
-        <!--androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ulista"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top"
-            android:layout_weight="0"
-            android:minHeight="300dp"
-            tools:listitem="@layout/usuario_template">
-
-        </androidx.recyclerview.widget.RecyclerView-->
-
         <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView
             android:id="@+id/ulista"
             android:layout_width="match_parent"

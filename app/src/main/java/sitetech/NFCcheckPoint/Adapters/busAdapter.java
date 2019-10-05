@@ -2,6 +2,7 @@ package sitetech.NFCcheckPoint.Adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
@@ -70,23 +71,26 @@ public class busAdapter extends OmegaRecyclerView.Adapter<busAdapter.ViewHolder>
         private final TextView placa;
         private final TextView interno;
         private final TextView empresa;
+        private final ImageView beliminar;
 
         BusDao busManager = AppController.daoSession.getBusDao();
 
         private Bus currentItem;
 
         public ViewHolder(ViewGroup itemView) {
-            super(itemView, R.layout.bus_template, SwipeViewHolder.NO_ID, R.layout.swipe_menu_bus);
+            super(itemView, R.layout.bus_template, SwipeViewHolder.NO_ID, R.layout.swipe_menu);
 
             placa = (findViewById(R.id.tnombre));
             interno = (findViewById(R.id.tcedula));
             empresa = (findViewById(R.id.empresa));
+            beliminar = (findViewById(R.id.beliminar));
+            beliminar.setOnClickListener(this);
 
             contentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //smoothOpenRightMenu();
-                    onItemClick.onClickItem(v, getAdapterPosition());
+                    onItemClick.onClickItemList(v, getAdapterPosition());
                 }
             });
         }

@@ -101,7 +101,7 @@ public class userAdapter extends OmegaRecyclerView.Adapter<userAdapter.MyViewHol
                 @Override
                 public void onClick(View v) {
                     //smoothOpenLeftMenu();
-                    onItemClick.onClickItem(v, getAdapterPosition());
+                    onItemClick.onClickItemList(v, getAdapterPosition());
                 }
             });
 
