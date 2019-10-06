@@ -15,11 +15,11 @@ public class Horario {
 
     @Id(autoincrement = true)
     private Long id;
-    private java.util.Date hora;
+    private String hora;
     private Integer maxMinutos;
-    private java.util.Date horaFestivo;
+    private String horaFestivo;
     private Integer maxMinutosFestivo;
-    private java.util.Date horaFinSemana;
+    private String horaFinSemana;
     private Integer maxMinutosFinSemana;
     private boolean eliminado;
 
@@ -35,7 +35,7 @@ public class Horario {
     }
 
     @Generated
-    public Horario(Long id, java.util.Date hora, Integer maxMinutos, java.util.Date horaFestivo, Integer maxMinutosFestivo, java.util.Date horaFinSemana, Integer maxMinutosFinSemana, boolean eliminado) {
+    public Horario(Long id, String hora, Integer maxMinutos, String horaFestivo, Integer maxMinutosFestivo, String horaFinSemana, Integer maxMinutosFinSemana, boolean eliminado) {
         this.id = id;
         this.hora = hora;
         this.maxMinutos = maxMinutos;
@@ -54,11 +54,11 @@ public class Horario {
         this.id = id;
     }
 
-    public java.util.Date getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(java.util.Date hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
@@ -70,11 +70,11 @@ public class Horario {
         this.maxMinutos = maxMinutos;
     }
 
-    public java.util.Date getHoraFestivo() {
+    public String getHoraFestivo() {
         return horaFestivo;
     }
 
-    public void setHoraFestivo(java.util.Date horaFestivo) {
+    public void setHoraFestivo(String horaFestivo) {
         this.horaFestivo = horaFestivo;
     }
 
@@ -86,11 +86,11 @@ public class Horario {
         this.maxMinutosFestivo = maxMinutosFestivo;
     }
 
-    public java.util.Date getHoraFinSemana() {
+    public String getHoraFinSemana() {
         return horaFinSemana;
     }
 
-    public void setHoraFinSemana(java.util.Date horaFinSemana) {
+    public void setHoraFinSemana(String horaFinSemana) {
         this.horaFinSemana = horaFinSemana;
     }
 

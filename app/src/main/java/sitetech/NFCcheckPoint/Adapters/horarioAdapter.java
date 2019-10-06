@@ -97,7 +97,7 @@ public class horarioAdapter extends OmegaRecyclerView.Adapter<horarioAdapter.Vie
         public void onClick(final View v) {
             switch (v.getId()) {
                 case R.id.beliminar:
-                    Dialog.showAsk2(v, "Eliminar Ruta", "¿Desea realmente eliminar esta ruta?",
+                    Dialog.showAsk2(v, "Eliminar Horario", "¿Desea realmente eliminar este horario?",
                             "Eliminar", "Cancelar", new myDialogInterface() {
                                 @Override
                                 public View onBuildDialog() {

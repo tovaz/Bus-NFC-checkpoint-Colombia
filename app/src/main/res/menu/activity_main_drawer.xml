@@ -17,9 +17,13 @@
             android:icon="@mipmap/bus"
             android:title="@string/menu_gallery" />
         <item
-            android:id="@+id/nav_tools"
+            android:id="@+id/nav_rutas"
             android:icon="@drawable/ruta"
             android:title="@string/menu_tools" />
+        <item
+            android:id="@+id/nav_horarios"
+            android:icon="@drawable/horario"
+            android:title="Horarios" />
     </group>
 
     <item android:title="Control">
@@ -28,10 +32,6 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/menu_share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
         </menu>
     </item>
 

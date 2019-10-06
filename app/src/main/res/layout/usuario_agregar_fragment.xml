@@ -27,7 +27,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="35dp"
         android:layout_marginBottom="70dp"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,55 +39,78 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <net.xpece.material.floatinglabel.FloatingLabelView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:flv_colorActivated="@color/colorLabelFloat"
+                app:flv_ownerView="@+id/tnombre"
+                app:flv_textDefault="Nombre" />
+
             <EditText
                 android:id="@+id/tnombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/text_edit"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/text_edit_sel"
                 android:ems="10"
                 android:hint="Nombre"
-                android:inputType="textPersonName"
-                android:padding="10dp" />
+                android:inputType="textPersonName" />
+
+            <net.xpece.material.floatinglabel.FloatingLabelView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:flv_colorActivated="@color/colorLabelFloat"
+                app:flv_ownerView="@+id/tcedula"
+                app:flv_textDefault="Cedula" />
 
             <EditText
                 android:id="@+id/tcedula"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/text_edit"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/text_edit_sel"
                 android:ems="10"
                 android:hint="Cedula"
-                android:inputType="textPersonName"
-                android:padding="10dp" />
+                android:inputType="textPersonName" />
+
+            <net.xpece.material.floatinglabel.FloatingLabelView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:flv_colorActivated="@color/colorLabelFloat"
+                app:flv_ownerView="@+id/tpassword"
+                app:flv_textDefault="Contraseña" />
 
             <EditText
                 android:id="@+id/tpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/text_edit"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/text_edit_sel"
                 android:ems="10"
                 android:hint="Contraseña"
-                android:inputType="textPersonName"
-                android:padding="10dp" />
+                android:inputType="textPersonName" />
+
+            <net.xpece.material.floatinglabel.FloatingLabelView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:flv_colorActivated="@color/colorLabelFloat"
+                app:flv_ownerView="@+id/ttelefono"
+                app:flv_textDefault="Telefono" />
 
             <EditText
                 android:id="@+id/ttelefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/text_edit"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/text_edit_sel"
                 android:ems="10"
                 android:hint="Telefono"
-                android:inputType="phone"
-                android:padding="10dp" />
+                android:inputType="phone" />
 
             <Switch
                 android:id="@+id/sactivo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:checked="true"
                 android:padding="10dp"
                 android:showText="true"
@@ -112,7 +135,7 @@
                 android:id="@+id/selempresa"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/text_edit"
+                android:background="@drawable/spinner_style"
                 android:dropDownWidth="wrap_content"
                 android:entries="@array/roles"
                 android:spinnerMode="dropdown" />
@@ -138,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="@drawable/btn_save"
+            android:background="@drawable/btn_save_sel"
             android:text="Guardar" />
 
         <Button
@@ -147,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_default"
+            android:background="@drawable/btn_default_sel"
             android:text="Cancelar" />
     </LinearLayout>
 

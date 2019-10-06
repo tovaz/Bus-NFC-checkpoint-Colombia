@@ -53,7 +53,7 @@ public class HorariosFragment extends Fragment implements Serializable {
             @Override
             public void onClick(View v) {
                 Itemseleccionado = null;
-                activityHelper.cargarFragmento(fragmento, new RutaAgregarFragment());
+                activityHelper.cargarFragmento(fragmento, new HorarioAgregarFragment());
             }
         });
 

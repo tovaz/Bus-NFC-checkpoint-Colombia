@@ -24,7 +24,7 @@
         tools:layout="@layout/buses_fragment" />
 
     <fragment
-        android:id="@+id/nav_tools"
+        android:id="@+id/nav_rutas"
         android:name="sitetech.NFCcheckPoint.ui.rutas.RutasFragment"
         android:label="@string/menu_tools"
         tools:layout="@layout/rutas_fragment" />
@@ -36,8 +36,8 @@
         tools:layout="@layout/fragment_share" />
 
     <fragment
-        android:id="@+id/nav_send"
+        android:id="@+id/nav_horarios"
         android:name="sitetech.NFCcheckPoint.ui.horarios.HorariosFragment"
-        android:label="@string/menu_send"
+        android:label="Horarios"
         tools:layout="@layout/horarios_fragment" />
 </navigation>

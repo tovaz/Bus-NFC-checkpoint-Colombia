@@ -8,11 +8,13 @@
     android:orientation="vertical"
     tools:context="sitetech.NFCcheckPoint.ui.rutas.RutaAgregarFragment" >
 
+
     <TextView
         android:id="@+id/ttitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:text="AGREGAR RUTA"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorPrimary"
@@ -24,21 +26,29 @@
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/ttitulo"
-        tools:layout_editor_absoluteX="10dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ttitulo">
+
+        <net.xpece.material.floatinglabel.FloatingLabelView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:flv_colorActivated="@color/colorLabelFloat"
+            app:flv_ownerView="@+id/tnombre"
+            app:flv_textDefault="Nombre" />
 
         <EditText
             android:id="@+id/tnombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:background="@drawable/text_edit"
             android:ems="10"
             android:hint="Nombre"
-            android:inputType="textPersonName"
-            android:padding="10dp" />
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 
@@ -47,14 +57,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/bguardar"
