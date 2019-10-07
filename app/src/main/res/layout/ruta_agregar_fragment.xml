@@ -9,25 +9,12 @@
     tools:context="sitetech.NFCcheckPoint.ui.rutas.RutaAgregarFragment" >
 
 
-    <TextView
-        android:id="@+id/ttitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:text="AGREGAR RUTA"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,12 +32,86 @@
             android:id="@+id/tnombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/text_edit"
+            android:background="@drawable/text_edit_sel"
             android:ems="10"
             android:hint="Nombre"
             android:inputType="textPersonName" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="70dp"
+        android:gravity="top"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <TextView
+            android:id="@+id/text_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:text="Usuarios"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/basignar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/btn_default_sel"
+            android:drawableLeft="@drawable/agregar_horario"
+            android:drawablePadding="5dp"
+            android:text="Asignar horario"
+            android:textAllCaps="false"
+            tools:layout_editor_absoluteX="264dp"
+            tools:layout_editor_absoluteY="674dp" />
+
+        <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView
+            android:id="@+id/hlista"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#888"
+            android:dividerHeight="0dp"
+            android:paddingTop="10dp"
+            android:scrollbars="vertical"
+            app:itemSpace="3dp"
+            tools:listitem="@layout/horario_template" />
+
+        <TextView
+            android:id="@+id/lnotificar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No hay ningun horario asignado"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/ttitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="AGREGAR RUTA"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -72,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="@drawable/btn_save"
+            android:background="@drawable/btn_save_sel"
             android:text="Guardar" />
 
         <Button
@@ -81,8 +142,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_default"
+            android:background="@drawable/btn_default_sel"
             android:text="Cancelar" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

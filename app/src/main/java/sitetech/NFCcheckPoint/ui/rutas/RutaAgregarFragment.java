@@ -1,6 +1,7 @@
 package sitetech.NFCcheckPoint.ui.rutas;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,34 +9,48 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
+
+import java.io.Serializable;
+import java.util.List;
+
+import sitetech.NFCcheckPoint.Adapters.horarioPorRutaAdapter;
+import sitetech.NFCcheckPoint.Adapters.onItemClick;
 import sitetech.NFCcheckPoint.AppController;
+import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
-import sitetech.NFCcheckPoint.db.Empresa;
-import sitetech.NFCcheckPoint.db.EmpresaDao;
 import sitetech.NFCcheckPoint.db.Ruta;
 import sitetech.NFCcheckPoint.db.RutaDao;
-import sitetech.NFCcheckPoint.ui.empresas.EmpresaAgregarFragment;
-import sitetech.NFCcheckPoint.ui.empresas.EmpresasFragment;
+import sitetech.NFCcheckPoint.db.horarioPorRuta;
+import sitetech.NFCcheckPoint.db.horarioPorRutaDao;
 import sitetech.routecheckapp.R;
 
-public class RutaAgregarFragment extends Fragment {
+public class RutaAgregarFragment extends Fragment implements  Serializable{
     private static final String MAINFRAGMENT_KEY = "mainFragment";
-    private RutasFragment mainFragment;
+    public RutasFragment mainFragment;
+    private RutaAgregarFragment agregarFragment;
     private View vista;
 
     private TextView ttitulo;
     private TextView tnombre;
+    private TextView lnotificar;
+
+    private OmegaRecyclerView hlista;
+    private Button basignar;
+
     private Button bcancelar;
     private Button bguardar;
 
-    public RutaAgregarFragment() { }
+    public Ruta RutaSeleccionada;
 
-    public static EmpresaAgregarFragment newInstance(EmpresasFragment _main) {
-        EmpresaAgregarFragment fragment = new EmpresaAgregarFragment();
+    public static RutaAgregarFragment newInstance(RutasFragment _main) {
+        RutaAgregarFragment fragment = new RutaAgregarFragment();
         Bundle args = new Bundle();
         args.putSerializable(MAINFRAGMENT_KEY, _main);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -45,6 +60,8 @@ public class RutaAgregarFragment extends Fragment {
         if (getArguments() != null) {
             mainFragment = (RutasFragment) getArguments().getSerializable(MAINFRAGMENT_KEY);
         }
+
+        agregarFragment = this;
     }
 
     @Override
@@ -53,8 +70,9 @@ public class RutaAgregarFragment extends Fragment {
         cargarControles();
         onClick();
 
-        if (mainFragment.Itemseleccionado != null)
-            cargarInfo();
+
+        if (mainFragment.Itemseleccionado != null)  cargarInfo();
+
         return vista;
     }
 
@@ -62,21 +80,27 @@ public class RutaAgregarFragment extends Fragment {
         Ruta ruta = mainFragment.Itemseleccionado;
         ttitulo.setText("Modificar Ruta");
         tnombre.setText(ruta.getNombre());
+
+        showListHorarios();
     }
 
     private void cargarControles(){
         ttitulo = vista.findViewById(R.id.ttitulo); // Titulo
         tnombre = vista.findViewById(R.id.tnombre);
+        basignar = vista.findViewById(R.id.basignar);
+        hlista = vista.findViewById(R.id.hlista);
+        lnotificar = vista.findViewById(R.id.lnotificar);
 
         bcancelar = vista.findViewById(R.id.bcancelar);
         bguardar = vista.findViewById(R.id.bguardar);
     }
 
     private void onClick(){
-        bcancelar.setOnClickListener(new View.OnClickListener() {
+        basignar.setOnClickListener(new View.OnClickListener() { //ABRIR DIALOGO PARA SELECCIONAR HORARIO
             @Override
             public void onClick(View v) {
-                activityHelper.goBackStack(vista);
+                RutaSeleccionada =  mainFragment.Itemseleccionado;
+                activityHelper.cargarFragmento(agregarFragment, new HorarioSelFragment(), R.anim.slide_down, R.anim.slide_up, R.anim.slide_down, R.anim.slide_down);
             }
         });
 
@@ -108,5 +132,47 @@ public class RutaAgregarFragment extends Fragment {
             }
         });
 
+        bcancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityHelper.goBackStack(vista);
+            }
+        });
+    }
+
+    public horarioPorRutaAdapter horariosAdapter;
+    private void showListHorarios(){
+        horarioPorRutaDao horarioDao = AppController.daoSession.getHorarioPorRutaDao(); // QUERY PARA OBTENER TODOS MENOS LOS ELIMINADOS
+        List<horarioPorRuta> lista = horarioDao.queryBuilder()
+                .where(horarioPorRutaDao.Properties.RutaId.eq(mainFragment.Itemseleccionado.getId()),
+                        horarioPorRutaDao.Properties.Eliminado.eq(false))
+
+                .orderDesc(horarioPorRutaDao.Properties.Id)
+                .list();
+
+        horariosAdapter = new horarioPorRutaAdapter(lista, new onItemClick() {
+            @Override
+            public void onClickItemList(View v, int position) {
+                ToastHelper.info(horariosAdapter.lista.get(position).getHorario().getHora().toString());
+            }
+        });
+
+        if (horariosAdapter.getItemCount() == 0) {
+            hlista.setVisibility(View.GONE);
+            lnotificar.setVisibility(View.VISIBLE);
+        }
+
+
+        hlista.setLayoutManager(new LinearLayoutManager(getContext()));
+        hlista.setAdapter(horariosAdapter);
+    }
+
+    public void agregarHorario(horarioPorRuta h){
+        Log.d("AGREGADO :: ", h.getHorario().getNombre());
+        horariosAdapter.updateData(h);
+        if (horariosAdapter.getItemCount() > 0) {
+            hlista.setVisibility(View.VISIBLE);
+            lnotificar.setVisibility(View.GONE);
+        }
     }
 }

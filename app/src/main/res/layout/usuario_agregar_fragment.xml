@@ -111,16 +111,16 @@
                 android:id="@+id/sactivo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:checked="true"
                 android:padding="10dp"
                 android:showText="true"
-                android:text="Estado del usuario"
+                android:textColor="#555"
                 android:textIsSelectable="false"
                 android:textOff="Inactivo"
                 android:textOn="Activo"
-                android:textSize="17sp"
-                android:thumb="@drawable/switch_sel"
-                android:track="@drawable/switch_track" />
+                android:textSize="15sp"
+                tools:text="Estado del usuario" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -129,7 +129,7 @@
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 android:text="Tipo de usuario"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <Spinner
                 android:id="@+id/selempresa"

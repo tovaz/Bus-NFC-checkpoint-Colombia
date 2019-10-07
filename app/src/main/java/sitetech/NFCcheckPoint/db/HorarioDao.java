@@ -2,6 +2,7 @@ package sitetech.NFCcheckPoint.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.Property;
@@ -23,13 +24,14 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Hora = new Property(1, String.class, "hora", false, "HORA");
-        public final static Property MaxMinutos = new Property(2, Integer.class, "maxMinutos", false, "MAX_MINUTOS");
-        public final static Property HoraFestivo = new Property(3, String.class, "horaFestivo", false, "HORA_FESTIVO");
-        public final static Property MaxMinutosFestivo = new Property(4, Integer.class, "maxMinutosFestivo", false, "MAX_MINUTOS_FESTIVO");
-        public final static Property HoraFinSemana = new Property(5, String.class, "horaFinSemana", false, "HORA_FIN_SEMANA");
-        public final static Property MaxMinutosFinSemana = new Property(6, Integer.class, "maxMinutosFinSemana", false, "MAX_MINUTOS_FIN_SEMANA");
-        public final static Property Eliminado = new Property(7, boolean.class, "eliminado", false, "ELIMINADO");
+        public final static Property Nombre = new Property(1, String.class, "nombre", false, "NOMBRE");
+        public final static Property Hora = new Property(2, String.class, "hora", false, "HORA");
+        public final static Property MaxMinutos = new Property(3, Integer.class, "maxMinutos", false, "MAX_MINUTOS");
+        public final static Property HoraFestivo = new Property(4, String.class, "horaFestivo", false, "HORA_FESTIVO");
+        public final static Property MaxMinutosFestivo = new Property(5, Integer.class, "maxMinutosFestivo", false, "MAX_MINUTOS_FESTIVO");
+        public final static Property HoraFinSemana = new Property(6, String.class, "horaFinSemana", false, "HORA_FIN_SEMANA");
+        public final static Property MaxMinutosFinSemana = new Property(7, Integer.class, "maxMinutosFinSemana", false, "MAX_MINUTOS_FIN_SEMANA");
+        public final static Property Eliminado = new Property(8, boolean.class, "eliminado", false, "ELIMINADO");
     }
 
 
@@ -46,13 +48,14 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"HORARIO\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"HORA\" TEXT," + // 1: hora
-                "\"MAX_MINUTOS\" INTEGER," + // 2: maxMinutos
-                "\"HORA_FESTIVO\" TEXT," + // 3: horaFestivo
-                "\"MAX_MINUTOS_FESTIVO\" INTEGER," + // 4: maxMinutosFestivo
-                "\"HORA_FIN_SEMANA\" TEXT," + // 5: horaFinSemana
-                "\"MAX_MINUTOS_FIN_SEMANA\" INTEGER," + // 6: maxMinutosFinSemana
-                "\"ELIMINADO\" INTEGER NOT NULL );"); // 7: eliminado
+                "\"NOMBRE\" TEXT," + // 1: nombre
+                "\"HORA\" TEXT," + // 2: hora
+                "\"MAX_MINUTOS\" INTEGER," + // 3: maxMinutos
+                "\"HORA_FESTIVO\" TEXT," + // 4: horaFestivo
+                "\"MAX_MINUTOS_FESTIVO\" INTEGER," + // 5: maxMinutosFestivo
+                "\"HORA_FIN_SEMANA\" TEXT," + // 6: horaFinSemana
+                "\"MAX_MINUTOS_FIN_SEMANA\" INTEGER," + // 7: maxMinutosFinSemana
+                "\"ELIMINADO\" INTEGER NOT NULL );"); // 8: eliminado
     }
 
     /** Drops the underlying database table. */
@@ -70,36 +73,41 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
             stmt.bindLong(1, id);
         }
  
+        String nombre = entity.getNombre();
+        if (nombre != null) {
+            stmt.bindString(2, nombre);
+        }
+ 
         String hora = entity.getHora();
         if (hora != null) {
-            stmt.bindString(2, hora);
+            stmt.bindString(3, hora);
         }
  
         Integer maxMinutos = entity.getMaxMinutos();
         if (maxMinutos != null) {
-            stmt.bindLong(3, maxMinutos);
+            stmt.bindLong(4, maxMinutos);
         }
  
         String horaFestivo = entity.getHoraFestivo();
         if (horaFestivo != null) {
-            stmt.bindString(4, horaFestivo);
+            stmt.bindString(5, horaFestivo);
         }
  
         Integer maxMinutosFestivo = entity.getMaxMinutosFestivo();
         if (maxMinutosFestivo != null) {
-            stmt.bindLong(5, maxMinutosFestivo);
+            stmt.bindLong(6, maxMinutosFestivo);
         }
  
         String horaFinSemana = entity.getHoraFinSemana();
         if (horaFinSemana != null) {
-            stmt.bindString(6, horaFinSemana);
+            stmt.bindString(7, horaFinSemana);
         }
  
         Integer maxMinutosFinSemana = entity.getMaxMinutosFinSemana();
         if (maxMinutosFinSemana != null) {
-            stmt.bindLong(7, maxMinutosFinSemana);
+            stmt.bindLong(8, maxMinutosFinSemana);
         }
-        stmt.bindLong(8, entity.getEliminado() ? 1L: 0L);
+        stmt.bindLong(9, entity.getEliminado() ? 1L: 0L);
     }
 
     @Override
@@ -111,36 +119,41 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
             stmt.bindLong(1, id);
         }
  
+        String nombre = entity.getNombre();
+        if (nombre != null) {
+            stmt.bindString(2, nombre);
+        }
+ 
         String hora = entity.getHora();
         if (hora != null) {
-            stmt.bindString(2, hora);
+            stmt.bindString(3, hora);
         }
  
         Integer maxMinutos = entity.getMaxMinutos();
         if (maxMinutos != null) {
-            stmt.bindLong(3, maxMinutos);
+            stmt.bindLong(4, maxMinutos);
         }
  
         String horaFestivo = entity.getHoraFestivo();
         if (horaFestivo != null) {
-            stmt.bindString(4, horaFestivo);
+            stmt.bindString(5, horaFestivo);
         }
  
         Integer maxMinutosFestivo = entity.getMaxMinutosFestivo();
         if (maxMinutosFestivo != null) {
-            stmt.bindLong(5, maxMinutosFestivo);
+            stmt.bindLong(6, maxMinutosFestivo);
         }
  
         String horaFinSemana = entity.getHoraFinSemana();
         if (horaFinSemana != null) {
-            stmt.bindString(6, horaFinSemana);
+            stmt.bindString(7, horaFinSemana);
         }
  
         Integer maxMinutosFinSemana = entity.getMaxMinutosFinSemana();
         if (maxMinutosFinSemana != null) {
-            stmt.bindLong(7, maxMinutosFinSemana);
+            stmt.bindLong(8, maxMinutosFinSemana);
         }
-        stmt.bindLong(8, entity.getEliminado() ? 1L: 0L);
+        stmt.bindLong(9, entity.getEliminado() ? 1L: 0L);
     }
 
     @Override
@@ -152,13 +165,14 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
     public Horario readEntity(Cursor cursor, int offset) {
         Horario entity = new Horario( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // hora
-            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // maxMinutos
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // horaFestivo
-            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // maxMinutosFestivo
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // horaFinSemana
-            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // maxMinutosFinSemana
-            cursor.getShort(offset + 7) != 0 // eliminado
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // nombre
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // hora
+            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // maxMinutos
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // horaFestivo
+            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // maxMinutosFestivo
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // horaFinSemana
+            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // maxMinutosFinSemana
+            cursor.getShort(offset + 8) != 0 // eliminado
         );
         return entity;
     }
@@ -166,13 +180,14 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
     @Override
     public void readEntity(Cursor cursor, Horario entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setHora(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setMaxMinutos(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
-        entity.setHoraFestivo(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setMaxMinutosFestivo(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
-        entity.setHoraFinSemana(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setMaxMinutosFinSemana(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
-        entity.setEliminado(cursor.getShort(offset + 7) != 0);
+        entity.setNombre(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setHora(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setMaxMinutos(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
+        entity.setHoraFestivo(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setMaxMinutosFestivo(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
+        entity.setHoraFinSemana(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setMaxMinutosFinSemana(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
+        entity.setEliminado(cursor.getShort(offset + 8) != 0);
      }
     
     @Override
@@ -199,5 +214,6 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-    
+
+
 }

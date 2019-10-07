@@ -10,12 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        app:cardUseCompatPadding="false"
-        app:contentPadding="5dp">
+        app:cardUseCompatPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/item_list_sel"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -28,7 +28,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/usuario" />
 
                 <ToggleButton
                     android:id="@+id/activo"

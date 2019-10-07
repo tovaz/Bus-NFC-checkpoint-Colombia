@@ -15,6 +15,7 @@ public class Horario {
 
     @Id(autoincrement = true)
     private Long id;
+    private String nombre;
     private String hora;
     private Integer maxMinutos;
     private String horaFestivo;
@@ -35,8 +36,9 @@ public class Horario {
     }
 
     @Generated
-    public Horario(Long id, String hora, Integer maxMinutos, String horaFestivo, Integer maxMinutosFestivo, String horaFinSemana, Integer maxMinutosFinSemana, boolean eliminado) {
+    public Horario(Long id, String nombre, String hora, Integer maxMinutos, String horaFestivo, Integer maxMinutosFestivo, String horaFinSemana, Integer maxMinutosFinSemana, boolean eliminado) {
         this.id = id;
+        this.nombre = nombre;
         this.hora = hora;
         this.maxMinutos = maxMinutos;
         this.horaFestivo = horaFestivo;
@@ -52,6 +54,14 @@ public class Horario {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getHora() {

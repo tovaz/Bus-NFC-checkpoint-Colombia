@@ -12,6 +12,8 @@ import android.widget.TimePicker;
 
 import androidx.fragment.app.Fragment;
 
+import java.io.Serializable;
+
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.db.Horario;
@@ -23,12 +25,13 @@ import sitetech.NFCcheckPoint.ui.empresas.EmpresasFragment;
 import sitetech.NFCcheckPoint.ui.rutas.RutasFragment;
 import sitetech.routecheckapp.R;
 
-public class HorarioAgregarFragment extends Fragment {
+public class HorarioAgregarFragment extends Fragment implements Serializable {
     private static final String MAINFRAGMENT_KEY = "mainFragment";
     private HorariosFragment mainFragment;
     private View vista;
 
     private TextView ttitulo;
+    private EditText tnombre;
     private EditText tmaxMinutos;
     private EditText tmaxMinutosFestivos;
     private Button bhora;
@@ -72,6 +75,7 @@ public class HorarioAgregarFragment extends Fragment {
         tmaxMinutos.setText(horario.getMaxMinutos().toString());
         tmaxMinutosFestivos.setText(horario.getMaxMinutosFestivo().toString());
 
+        tnombre.setText(horario.getNombre());
         bhora.setText(horario.getHora().toString());
         bhoraFestivo.setText(horario.getHoraFestivo().toString());
     }
@@ -79,6 +83,7 @@ public class HorarioAgregarFragment extends Fragment {
     private void cargarControles(){
         ttitulo = vista.findViewById(R.id.ttitulo); // Titulo
         tmaxMinutos = vista.findViewById(R.id.tmaxMinutos);
+        tnombre = vista.findViewById(R.id.tnombre);
         tmaxMinutosFestivos = vista.findViewById(R.id.tmaxMinutosFestivos);
         bhora = vista.findViewById(R.id.bhora);
         bhoraFestivo = vista.findViewById(R.id.bhoraFestivo);
@@ -135,8 +140,7 @@ public class HorarioAgregarFragment extends Fragment {
                 if (mainFragment.Itemseleccionado != null)
                     horario = mainFragment.Itemseleccionado;
 
-                //horario.setNombre(tnombre.getText().toString());
-
+                horario.setNombre(tnombre.getText().toString());
                 horario.setHora(bhora.getText().toString());
                 horario.setMaxMinutos(Integer.parseInt(tmaxMinutos.getText().toString()));
                 horario.setHoraFestivo(bhoraFestivo.getText().toString());

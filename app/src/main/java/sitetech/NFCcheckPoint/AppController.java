@@ -2,11 +2,13 @@ package sitetech.NFCcheckPoint;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import org.greenrobot.greendao.database.Database;
 
 import sitetech.NFCcheckPoint.db.DaoMaster;
 import sitetech.NFCcheckPoint.db.DaoSession;
+import sitetech.NFCcheckPoint.db.HorarioDao;
 
 /**
  * Created by Akinsete on 1/14/16.
@@ -25,7 +27,13 @@ public class AppController extends Application {
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
 
+        //AgregarColumna(db, "HORARIO", "NOMBRE", "TEXT");
         AppController.context = getApplicationContext();
+    }
+
+    public void AgregarColumna(Database db, String tabla, String columna, String tipo){
+        Log.d("ALTERANDO TABLA " + tabla, "ALTERANDO TABLE " + tabla + ", AGREGANDO " + columna + " tipo " + tipo);
+        db.execSQL("ALTER TABLE " + tabla + " ADD " + columna + " " + tipo);
     }
 
     public DaoSession getDaoSession() {

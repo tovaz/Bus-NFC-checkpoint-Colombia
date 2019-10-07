@@ -69,6 +69,7 @@ public class horarioAdapter extends OmegaRecyclerView.Adapter<horarioAdapter.Vie
     }
 
     public class ViewHolder extends SwipeViewHolder implements View.OnClickListener {
+        private final TextView tnombre;
         private final TextView thora;
         private final TextView thoraFestivo;
         private final ImageView beliminar;
@@ -79,6 +80,7 @@ public class horarioAdapter extends OmegaRecyclerView.Adapter<horarioAdapter.Vie
         public ViewHolder(ViewGroup itemView) {
             super(itemView, R.layout.horario_template, SwipeViewHolder.NO_ID, R.layout.swipe_menu);
 
+            tnombre = (findViewById(R.id.tnombre));
             thora = (findViewById(R.id.thora));
             thoraFestivo = (findViewById(R.id.thoraFestivo));
             beliminar = (findViewById(R.id.beliminar));
@@ -123,6 +125,9 @@ public class horarioAdapter extends OmegaRecyclerView.Adapter<horarioAdapter.Vie
 
         public void display(Horario rx) {
             currentItem = rx;
+            if (rx.getNombre() == null) tnombre.setText("");
+            else tnombre.setText(rx.getNombre().toString());
+
             thora.setText(rx.getHora() + " Min Max: " + rx.getMaxMinutos());
             thoraFestivo.setText(rx.getHoraFestivo() + " Min Max: " + rx.getMaxMinutosFestivo());
         }

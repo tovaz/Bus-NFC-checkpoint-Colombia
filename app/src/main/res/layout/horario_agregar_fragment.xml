@@ -37,13 +37,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <net.xpece.material.floatinglabel.FloatingLabelView
+                android:id="@+id/floatingLabelView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flv_ownerView="@+id/tnombre"
+                app:flv_textDefault="Nombre" />
+
+            <EditText
+                android:id="@+id/tnombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/text_edit_sel"
+                android:ems="10"
+                android:hint="Nombre"
+                android:inputType="textPersonName" />
+
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Horario Normal"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,7 +108,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/text_edit_sel"
-                        android:editable="true"
                         android:ems="10"
                         android:hint="Minutos Maximo"
                         android:inputType="phone"
@@ -106,7 +123,8 @@
                 android:layout_marginTop="20dp"
                 android:inputType="textMultiLine"
                 android:text="Horario para dias festivos y fines de semana"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"

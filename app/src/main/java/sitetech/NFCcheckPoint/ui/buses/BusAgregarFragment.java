@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import sitetech.NFCcheckPoint.db.Empresa;
 import sitetech.NFCcheckPoint.db.EmpresaDao;
 import sitetech.routecheckapp.R;
 
-public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSelectedListener{
+public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSelectedListener, Serializable {
     private static final String MAINFRAGMENT_KEY = "mainFragment";
     private BusesFragment mainFragment;
     private View vista;

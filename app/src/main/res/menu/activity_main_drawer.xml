@@ -3,35 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_usuarios"
-            android:icon="@drawable/user"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_empresas"
-            android:icon="@drawable/empresa"
-            android:title="@string/menu_slideshow" />
-        <item
-            android:id="@+id/nav_buses"
-            android:icon="@mipmap/bus"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_rutas"
-            android:icon="@drawable/ruta"
-            android:title="@string/menu_tools" />
-        <item
-            android:id="@+id/nav_horarios"
-            android:icon="@drawable/horario"
-            android:title="Horarios" />
-    </group>
+    <item android:title="Administracion">
+        <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_usuarios"
+                android:icon="@drawable/user"
+                android:title="@string/menu_home" />
+            <item
+                android:id="@+id/nav_empresas"
+                android:icon="@drawable/empresa"
+                android:title="@string/menu_slideshow" />
+            <item
+                android:id="@+id/nav_buses"
+                android:icon="@mipmap/bus"
+                android:title="@string/menu_gallery" />
+            <item
+                android:id="@+id/nav_rutas"
+                android:icon="@drawable/ruta"
+                android:title="@string/menu_tools" />
+            <item
+                android:id="@+id/nav_horarios"
+                android:icon="@drawable/horario"
+                android:title="Horarios" />
+        </group>
+    </item>
 
-    <item android:title="Control">
+    <item android:title="Historial de registros">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
+                android:title="Historial" />
         </menu>
     </item>
 

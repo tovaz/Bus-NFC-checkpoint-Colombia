@@ -7,16 +7,16 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
         app:cardElevation="1dp"
-        app:cardUseCompatPadding="false"
-        app:contentPadding="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:cardUseCompatPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/item_list_sel"
             android:orientation="horizontal">
 
             <LinearLayout

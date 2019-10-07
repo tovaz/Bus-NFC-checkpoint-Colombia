@@ -13,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.db.Usuario;
@@ -22,7 +24,7 @@ import sitetech.routecheckapp.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Usuario_AgregarFragment extends Fragment {
+public class Usuario_AgregarFragment extends Fragment implements Serializable {
 
     private static final String MAINFRAGMENT_KEY = "mainFragment";
     private Spinner selRol;

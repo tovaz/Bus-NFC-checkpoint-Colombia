@@ -25,13 +25,15 @@ import sitetech.NFCcheckPoint.db.RutaDao;
 import sitetech.routecheckapp.R;
 
 public class RutasFragment extends Fragment implements Serializable {
+
     private View vista;
     private Button bagregar;
     private OmegaRecyclerView ulista;
     private TextView lnotificar;
     private rutaAdapter dataAdapter;
-    private RutasFragment fragmento;
+    public RutasFragment fragmento;
     public Ruta Itemseleccionado;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.rutas_fragment, container, false);
         bagregar = root.findViewById(R.id.bagregar);

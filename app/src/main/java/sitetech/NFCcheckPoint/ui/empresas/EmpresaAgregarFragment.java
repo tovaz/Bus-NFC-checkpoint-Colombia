@@ -10,13 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.db.Empresa;
 import sitetech.NFCcheckPoint.db.EmpresaDao;
 import sitetech.routecheckapp.R;
 
-public class EmpresaAgregarFragment extends Fragment {
+public class EmpresaAgregarFragment extends Fragment implements Serializable {
     private static final String MAINFRAGMENT_KEY = "mainFragment";
     private EmpresasFragment mainFragment;
     private View vista;

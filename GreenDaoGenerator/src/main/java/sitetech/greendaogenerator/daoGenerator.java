@@ -79,6 +79,7 @@ public class daoGenerator {
     private Entity horarioEntity(final Schema schema) {
         horario = schema.addEntity("Horario");
         horario.addIdProperty().primaryKey().autoincrement();
+        horario.addStringProperty("nombre");
         horario.addStringProperty("hora");
         horario.addIntProperty("maxMinutos");
 

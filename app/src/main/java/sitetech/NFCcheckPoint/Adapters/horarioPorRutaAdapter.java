@@ -8,24 +8,25 @@ import android.widget.TextView;
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
 import com.omega_r.libs.omegarecyclerview.swipe_menu.SwipeViewHolder;
 
+import java.io.Serializable;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Dialog;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
+import sitetech.NFCcheckPoint.db.Horario;
 import sitetech.NFCcheckPoint.db.HorarioDao;
-import sitetech.NFCcheckPoint.db.Ruta;
-import sitetech.NFCcheckPoint.db.RutaDao;
+import sitetech.NFCcheckPoint.db.horarioPorRuta;
 import sitetech.NFCcheckPoint.db.horarioPorRutaDao;
 import sitetech.routecheckapp.R;
 
-public class rutaAdapter extends OmegaRecyclerView.Adapter<rutaAdapter.ViewHolder>  {
-    public List<Ruta> lista;
+public class horarioPorRutaAdapter extends OmegaRecyclerView.Adapter<horarioPorRutaAdapter.ViewHolder> implements Serializable {
+    public List<horarioPorRuta> lista;
     private onItemClick onItemClick;
 
 
-    public rutaAdapter(List<Ruta> l, onItemClick onclick) {
+    public horarioPorRutaAdapter(List<horarioPorRuta> l, onItemClick onclick) {
         lista = l;
         this.onItemClick = onclick;
     }
@@ -36,53 +37,55 @@ public class rutaAdapter extends OmegaRecyclerView.Adapter<rutaAdapter.ViewHolde
     }
 
     @Override
-    public rutaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new rutaAdapter.ViewHolder(parent);
+    public horarioPorRutaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new horarioPorRutaAdapter.ViewHolder(parent);
     }
 
     @Override
-    public void onBindViewHolder(rutaAdapter.ViewHolder holder, int position) {
-        Ruta dato = lista.get(position);
+    public void onBindViewHolder(horarioPorRutaAdapter.ViewHolder holder, int position) {
+        horarioPorRuta dato = lista.get(position);
         holder.display(dato);
     }
 
-    public void updateData(Ruta bx) {
+    public void updateData(horarioPorRuta bx) {
         boolean nuevo = true;
-        for (Ruta rx : lista) {
+        for (horarioPorRuta rx : lista) {
             if (rx.getId() == bx.getId()) {
                 lista.set(lista.indexOf(rx), bx);
                 nuevo = false;
             }
-            ToastHelper.info("Se a modificado la ruta: " + bx.getNombre());
+            ToastHelper.info("Se a modificado el horario.");
         }
 
         if (nuevo) {
             lista.add(bx);
-            ToastHelper.exito("Se a creado la ruta: " + bx.getNombre());
+            ToastHelper.exito("Horario asignado a la ruta.");
         }
 
         notifyDataSetChanged();
     }
 
-    public void deleteData(Ruta rx) {
-        ToastHelper.normal("Se a eliminado la ruta: " + rx.getNombre());
+    public void deleteData(horarioPorRuta rx) {
+        ToastHelper.normal("Horario desasignado de la ruta.");
         lista.remove(rx);
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends SwipeViewHolder implements View.OnClickListener {
         private final TextView tnombre;
-        private final TextView thorarios;
+        private final TextView thora;
+        private final TextView thoraFestivo;
         private final ImageView beliminar;
-        RutaDao empresaManager = AppController.daoSession.getRutaDao();
+        private horarioPorRuta currentItem;
 
-        private Ruta currentItem;
+        horarioPorRutaDao horarioManager = AppController.daoSession.getHorarioPorRutaDao();
 
         public ViewHolder(ViewGroup itemView) {
-            super(itemView, R.layout.ruta_template, SwipeViewHolder.NO_ID, R.layout.swipe_menu);
+            super(itemView, R.layout.horarios_porruta_template, SwipeViewHolder.NO_ID, R.layout.swipe_menu);
 
             tnombre = (findViewById(R.id.tnombre));
-            thorarios = (findViewById(R.id.thorarios));
+            thora = (findViewById(R.id.thora));
+            thoraFestivo = (findViewById(R.id.thoraFestivo));
             beliminar = (findViewById(R.id.beliminar));
             beliminar.setOnClickListener(this);
 
@@ -99,8 +102,8 @@ public class rutaAdapter extends OmegaRecyclerView.Adapter<rutaAdapter.ViewHolde
         public void onClick(final View v) {
             switch (v.getId()) {
                 case R.id.beliminar:
-                    Dialog.showAsk2(v, "Eliminar Ruta", "¿Desea realmente eliminar esta ruta?",
-                            "Eliminar", "Cancelar", new myDialogInterface() {
+                    Dialog.showAsk2(v, "Quitar Horario", "¿Desea realmente quitar el horario de la ruta?",
+                            "Quitar", "Cancelar", new myDialogInterface() {
                                 @Override
                                 public View onBuildDialog() {
                                     return null;
@@ -113,8 +116,8 @@ public class rutaAdapter extends OmegaRecyclerView.Adapter<rutaAdapter.ViewHolde
 
                                 @Override
                                 public void onResult(View vista) {
-                                    currentItem.setEliminada(true);
-                                    empresaManager.update(currentItem);
+                                    currentItem.setEliminado(true);
+                                    horarioManager.update(currentItem);
                                     deleteData(currentItem);
                                     smoothCloseMenu();
                                 }
@@ -123,17 +126,13 @@ public class rutaAdapter extends OmegaRecyclerView.Adapter<rutaAdapter.ViewHolde
             }
         }
 
-        public void display(Ruta rx) {
+        public void display(horarioPorRuta rx) {
             currentItem = rx;
-            tnombre.setText(rx.getNombre().toString());
+            if (rx.getHorario().getNombre() == null) tnombre.setText("");
+            else tnombre.setText(rx.getHorario().getNombre().toString());
 
-            horarioPorRutaDao hxruta= AppController.daoSession.getHorarioPorRutaDao();
-            int horarios = hxruta.queryBuilder()
-                    .where(horarioPorRutaDao.Properties.RutaId.eq(rx.getId()), horarioPorRutaDao.Properties.Eliminado.eq(false))
-                    .list().size();
-
-            thorarios.setText("Horarios asignados: " + String.valueOf(horarios));
+            thora.setText(rx.getHorario().getHora() + " Min Max: " + rx.getHorario().getMaxMinutos());
+            thoraFestivo.setText(rx.getHorario().getHoraFestivo() + " Min Max: " + rx.getHorario().getMaxMinutosFestivo());
         }
     }
-
 }
