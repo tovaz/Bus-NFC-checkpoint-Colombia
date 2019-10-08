@@ -52,7 +52,7 @@ public class CheckFragment extends Fragment {
             }
         });
 
-        rlista.setLayoutManager(new LinearLayoutManager(getContext()));
+        rlista.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rlista.setAdapter(dataAdapter);
     }
 

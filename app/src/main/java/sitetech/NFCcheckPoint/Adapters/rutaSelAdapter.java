@@ -3,6 +3,7 @@ package sitetech.NFCcheckPoint.Adapters;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
@@ -22,11 +23,13 @@ import sitetech.routecheckapp.R;
 public class rutaSelAdapter extends OmegaRecyclerView.Adapter<rutaSelAdapter.ViewHolder> {
     public List<Ruta> lista;
     private onItemClick onItemClick;
-
+    private Ruta selectedItem;
 
     public rutaSelAdapter(List<Ruta> l, onItemClick onclick) {
         lista = l;
         this.onItemClick = onclick;
+        if (l.size() > 0)
+            setSelectedItem(l.get(0));
     }
 
     @Override
@@ -43,6 +46,14 @@ public class rutaSelAdapter extends OmegaRecyclerView.Adapter<rutaSelAdapter.Vie
     public void onBindViewHolder(rutaSelAdapter.ViewHolder holder, int position) {
         Ruta dato = lista.get(position);
         holder.display(dato);
+    }
+
+    public void setSelectedItem(Ruta rx){
+        selectedItem = rx;
+    }
+
+    public Ruta getSelectedItem(){
+        return selectedItem;
     }
 
     public void updateData(Ruta bx) {
@@ -71,6 +82,7 @@ public class rutaSelAdapter extends OmegaRecyclerView.Adapter<rutaSelAdapter.Vie
 
     public class ViewHolder extends SwipeViewHolder implements View.OnClickListener {
         private final TextView tnombre;
+        private LinearLayout linearFondo;
         HorarioDao horarioManager = AppController.daoSession.getHorarioDao();
 
         private Ruta currentItem;
@@ -78,15 +90,21 @@ public class rutaSelAdapter extends OmegaRecyclerView.Adapter<rutaSelAdapter.Vie
         public ViewHolder(ViewGroup itemView) {
             super(itemView, R.layout.ruta_sel_template, SwipeViewHolder.NO_ID, SwipeViewHolder.NO_ID);
 
-            tnombre = (findViewById(R.id.tnombre));
-
+            tnombre = findViewById(R.id.tnombre);
+            linearFondo = findViewById(R.id.linearFondo);
             contentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    setSelectedItem(currentItem);
                     onItemClick.onClickItemList(v, getAdapterPosition());
-                    //deleteData(lista.get(getAdapterPosition()));
                 }
             });
+        }
+
+        private Ruta backItem;
+        private void setSelection(Ruta rx){
+            //if (backItem == null)
+
         }
 
         @Override

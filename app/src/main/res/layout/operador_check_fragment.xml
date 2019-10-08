@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,10 +15,16 @@
 
     <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView
         android:id="@+id/rlista"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:divider="#888"
         android:dividerHeight="0dp"
+        android:fadeScrollbars="true"
         android:orientation="horizontal"
-        tools:listitem="@layout/ruta_template" />
+        android:overScrollMode="never"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbars="horizontal"
+        app:itemSpace="0dp"
+        tools:listitem="@layout/ruta_sel_template" />
 </LinearLayout>
