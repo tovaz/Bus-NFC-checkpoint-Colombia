@@ -71,6 +71,7 @@ public class RutaAgregarFragment extends Fragment implements  Serializable{
         onClick();
 
 
+        basignar.setVisibility(View.GONE);
         if (mainFragment.Itemseleccionado != null)  cargarInfo();
 
         return vista;
@@ -80,7 +81,7 @@ public class RutaAgregarFragment extends Fragment implements  Serializable{
         Ruta ruta = mainFragment.Itemseleccionado;
         ttitulo.setText("Modificar Ruta");
         tnombre.setText(ruta.getNombre());
-
+        basignar.setVisibility(View.VISIBLE);
         showListHorarios();
     }
 

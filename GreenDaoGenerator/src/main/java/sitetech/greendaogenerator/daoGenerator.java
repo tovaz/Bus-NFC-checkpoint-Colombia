@@ -8,7 +8,7 @@ import org.greenrobot.greendao.generator.Schema;
 import java.util.function.LongPredicate;
 
 public class daoGenerator {
-    private Entity user, empresa, bus, ruta, horario, horarioPorRuta, turno, registroTurno;
+    private Entity user, empresa, bus, ruta, horario, horarioPorRuta, turno, registroTurno, diaFestivo;
 
     public  static void main(String[] args) {
         Schema schema = new Schema(1, "sitetech.NFCcheckPoint.db"); // Your app package name and the (.db) is the folder where the DAO files will be generated into.
@@ -30,9 +30,10 @@ public class daoGenerator {
         busEntity(schema);
         rutaEntity(schema);
         horarioEntity(schema);
-        horariosPorRuta(schema);
+        horariosPorRutaEntity(schema);
         turnoEntity(schema);
         registroEntity(schema);
+        diasFestivosEntity(schema);
     }
 
     // This is use to describe the colums of your table
@@ -102,7 +103,7 @@ public class daoGenerator {
         return ruta;
     }
 
-    private Entity horariosPorRuta(final Schema schema){ // TABLA INTERMEDIA PARA GUARDAR INFO RELACIONADA
+    private Entity horariosPorRutaEntity(final Schema schema){ // TABLA INTERMEDIA PARA GUARDAR INFO RELACIONADA
         horarioPorRuta = schema.addEntity("horarioPorRuta");
         horarioPorRuta.addIdProperty().primaryKey().autoincrement();
 
@@ -114,6 +115,17 @@ public class daoGenerator {
         horarioPorRuta.addBooleanProperty("eliminado").notNull();
 
         return horarioPorRuta;
+    }
+
+    private Entity diasFestivosEntity(final Schema schema){ // TABLA INTERMEDIA PARA GUARDAR INFO RELACIONADA
+        diaFestivo = schema.addEntity("DiaFestivo");
+        diaFestivo.addIdProperty().primaryKey().autoincrement();
+
+        diaFestivo.addStringProperty("nombre").notNull().getProperty();
+        diaFestivo.addDateProperty("dia").notNull().getProperty();
+        diaFestivo.addBooleanProperty("eliminado").notNull();
+
+        return diaFestivo;
     }
 
     private Entity turnoEntity(final Schema schema){

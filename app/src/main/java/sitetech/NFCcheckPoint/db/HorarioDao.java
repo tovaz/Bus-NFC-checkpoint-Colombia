@@ -2,7 +2,6 @@ package sitetech.NFCcheckPoint.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
-import android.util.Log;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.Property;
@@ -214,6 +213,5 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
-
+    
 }

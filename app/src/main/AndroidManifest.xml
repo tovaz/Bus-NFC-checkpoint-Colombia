@@ -9,15 +9,18 @@
     <application
         android:name="sitetech.NFCcheckPoint.AppController"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/route"
         android:label="@string/app_name"
         android:roundIcon="@drawable/route"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="sitetech.NFCcheckPoint.ui.rutas.HorarioSelFragment"></activity>
+        <activity android:name="sitetech.NFCcheckPoint.OperadorActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="sitetech.NFCcheckPoint.MainActivity"
-            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="sitetech.NFCcheckPoint.LoginActivity"
+            android:label="NFC Check Point"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
