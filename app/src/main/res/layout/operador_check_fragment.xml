@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,48 +10,180 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/SuccessColor"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/SuccessColor"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/tfecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Fecha"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/bprueba"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pasar Tarjeta" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tfecha"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Fecha" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Ruta para el registro" />
 
-        <TextView
-            android:id="@+id/tusuario"
-            android:layout_width="wrap_content"
+        <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView
+            android:id="@+id/rlista"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Usuario"
-            android:textAlignment="viewEnd" />
+            android:divider="#888"
+            android:dividerHeight="0dp"
+            android:fadeScrollbars="true"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:scrollbarAlwaysDrawVerticalTrack="false"
+            android:scrollbars="horizontal"
+            app:itemSpace="0dp"
+            tools:listitem="@layout/ruta_sel_template">
+
+        </com.omega_r.libs.omegarecyclerview.OmegaRecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="PLACA" />
+
+                <TextView
+                    android:id="@+id/tplaca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_edit"
+                    android:text="TextView"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="EMPRESA" />
+
+                <TextView
+                    android:id="@+id/tempresa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_edit"
+                    android:text="TextView"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="79dp"
+                    android:layout_height="match_parent"
+                    android:text="INTERNO" />
+
+                <TextView
+                    android:id="@+id/tinterno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_edit"
+                    android:text="TextView"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="HORA DE REGISTRO" />
+
+                        <TextView
+                            android:id="@+id/thoraregistro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/text_edit"
+                            android:minWidth="200dp"
+                            android:text="TextView"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/bimprimir"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_save_sel"
+                        android:text="Imprimir" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="Ruta para el registro" />
-
-    <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView
-        android:id="@+id/rlista"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:divider="#888"
-        android:dividerHeight="0dp"
-        android:fadeScrollbars="true"
-        android:orientation="horizontal"
-        android:overScrollMode="never"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:scrollbars="horizontal"
-        app:itemSpace="0dp"
-        tools:listitem="@layout/ruta_sel_template" />
-</LinearLayout>
+</ScrollView>

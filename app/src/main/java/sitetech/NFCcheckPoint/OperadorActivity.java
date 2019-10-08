@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -37,6 +38,7 @@ public class OperadorActivity extends AppCompatActivity {
         tusuario = findViewById(R.id.tusuario);
         blogout = findViewById(R.id.blogout);
 
+
         cargarTabs();
         cargarUsuario();
     }
@@ -55,6 +57,7 @@ public class OperadorActivity extends AppCompatActivity {
                 int color = ContextCompat.getColor(getBaseContext(), R.color.colorAccent);
                 tab.getIcon().setColorFilter(color, PorterDuff.Mode.SRC_IN);
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 int color = ContextCompat.getColor(getBaseContext(), R.color.colorAccentDark);

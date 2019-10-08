@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
@@ -34,6 +36,7 @@ public class CheckFragment extends Fragment {
     public View vista;
     private TextView tfecha;
     private TextView tusuario;
+    private Button bpruebas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState){
@@ -49,6 +52,16 @@ public class CheckFragment extends Fragment {
         rlista = vista.findViewById(R.id.rlista);
         tfecha = vista.findViewById(R.id.tfecha);
         tusuario = vista.findViewById(R.id.tusuario);
+        bpruebas = vista.findViewById(R.id.bpruebas);
+    }
+
+    private void pruebas(){
+        bpruebas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void showFechayHora(){
@@ -74,6 +87,15 @@ public class CheckFragment extends Fragment {
         rlista.setAdapter(dataAdapter);
     }
 
+
+    /******************************************************************************/
+    private void checkNFC(){
+
+    }
+
+    private void leerTarjeta(){
+
+    }
 
 }
 
