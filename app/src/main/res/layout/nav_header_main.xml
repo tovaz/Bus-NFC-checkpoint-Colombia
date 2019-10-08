@@ -62,7 +62,8 @@
                 android:layout_gravity="center"
                 android:hint="ADMIN"
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/trol"
@@ -70,14 +71,17 @@
                 android:layout_height="wrap_content"
                 android:hint="Administrador"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/SuccessColor"
+                android:textColor="@color/colorPrimary"
                 android:textSize="10sp" />
 
             <Button
                 android:id="@+id/blogout"
                 android:layout_width="200dp"
-                android:layout_height="45dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_default_sel"
                 android:text="Cerrar Sesion"
+                android:textColor="#333"
                 android:textSize="10sp" />
         </LinearLayout>
 

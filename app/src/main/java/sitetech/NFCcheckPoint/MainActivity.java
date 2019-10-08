@@ -3,6 +3,7 @@ package sitetech.NFCcheckPoint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,6 +25,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void cargarControles(){
         View header = navigationView.getHeaderView(0);
-        tnombre = header.findViewById(R.id.tnombre);
+        tnombre = header.findViewById(R.id.tusuario);
         trol = header.findViewById(R.id.trol);
         blogout = header.findViewById(R.id.blogout);
 
@@ -108,12 +110,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void cargarUsuario(){
-        int uid = getIntent().getIntExtra("usuario", 0);
+        long uid = getIntent().getLongExtra("usuario", 0);
         Usuario ux = AppController.daoSession.getUsuarioDao().queryBuilder().where(UsuarioDao.Properties.Id.eq(uid)).unique();
         if (ux != null) {
             usuarioLog = ux;
-            tnombre.setText(usuarioLog.getNombre());
-            trol.setText(usuarioLog.getRol());
+            tnombre.setText(usuarioLog.getNombre().toString());
+            trol.setText(usuarioLog.getRol().toString());
         }
 
         blogout.setOnClickListener(new View.OnClickListener() {
@@ -134,5 +136,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

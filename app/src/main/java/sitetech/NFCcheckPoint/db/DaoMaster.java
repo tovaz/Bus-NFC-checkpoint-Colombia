@@ -29,6 +29,7 @@ public class DaoMaster extends AbstractDaoMaster {
         horarioPorRutaDao.createTable(db, ifNotExists);
         TurnoDao.createTable(db, ifNotExists);
         Registro_TurnoDao.createTable(db, ifNotExists);
+        DiaFestivoDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -41,6 +42,7 @@ public class DaoMaster extends AbstractDaoMaster {
         horarioPorRutaDao.dropTable(db, ifExists);
         TurnoDao.dropTable(db, ifExists);
         Registro_TurnoDao.dropTable(db, ifExists);
+        DiaFestivoDao.dropTable(db, ifExists);
     }
 
     /**
@@ -67,6 +69,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(horarioPorRutaDao.class);
         registerDaoClass(TurnoDao.class);
         registerDaoClass(Registro_TurnoDao.class);
+        registerDaoClass(DiaFestivoDao.class);
     }
 
     public DaoSession newSession() {

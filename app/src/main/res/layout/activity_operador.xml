@@ -5,6 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -14,12 +26,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:paddingBottom="10dp"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -47,6 +60,35 @@
                     android:background="@drawable/btn_default_sel"
                     android:src="@drawable/print_24x242"
                     app:srcCompat="@drawable/print_32" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/tusuario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Usuario"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="#eee"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/blogout"
+                        android:layout_width="120dp"
+                        android:layout_height="31dp"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_red_sel"
+                        android:text="Salir"
+                        android:textColor="#eee"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -79,28 +121,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        <LinearLayout
-            android:id="@+id/lin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
-
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

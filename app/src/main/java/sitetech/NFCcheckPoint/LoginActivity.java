@@ -125,14 +125,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void iniciarAdmin(){
         ToastHelper.exito("Logiado como Administrador");
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("usuario", uLogeado.getId());
         startActivity(intent);
     }
 
     private void iniciarOperador(){
         ToastHelper.exito("Logiado como Operador");
-        Intent intent = new Intent(getBaseContext(), OperadorActivity.class);
+        Intent intent = new Intent(this, OperadorActivity.class);
         intent.putExtra("usuario", uLogeado.getId());
         startActivity(intent);
     }

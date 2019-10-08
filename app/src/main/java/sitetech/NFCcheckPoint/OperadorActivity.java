@@ -7,15 +7,25 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 
 import sitetech.NFCcheckPoint.Adapters.TabsAdapter;
+import sitetech.NFCcheckPoint.Helpers.Dialog;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
+import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
+import sitetech.NFCcheckPoint.db.Usuario;
+import sitetech.NFCcheckPoint.db.UsuarioDao;
 import sitetech.routecheckapp.R;
 
 public class OperadorActivity extends AppCompatActivity {
 
+    public Usuario usuarioLog;
+    private TextView tusuario;
+    private Button blogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +34,11 @@ public class OperadorActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); //ACTIVAR ACTION BAR
 
+        tusuario = findViewById(R.id.tusuario);
+        blogout = findViewById(R.id.blogout);
+
         cargarTabs();
+        cargarUsuario();
     }
 
     private  void cargarTabs(){
@@ -53,5 +67,33 @@ public class OperadorActivity extends AppCompatActivity {
         });
 
         tabLayout.getTabAt(0).select();
+    }
+
+    public void cargarUsuario(){
+        long uid = getIntent().getLongExtra("usuario", 0);
+        Usuario ux = AppController.daoSession.getUsuarioDao().queryBuilder().where(UsuarioDao.Properties.Id.eq(uid)).unique();
+        if (ux != null) {
+            usuarioLog = ux;
+            tusuario.setText(usuarioLog.getNombre().toString());
+        }
+
+        blogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog.showAsk2(v, "Cerrar Sesion", "¿Quiere cerrar sesion ahora?", "Cerrar ahora", "Cancelar", new myDialogInterface() {
+                    @Override
+                    public View onBuildDialog() {  return null; }
+
+                    @Override
+                    public void onCancel() { }
+
+                    @Override
+                    public void onResult(View vista) {
+                        finish();
+                    }
+                });
+
+            }
+        });
     }
 }

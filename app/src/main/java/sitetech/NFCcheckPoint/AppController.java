@@ -23,7 +23,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"nfc-checkpoint-db"); //The users-db here is the name of our database.
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"nfc-checkpoint-db-1.1"); //The users-db here is the name of our database.
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
 

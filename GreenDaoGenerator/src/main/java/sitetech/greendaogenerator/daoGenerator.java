@@ -78,7 +78,7 @@ public class daoGenerator {
     }
 
     private Entity horarioEntity(final Schema schema) {
-        horario = schema.addEntity("Horario");
+        horario = schema.addEntity("Horario"); //hora de inicio
         horario.addIdProperty().primaryKey().autoincrement();
         horario.addStringProperty("nombre");
         horario.addStringProperty("hora");
@@ -87,8 +87,8 @@ public class daoGenerator {
         horario.addStringProperty("horaFestivo");
         horario.addIntProperty("maxMinutosFestivo");
 
-        horario.addStringProperty("horaFinSemana");
-        horario.addIntProperty("maxMinutosFinSemana");
+        horario.addStringProperty("horaFinSemana"); //hora final
+        horario.addIntProperty("maxMinutosFinSemana"); // hora final
 
         horario.addBooleanProperty("eliminado").notNull();
         return horario;
