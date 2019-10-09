@@ -155,13 +155,12 @@ public class daoGenerator {
         Property busId = registroTurno.addLongProperty("busId").notNull().getProperty();
         Property rutaId = registroTurno.addLongProperty("rutaId").notNull().getProperty();
         Property turnoId = registroTurno.addLongProperty("turnoId").notNull().getProperty();
-        Property userId = registroTurno.addLongProperty("operadorId").notNull().getProperty();
+        Property userId = registroTurno.addLongProperty("userId").notNull().getProperty();
 
         registroTurno.addToOne(bus, busId);
         registroTurno.addToOne(ruta, rutaId);
         registroTurno.addToOne(turno, turnoId);
         registroTurno.addToOne(user, userId);
-
         return registroTurno;
     }
 }

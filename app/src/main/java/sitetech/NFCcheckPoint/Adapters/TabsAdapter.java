@@ -6,12 +6,18 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import sitetech.NFCcheckPoint.ui.operador.CheckFragment;
 import sitetech.NFCcheckPoint.ui.operador.HistoryFragment;
+import sitetech.NFCcheckPoint.ui.operador.TurnoFragment;
 
 public class TabsAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
+    CheckFragment checkF;
+    TurnoFragment turnoF;
     public TabsAdapter(FragmentManager fm, int NoofTabs){
         super(fm);
         this.mNumOfTabs = NoofTabs;
+
+        checkF = new CheckFragment();
+        turnoF = new TurnoFragment();
     }
     @Override
     public int getCount() {
@@ -21,11 +27,13 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position){
         switch (position){
             case 0:
-                CheckFragment check = new CheckFragment();
-                return check;
+                return checkF;
             case 1:
                 HistoryFragment history = new HistoryFragment();
                 return history;
+
+            case 2:
+                return turnoF;
             default:
                 return null;
         }

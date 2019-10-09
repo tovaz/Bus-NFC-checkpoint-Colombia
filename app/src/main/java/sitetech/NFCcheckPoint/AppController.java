@@ -6,9 +6,15 @@ import android.util.Log;
 
 import org.greenrobot.greendao.database.Database;
 
+import java.util.Date;
+
+import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.db.DaoMaster;
 import sitetech.NFCcheckPoint.db.DaoSession;
 import sitetech.NFCcheckPoint.db.HorarioDao;
+import sitetech.NFCcheckPoint.db.Turno;
+import sitetech.NFCcheckPoint.db.TurnoDao;
+import sitetech.NFCcheckPoint.db.Usuario;
 
 /**
  * Created by Akinsete on 1/14/16.
@@ -18,6 +24,7 @@ public class AppController extends Application {
     public static final boolean ENCRYPTED = true;
     public static DaoSession daoSession;
     private static Context context;
+    public static Configuraciones Configuracion;
 
     @Override
     public void onCreate() {
@@ -27,8 +34,10 @@ public class AppController extends Application {
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
 
+        Configuracion = new Configuraciones();
         //AgregarColumna(db, "HORARIO", "NOMBRE", "TEXT");
         AppController.context = getApplicationContext();
+        checkTurno(); // PRIMORDIAL PARA CREAR EL PRIMER TURNO.
     }
 
     public void AgregarColumna(Database db, String tabla, String columna, String tipo){
@@ -42,5 +51,16 @@ public class AppController extends Application {
 
     public static Context getAppContext() {
         return AppController.context;
+    }
+
+    private void checkTurno(){
+        TurnoDao turnoManager = daoSession.getTurnoDao();
+        if (turnoManager.loadAll().size() == 0){
+            Turno turno = new Turno();
+            turno.setFechaCreacion(new Date());
+            turno.setEliminada(false);
+            turno.setFechaCierre(null);
+            turnoManager.insert(turno);
+        }
     }
 }

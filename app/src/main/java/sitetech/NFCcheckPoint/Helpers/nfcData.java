@@ -6,14 +6,17 @@ import java.util.Map;
 
 import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.BusDao;
+import sitetech.NFCcheckPoint.db.Empresa;
 
 public class nfcData {
     private Bus bus;
-    private Date horaSalida;
+    private Empresa empresa;
+    private Date ultimoCheck;
 
     public nfcData(Bus _bus) {
         bus = _bus;
-        horaSalida = new Date();
+        empresa = _bus.getEmpresa();
+        ultimoCheck = new Date();
     }
 
     public Bus getBus() {
@@ -24,11 +27,19 @@ public class nfcData {
         this.bus = bus;
     }
 
-    public Date getHoraSalida() {
-        return horaSalida;
+    public Date getUltimoCheck() {
+        return ultimoCheck;
     }
 
-    public void setHoraSalida(Date horaSalida) {
-        this.horaSalida = horaSalida;
+    public void setUltimoCheck(Date ultimoCheck) {
+        this.ultimoCheck = ultimoCheck;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
@@ -109,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (uLogeado != null) {
+            Configuraciones.setUsuarioLog(this, uLogeado);
             if (uLogeado.getRol().equals("Administrador"))
                 iniciarAdmin();
             if (uLogeado.getRol().equals("Operador"))

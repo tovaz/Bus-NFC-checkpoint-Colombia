@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/bprueba"
+                android:id="@+id/bpruebas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pasar Tarjeta" />
@@ -48,7 +48,7 @@
         <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView
             android:id="@+id/rlista"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:divider="#888"
             android:dividerHeight="0dp"
             android:fadeScrollbars="true"
@@ -57,7 +57,7 @@
             android:scrollbarAlwaysDrawHorizontalTrack="true"
             android:scrollbarAlwaysDrawVerticalTrack="false"
             android:scrollbars="horizontal"
-            app:itemSpace="0dp"
+            app:itemSpace="1dp"
             tools:listitem="@layout/ruta_sel_template">
 
         </com.omega_r.libs.omegarecyclerview.OmegaRecyclerView>
@@ -72,7 +72,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -84,9 +83,8 @@
                     android:id="@+id/tplaca"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:background="@drawable/text_edit"
-                    android:text="TextView"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
@@ -96,7 +94,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -108,9 +105,8 @@
                     android:id="@+id/tempresa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:background="@drawable/text_edit"
-                    android:text="TextView"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -119,7 +115,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -131,9 +126,29 @@
                     android:id="@+id/tinterno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:background="@drawable/text_edit"
-                    android:text="TextView"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="79dp"
+                    android:layout_height="match_parent"
+                    android:text="ULTIMO CHECK" />
+
+                <TextView
+                    android:id="@+id/tultimocheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:background="@drawable/text_edit"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -146,6 +161,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -165,9 +181,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/text_edit"
                             android:minWidth="200dp"
-                            android:text="TextView"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="18sp" />
+                            android:textSize="20sp" />
                     </LinearLayout>
 
                     <Button
@@ -182,8 +197,46 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="79dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Justificacion"
+                        android:textAlignment="center"
+                        android:textColor="@color/ErrorColor" />
+
+                    <EditText
+                        android:id="@+id/tjustificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/text_edit"
+                        android:inputType="textMultiLine"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/bguardar"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_primario_sel"
+                    android:text="Guardar Registro"
+                    android:textColor="#eee" />
+
             </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>
