@@ -45,22 +45,14 @@
             android:paddingRight="10dp"
             android:text="Ruta para el registro" />
 
-        <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rlista"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:divider="#888"
-            android:dividerHeight="0dp"
-            android:fadeScrollbars="true"
             android:orientation="horizontal"
-            android:overScrollMode="never"
-            android:scrollbarAlwaysDrawHorizontalTrack="true"
-            android:scrollbarAlwaysDrawVerticalTrack="false"
-            android:scrollbars="horizontal"
-            app:itemSpace="1dp"
             tools:listitem="@layout/ruta_sel_template">
 
-        </com.omega_r.libs.omegarecyclerview.OmegaRecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:layout_width="match_parent"

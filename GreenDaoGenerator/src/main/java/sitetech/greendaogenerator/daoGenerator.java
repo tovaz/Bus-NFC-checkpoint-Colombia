@@ -81,14 +81,17 @@ public class daoGenerator {
         horario = schema.addEntity("Horario"); //hora de inicio
         horario.addIdProperty().primaryKey().autoincrement();
         horario.addStringProperty("nombre");
-        horario.addStringProperty("hora");
+        horario.addStringProperty("horaDesde");
+        horario.addStringProperty("horaHasta");
         horario.addIntProperty("maxMinutos");
 
-        horario.addStringProperty("horaFestivo");
+        horario.addStringProperty("horaFestivoDesde");
+        horario.addStringProperty("horaFestivoHasta");
         horario.addIntProperty("maxMinutosFestivo");
 
-        horario.addStringProperty("horaFinSemana"); //hora final
-        horario.addIntProperty("maxMinutosFinSemana"); // hora final
+        horario.addStringProperty("horaFinSemanaDesde"); //hora no en uso
+        horario.addStringProperty("horaFinSemanaHasta"); //hora
+        horario.addIntProperty("maxMinutosFinSemana"); // hora
 
         horario.addBooleanProperty("eliminado").notNull();
         return horario;
@@ -121,7 +124,7 @@ public class daoGenerator {
         diaFestivo = schema.addEntity("DiaFestivo");
         diaFestivo.addIdProperty().primaryKey().autoincrement();
 
-        diaFestivo.addStringProperty("nombre").notNull().getProperty();
+        diaFestivo.addStringProperty("nombre").getProperty();
         diaFestivo.addDateProperty("dia").notNull().getProperty();
         diaFestivo.addBooleanProperty("eliminado").notNull();
 
@@ -152,6 +155,7 @@ public class daoGenerator {
         registroTurno.addIntProperty("minAtrazado");
         registroTurno.addIntProperty("minAdelantado");
         registroTurno.addStringProperty("justificacion");
+        registroTurno.addStringProperty("despacho");
         Property busId = registroTurno.addLongProperty("busId").notNull().getProperty();
         Property rutaId = registroTurno.addLongProperty("rutaId").notNull().getProperty();
         Property turnoId = registroTurno.addLongProperty("turnoId").notNull().getProperty();

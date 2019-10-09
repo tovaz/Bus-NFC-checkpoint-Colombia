@@ -154,7 +154,7 @@ public class RutaAgregarFragment extends Fragment implements  Serializable{
         horariosAdapter = new horarioPorRutaAdapter(lista, new onItemClick() {
             @Override
             public void onClickItemList(View v, int position) {
-                ToastHelper.info(horariosAdapter.lista.get(position).getHorario().getHora().toString());
+                ToastHelper.info(horariosAdapter.lista.get(position).getHorario().getHoraDesde().toString());
             }
         });
 

@@ -52,13 +52,14 @@
                 android:background="@drawable/text_edit_sel"
                 android:ems="10"
                 android:hint="Nombre"
-                android:inputType="textPersonName" />
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Horario Normal"
+                android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -71,49 +72,95 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        tools:text="Desde" />
+
+                    <EditText
+                        android:id="@+id/thora"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="time" />
+
+                    <Button
+                        android:id="@+id/bhora"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_default_sel"
+                        android:drawableRight="@drawable/agregar_horario"
+                        android:textAlignment="textStart"
+                        android:textSize="14sp"
+                        tools:text="Seleccionar" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Hora de despacho" />
-
-                    <Button
-                        android:id="@+id/bhora"
-                        android:layout_width="120dp"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/text_edit_sel"
-                        android:hint="09:00"
-                        android:textAlignment="textStart"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="vertical">
-
-                    <net.xpece.material.floatinglabel.FloatingLabelView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:flv_ownerView="@+id/tmaxMinutos"
-                        app:flv_textDefault="Minutos Maximo" />
+                        android:layout_gravity="center_horizontal"
+                        tools:text="Hasta" />
 
                     <EditText
-                        android:id="@+id/tmaxMinutos"
+                        android:id="@+id/thoraHasta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="time" />
+
+                    <Button
+                        android:id="@+id/bhora_hasta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:background="@drawable/text_edit_sel"
-                        android:ems="10"
-                        android:hint="Minutos Maximo"
-                        android:inputType="phone"
-                        android:text="0" />
+                        android:background="@drawable/btn_default_sel"
+                        android:drawableRight="@drawable/agregar_horario"
+                        android:text="Seleccionar"
+                        android:textAlignment="textStart"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <net.xpece.material.floatinglabel.FloatingLabelView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:flv_ownerView="@+id/tmaxMinutos"
+                    app:flv_textDefault="Minutos Maximo" />
+
+                <EditText
+                    android:id="@+id/tmaxMinutos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_edit_sel"
+                    android:ems="10"
+                    android:hint="Minutos Maximo"
+                    android:inputType="phone"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
             </LinearLayout>
 
             <TextView
@@ -123,6 +170,7 @@
                 android:layout_marginTop="20dp"
                 android:inputType="textMultiLine"
                 android:text="Horario para dias festivos y fines de semana"
+                android:textAlignment="center"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -134,48 +182,87 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        tools:text="Desde" />
+
+                    <EditText
+                        android:id="@+id/thoraFestivo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="time" />
+
+                    <Button
+                        android:id="@+id/bhoraFestivo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_default_sel"
+                        android:drawableRight="@drawable/agregar_horario"
+                        android:text="Seleccionar"
+                        android:textAlignment="textStart"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Hora en dia Festivo" />
-
-                    <Button
-                        android:id="@+id/bhoraFestivo"
-                        android:layout_width="120dp"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/text_edit_sel"
-                        android:hint="10:00"
-                        android:textAlignment="textStart"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="vertical">
-
-                    <net.xpece.material.floatinglabel.FloatingLabelView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:flv_ownerView="@+id/tmaxMinutosFestivos"
-                        app:flv_textDefault="Minutos Maximo" />
+                        android:layout_gravity="center_horizontal"
+                        tools:text="Hasta" />
 
                     <EditText
-                        android:id="@+id/tmaxMinutosFestivos"
+                        android:id="@+id/thoraFestivoHasta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/text_edit_sel"
-                        android:ems="10"
-                        android:hint="Minutos Maximo"
-                        android:inputType="phone"
-                        android:text="0" />
+                        android:inputType="time" />
+
+                    <Button
+                        android:id="@+id/bhoraFestivoHasta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_default_sel"
+                        android:drawableRight="@drawable/agregar_horario"
+                        android:textAlignment="textStart"
+                        android:textSize="14sp"
+                        tools:text="Seleccionar" />
 
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <net.xpece.material.floatinglabel.FloatingLabelView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:flv_ownerView="@+id/tmaxMinutosFestivos"
+                    app:flv_textDefault="Minutos Maximo" />
+
+                <EditText
+                    android:id="@+id/tmaxMinutosFestivos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_edit_sel"
+                    android:ems="10"
+                    android:hint="Minutos Maximo"
+                    android:inputType="phone"
+                    android:text="0" />
 
             </LinearLayout>
 

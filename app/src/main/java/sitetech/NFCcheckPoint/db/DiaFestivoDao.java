@@ -42,7 +42,7 @@ public class DiaFestivoDao extends AbstractDao<DiaFestivo, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"DIA_FESTIVO\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"NOMBRE\" TEXT NOT NULL ," + // 1: nombre
+                "\"NOMBRE\" TEXT," + // 1: nombre
                 "\"DIA\" INTEGER NOT NULL ," + // 2: dia
                 "\"ELIMINADO\" INTEGER NOT NULL );"); // 3: eliminado
     }
@@ -61,7 +61,11 @@ public class DiaFestivoDao extends AbstractDao<DiaFestivo, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindString(2, entity.getNombre());
+ 
+        String nombre = entity.getNombre();
+        if (nombre != null) {
+            stmt.bindString(2, nombre);
+        }
         stmt.bindLong(3, entity.getDia().getTime());
         stmt.bindLong(4, entity.getEliminado() ? 1L: 0L);
     }
@@ -74,7 +78,11 @@ public class DiaFestivoDao extends AbstractDao<DiaFestivo, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindString(2, entity.getNombre());
+ 
+        String nombre = entity.getNombre();
+        if (nombre != null) {
+            stmt.bindString(2, nombre);
+        }
         stmt.bindLong(3, entity.getDia().getTime());
         stmt.bindLong(4, entity.getEliminado() ? 1L: 0L);
     }
@@ -88,7 +96,7 @@ public class DiaFestivoDao extends AbstractDao<DiaFestivo, Long> {
     public DiaFestivo readEntity(Cursor cursor, int offset) {
         DiaFestivo entity = new DiaFestivo( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getString(offset + 1), // nombre
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // nombre
             new java.util.Date(cursor.getLong(offset + 2)), // dia
             cursor.getShort(offset + 3) != 0 // eliminado
         );
@@ -98,7 +106,7 @@ public class DiaFestivoDao extends AbstractDao<DiaFestivo, Long> {
     @Override
     public void readEntity(Cursor cursor, DiaFestivo entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setNombre(cursor.getString(offset + 1));
+        entity.setNombre(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setDia(new java.util.Date(cursor.getLong(offset + 2)));
         entity.setEliminado(cursor.getShort(offset + 3) != 0);
      }

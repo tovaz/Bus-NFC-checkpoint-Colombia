@@ -23,10 +23,11 @@ public class Registro_Turno {
     private Integer minAtrazado;
     private Integer minAdelantado;
     private String justificacion;
+    private String despacho;
     private long busId;
     private long rutaId;
     private long turnoId;
-    private long operadorId;
+    private long userId;
 
     /** Used to resolve relations */
     @Generated
@@ -54,7 +55,7 @@ public class Registro_Turno {
     @Generated
     private transient Long turno__resolvedKey;
 
-    @ToOne(joinProperty = "operadorId")
+    @ToOne(joinProperty = "userId")
     private Usuario usuario;
 
     @Generated
@@ -72,17 +73,18 @@ public class Registro_Turno {
     }
 
     @Generated
-    public Registro_Turno(Long id, java.util.Date fecha, Boolean eliminado, Integer minAtrazado, Integer minAdelantado, String justificacion, long busId, long rutaId, long turnoId, long operadorId) {
+    public Registro_Turno(Long id, java.util.Date fecha, Boolean eliminado, Integer minAtrazado, Integer minAdelantado, String justificacion, String despacho, long busId, long rutaId, long turnoId, long userId) {
         this.id = id;
         this.fecha = fecha;
         this.eliminado = eliminado;
         this.minAtrazado = minAtrazado;
         this.minAdelantado = minAdelantado;
         this.justificacion = justificacion;
+        this.despacho = despacho;
         this.busId = busId;
         this.rutaId = rutaId;
         this.turnoId = turnoId;
-        this.operadorId = operadorId;
+        this.userId = userId;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -140,6 +142,14 @@ public class Registro_Turno {
         this.justificacion = justificacion;
     }
 
+    public String getDespacho() {
+        return despacho;
+    }
+
+    public void setDespacho(String despacho) {
+        this.despacho = despacho;
+    }
+
     public long getBusId() {
         return busId;
     }
@@ -164,12 +174,12 @@ public class Registro_Turno {
         this.turnoId = turnoId;
     }
 
-    public long getOperadorId() {
-        return operadorId;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setOperadorId(long operadorId) {
-        this.operadorId = operadorId;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     /** To-one relationship, resolved on first access. */
@@ -259,7 +269,7 @@ public class Registro_Turno {
     /** To-one relationship, resolved on first access. */
     @Generated
     public Usuario getUsuario() {
-        long __key = this.operadorId;
+        long __key = this.userId;
         if (usuario__resolvedKey == null || !usuario__resolvedKey.equals(__key)) {
             __throwIfDetached();
             UsuarioDao targetDao = daoSession.getUsuarioDao();
@@ -275,12 +285,12 @@ public class Registro_Turno {
     @Generated
     public void setUsuario(Usuario usuario) {
         if (usuario == null) {
-            throw new DaoException("To-one property 'operadorId' has not-null constraint; cannot set to-one to null");
+            throw new DaoException("To-one property 'userId' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
             this.usuario = usuario;
-            operadorId = usuario.getId();
-            usuario__resolvedKey = operadorId;
+            userId = usuario.getId();
+            usuario__resolvedKey = userId;
         }
     }
 

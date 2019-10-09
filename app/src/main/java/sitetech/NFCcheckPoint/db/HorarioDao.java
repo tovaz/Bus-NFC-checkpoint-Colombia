@@ -24,13 +24,16 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Nombre = new Property(1, String.class, "nombre", false, "NOMBRE");
-        public final static Property Hora = new Property(2, String.class, "hora", false, "HORA");
-        public final static Property MaxMinutos = new Property(3, Integer.class, "maxMinutos", false, "MAX_MINUTOS");
-        public final static Property HoraFestivo = new Property(4, String.class, "horaFestivo", false, "HORA_FESTIVO");
-        public final static Property MaxMinutosFestivo = new Property(5, Integer.class, "maxMinutosFestivo", false, "MAX_MINUTOS_FESTIVO");
-        public final static Property HoraFinSemana = new Property(6, String.class, "horaFinSemana", false, "HORA_FIN_SEMANA");
-        public final static Property MaxMinutosFinSemana = new Property(7, Integer.class, "maxMinutosFinSemana", false, "MAX_MINUTOS_FIN_SEMANA");
-        public final static Property Eliminado = new Property(8, boolean.class, "eliminado", false, "ELIMINADO");
+        public final static Property HoraDesde = new Property(2, String.class, "horaDesde", false, "HORA_DESDE");
+        public final static Property HoraHasta = new Property(3, String.class, "horaHasta", false, "HORA_HASTA");
+        public final static Property MaxMinutos = new Property(4, Integer.class, "maxMinutos", false, "MAX_MINUTOS");
+        public final static Property HoraFestivoDesde = new Property(5, String.class, "horaFestivoDesde", false, "HORA_FESTIVO_DESDE");
+        public final static Property HoraFestivoHasta = new Property(6, String.class, "horaFestivoHasta", false, "HORA_FESTIVO_HASTA");
+        public final static Property MaxMinutosFestivo = new Property(7, Integer.class, "maxMinutosFestivo", false, "MAX_MINUTOS_FESTIVO");
+        public final static Property HoraFinSemanaDesde = new Property(8, String.class, "horaFinSemanaDesde", false, "HORA_FIN_SEMANA_DESDE");
+        public final static Property HoraFinSemanaHasta = new Property(9, String.class, "horaFinSemanaHasta", false, "HORA_FIN_SEMANA_HASTA");
+        public final static Property MaxMinutosFinSemana = new Property(10, Integer.class, "maxMinutosFinSemana", false, "MAX_MINUTOS_FIN_SEMANA");
+        public final static Property Eliminado = new Property(11, boolean.class, "eliminado", false, "ELIMINADO");
     }
 
 
@@ -48,13 +51,16 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"HORARIO\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NOMBRE\" TEXT," + // 1: nombre
-                "\"HORA\" TEXT," + // 2: hora
-                "\"MAX_MINUTOS\" INTEGER," + // 3: maxMinutos
-                "\"HORA_FESTIVO\" TEXT," + // 4: horaFestivo
-                "\"MAX_MINUTOS_FESTIVO\" INTEGER," + // 5: maxMinutosFestivo
-                "\"HORA_FIN_SEMANA\" TEXT," + // 6: horaFinSemana
-                "\"MAX_MINUTOS_FIN_SEMANA\" INTEGER," + // 7: maxMinutosFinSemana
-                "\"ELIMINADO\" INTEGER NOT NULL );"); // 8: eliminado
+                "\"HORA_DESDE\" TEXT," + // 2: horaDesde
+                "\"HORA_HASTA\" TEXT," + // 3: horaHasta
+                "\"MAX_MINUTOS\" INTEGER," + // 4: maxMinutos
+                "\"HORA_FESTIVO_DESDE\" TEXT," + // 5: horaFestivoDesde
+                "\"HORA_FESTIVO_HASTA\" TEXT," + // 6: horaFestivoHasta
+                "\"MAX_MINUTOS_FESTIVO\" INTEGER," + // 7: maxMinutosFestivo
+                "\"HORA_FIN_SEMANA_DESDE\" TEXT," + // 8: horaFinSemanaDesde
+                "\"HORA_FIN_SEMANA_HASTA\" TEXT," + // 9: horaFinSemanaHasta
+                "\"MAX_MINUTOS_FIN_SEMANA\" INTEGER," + // 10: maxMinutosFinSemana
+                "\"ELIMINADO\" INTEGER NOT NULL );"); // 11: eliminado
     }
 
     /** Drops the underlying database table. */
@@ -77,36 +83,51 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
             stmt.bindString(2, nombre);
         }
  
-        String hora = entity.getHora();
-        if (hora != null) {
-            stmt.bindString(3, hora);
+        String horaDesde = entity.getHoraDesde();
+        if (horaDesde != null) {
+            stmt.bindString(3, horaDesde);
+        }
+ 
+        String horaHasta = entity.getHoraHasta();
+        if (horaHasta != null) {
+            stmt.bindString(4, horaHasta);
         }
  
         Integer maxMinutos = entity.getMaxMinutos();
         if (maxMinutos != null) {
-            stmt.bindLong(4, maxMinutos);
+            stmt.bindLong(5, maxMinutos);
         }
  
-        String horaFestivo = entity.getHoraFestivo();
-        if (horaFestivo != null) {
-            stmt.bindString(5, horaFestivo);
+        String horaFestivoDesde = entity.getHoraFestivoDesde();
+        if (horaFestivoDesde != null) {
+            stmt.bindString(6, horaFestivoDesde);
+        }
+ 
+        String horaFestivoHasta = entity.getHoraFestivoHasta();
+        if (horaFestivoHasta != null) {
+            stmt.bindString(7, horaFestivoHasta);
         }
  
         Integer maxMinutosFestivo = entity.getMaxMinutosFestivo();
         if (maxMinutosFestivo != null) {
-            stmt.bindLong(6, maxMinutosFestivo);
+            stmt.bindLong(8, maxMinutosFestivo);
         }
  
-        String horaFinSemana = entity.getHoraFinSemana();
-        if (horaFinSemana != null) {
-            stmt.bindString(7, horaFinSemana);
+        String horaFinSemanaDesde = entity.getHoraFinSemanaDesde();
+        if (horaFinSemanaDesde != null) {
+            stmt.bindString(9, horaFinSemanaDesde);
+        }
+ 
+        String horaFinSemanaHasta = entity.getHoraFinSemanaHasta();
+        if (horaFinSemanaHasta != null) {
+            stmt.bindString(10, horaFinSemanaHasta);
         }
  
         Integer maxMinutosFinSemana = entity.getMaxMinutosFinSemana();
         if (maxMinutosFinSemana != null) {
-            stmt.bindLong(8, maxMinutosFinSemana);
+            stmt.bindLong(11, maxMinutosFinSemana);
         }
-        stmt.bindLong(9, entity.getEliminado() ? 1L: 0L);
+        stmt.bindLong(12, entity.getEliminado() ? 1L: 0L);
     }
 
     @Override
@@ -123,36 +144,51 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
             stmt.bindString(2, nombre);
         }
  
-        String hora = entity.getHora();
-        if (hora != null) {
-            stmt.bindString(3, hora);
+        String horaDesde = entity.getHoraDesde();
+        if (horaDesde != null) {
+            stmt.bindString(3, horaDesde);
+        }
+ 
+        String horaHasta = entity.getHoraHasta();
+        if (horaHasta != null) {
+            stmt.bindString(4, horaHasta);
         }
  
         Integer maxMinutos = entity.getMaxMinutos();
         if (maxMinutos != null) {
-            stmt.bindLong(4, maxMinutos);
+            stmt.bindLong(5, maxMinutos);
         }
  
-        String horaFestivo = entity.getHoraFestivo();
-        if (horaFestivo != null) {
-            stmt.bindString(5, horaFestivo);
+        String horaFestivoDesde = entity.getHoraFestivoDesde();
+        if (horaFestivoDesde != null) {
+            stmt.bindString(6, horaFestivoDesde);
+        }
+ 
+        String horaFestivoHasta = entity.getHoraFestivoHasta();
+        if (horaFestivoHasta != null) {
+            stmt.bindString(7, horaFestivoHasta);
         }
  
         Integer maxMinutosFestivo = entity.getMaxMinutosFestivo();
         if (maxMinutosFestivo != null) {
-            stmt.bindLong(6, maxMinutosFestivo);
+            stmt.bindLong(8, maxMinutosFestivo);
         }
  
-        String horaFinSemana = entity.getHoraFinSemana();
-        if (horaFinSemana != null) {
-            stmt.bindString(7, horaFinSemana);
+        String horaFinSemanaDesde = entity.getHoraFinSemanaDesde();
+        if (horaFinSemanaDesde != null) {
+            stmt.bindString(9, horaFinSemanaDesde);
+        }
+ 
+        String horaFinSemanaHasta = entity.getHoraFinSemanaHasta();
+        if (horaFinSemanaHasta != null) {
+            stmt.bindString(10, horaFinSemanaHasta);
         }
  
         Integer maxMinutosFinSemana = entity.getMaxMinutosFinSemana();
         if (maxMinutosFinSemana != null) {
-            stmt.bindLong(8, maxMinutosFinSemana);
+            stmt.bindLong(11, maxMinutosFinSemana);
         }
-        stmt.bindLong(9, entity.getEliminado() ? 1L: 0L);
+        stmt.bindLong(12, entity.getEliminado() ? 1L: 0L);
     }
 
     @Override
@@ -165,13 +201,16 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
         Horario entity = new Horario( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // nombre
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // hora
-            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // maxMinutos
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // horaFestivo
-            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // maxMinutosFestivo
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // horaFinSemana
-            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // maxMinutosFinSemana
-            cursor.getShort(offset + 8) != 0 // eliminado
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // horaDesde
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // horaHasta
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // maxMinutos
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // horaFestivoDesde
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // horaFestivoHasta
+            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // maxMinutosFestivo
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // horaFinSemanaDesde
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // horaFinSemanaHasta
+            cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10), // maxMinutosFinSemana
+            cursor.getShort(offset + 11) != 0 // eliminado
         );
         return entity;
     }
@@ -180,13 +219,16 @@ public class HorarioDao extends AbstractDao<Horario, Long> {
     public void readEntity(Cursor cursor, Horario entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setNombre(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setHora(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setMaxMinutos(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
-        entity.setHoraFestivo(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setMaxMinutosFestivo(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
-        entity.setHoraFinSemana(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setMaxMinutosFinSemana(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
-        entity.setEliminado(cursor.getShort(offset + 8) != 0);
+        entity.setHoraDesde(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setHoraHasta(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setMaxMinutos(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setHoraFestivoDesde(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setHoraFestivoHasta(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setMaxMinutosFestivo(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
+        entity.setHoraFinSemanaDesde(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setHoraFinSemanaHasta(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setMaxMinutosFinSemana(cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10));
+        entity.setEliminado(cursor.getShort(offset + 11) != 0);
      }
     
     @Override

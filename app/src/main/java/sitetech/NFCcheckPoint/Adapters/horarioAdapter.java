@@ -63,7 +63,7 @@ public class horarioAdapter extends OmegaRecyclerView.Adapter<horarioAdapter.Vie
     }
 
     public void deleteData(Horario rx) {
-        ToastHelper.normal("Se a eliminado el horario " + rx.getHora());
+        ToastHelper.normal("Se a eliminado el horario " + rx.getHoraDesde());
         lista.remove(rx);
         notifyDataSetChanged();
     }
@@ -128,8 +128,8 @@ public class horarioAdapter extends OmegaRecyclerView.Adapter<horarioAdapter.Vie
             if (rx.getNombre() == null) tnombre.setText("");
             else tnombre.setText(rx.getNombre().toString());
 
-            thora.setText(rx.getHora() + " Min Max: " + rx.getMaxMinutos());
-            thoraFestivo.setText(rx.getHoraFestivo() + " Min Max: " + rx.getMaxMinutosFestivo());
+            thora.setText(rx.getHoraDesde() + " a " + rx.getHoraHasta() + " Min Max: " + rx.getMaxMinutos());
+            thoraFestivo.setText(rx.getHoraFestivoDesde() + " a " + rx.getHoraFestivoHasta() + " Min Max: " + rx.getMaxMinutosFestivo());
         }
     }
 }

@@ -1,10 +1,14 @@
 package sitetech.NFCcheckPoint.Adapters;
 
+import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
 import com.omega_r.libs.omegarecyclerview.swipe_menu.SwipeViewHolder;
@@ -20,16 +24,24 @@ import sitetech.NFCcheckPoint.db.HorarioDao;
 import sitetech.NFCcheckPoint.db.Ruta;
 import sitetech.routecheckapp.R;
 
-public class rutaSelAdapter extends OmegaRecyclerView.Adapter<rutaSelAdapter.ViewHolder> {
+public class rutaSelAdapter extends RecyclerView.Adapter<rutaSelAdapter.ViewHolder> {
     public List<Ruta> lista;
     private onItemClick onItemClick;
-    private Ruta selectedItem;
+    private int selectedItem;
 
     public rutaSelAdapter(List<Ruta> l, onItemClick onclick) {
         lista = l;
         this.onItemClick = onclick;
-        if (l.size() > 0)
-            setSelectedItem(l.get(0));
+
+        //if (l.size() > 0)
+        //    setSelectedItem(l.get(0));
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ruta_sel_template, parent, false);
+        ViewHolder viewHolder = new ViewHolder(v);
+        return viewHolder;
     }
 
     @Override
@@ -38,23 +50,23 @@ public class rutaSelAdapter extends OmegaRecyclerView.Adapter<rutaSelAdapter.Vie
     }
 
     @Override
-    public rutaSelAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new rutaSelAdapter.ViewHolder(parent);
-    }
-
-    @Override
     public void onBindViewHolder(rutaSelAdapter.ViewHolder holder, int position) {
         Ruta dato = lista.get(position);
         holder.display(dato);
+        holder.itemView.setSelected(selectedItem == position);
+
+        //holder.itemView.setBackgroundColor(selectedItem == position ? Color.GREEN : Color.TRANSPARENT);
     }
 
     public void setSelectedItem(Ruta rx){
-        selectedItem = rx;
+        notifyItemChanged(selectedItem);
+        selectedItem = lista.indexOf(rx);
+        notifyItemChanged(selectedItem);
     }
 
-    public Ruta getSelectedItem(){
+    /*public Ruta getSelectedItem(){
         return selectedItem;
-    }
+    }*/
 
     public void updateData(Ruta bx) {
         boolean nuevo = true;
@@ -80,22 +92,26 @@ public class rutaSelAdapter extends OmegaRecyclerView.Adapter<rutaSelAdapter.Vie
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends SwipeViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView tnombre;
         private LinearLayout linearFondo;
         HorarioDao horarioManager = AppController.daoSession.getHorarioDao();
 
         private Ruta currentItem;
 
-        public ViewHolder(ViewGroup itemView) {
-            super(itemView, R.layout.ruta_sel_template, SwipeViewHolder.NO_ID, SwipeViewHolder.NO_ID);
 
-            tnombre = findViewById(R.id.tnombre);
-            linearFondo = findViewById(R.id.linearFondo);
-            contentView.setOnClickListener(new View.OnClickListener() {
+        public ViewHolder(View itemView) {
+            super(itemView);
+            tnombre = itemView.findViewById(R.id.tnombre);
+            linearFondo = itemView.findViewById(R.id.linearFondo);
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setSelectedItem(currentItem);
+                    //setSelectedItem(currentItem);
+                    notifyItemChanged(selectedItem);
+                    selectedItem = getLayoutPosition();
+                    notifyItemChanged(selectedItem);
+
                     onItemClick.onClickItemList(v, getAdapterPosition());
                 }
             });

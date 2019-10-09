@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.util.Log;
@@ -43,7 +44,7 @@ import sitetech.NFCcheckPoint.ui.rutas.RutaAgregarFragment;
 import sitetech.routecheckapp.R;
 
 public class CheckFragment extends Fragment {
-    public OmegaRecyclerView rlista;
+    public RecyclerView rlista;
     public View vista;
     private TextView tfecha, tusuario;
     private Button bguardar;
@@ -55,11 +56,11 @@ public class CheckFragment extends Fragment {
 
     private Turno turno;
     private Date fechaCheck;
+    private Ruta rutaSeleccionada;
     private final String nfcPrueba = "{\"bus\":{\"eliminado\":false,\"empresa\":{\"eliminado\":false,\"id\":1,\"nombre\":\"Tacana\",\"telefono\":\"565959\"},\"empresaId\":1,\"id\":1,\"interno\":\"4694876\",\"placa\":\"1736HGY\"},\"empresa\":{\"eliminado\":false,\"id\":1,\"nombre\":\"Tacana\",\"telefono\":\"565959\"},\"ultimoCheck\":\"Oct 8, 2019 4:15:57 PM\"}";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState){
         vista =  inflater.inflate(R.layout.operador_check_fragment, viewGroup, false);
-
 
         cargarControles();
         cargarLista();
@@ -94,10 +95,14 @@ public class CheckFragment extends Fragment {
                 Registro_Turno nuevoRegistro = new Registro_Turno();
                 nuevoRegistro.setFecha(fechaCheck);
                 nuevoRegistro.setBus(infoTarjeta.getBus());
+                nuevoRegistro.setRuta(rutaSeleccionada);
                 nuevoRegistro.setTurno(Configuraciones.getTurnoAbierto());
                 nuevoRegistro.setUsuario(Configuraciones.getUsuarioLog(getContext()));
                 nuevoRegistro.setEliminado(false);
                 registrosManager.insert(nuevoRegistro);
+
+                ToastHelper.exito("Bus registrado con exito.");
+                limpiarInfo();
             }
         });
     }
@@ -109,7 +114,10 @@ public class CheckFragment extends Fragment {
                 /*Log.d("NFC DATA EXAMPLE: ", nfcHelper.convertnfcData(new nfcData(
                         AppController.daoSession.getBusDao().queryBuilder().where(BusDao.Properties.Id.eq(1)).unique()
                 )));*/
-                leerTarjeta();
+                if (rutaSeleccionada != null)
+                    leerTarjeta();
+                else
+                    ToastHelper.exito("Debe de seleccionar una ruta, para poder escanear una tarjeta.");
             }
         });
     }
@@ -129,12 +137,21 @@ public class CheckFragment extends Fragment {
         dataAdapter = new rutaSelAdapter(lista, new onItemClick() {
             @Override
             public void onClickItemList(View v, int position) {
-                ToastHelper.info(lista.get(position).getNombre().toString());
+                ToastHelper.info("RUTA SELECCIONADA : " + lista.get(position).getNombre().toString());
+                Configuraciones.setRutaDefault(getContext(), lista.get(position));
             }
         });
 
+        rlista.setHasFixedSize(true);
         rlista.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rlista.setAdapter(dataAdapter);
+
+        Ruta rx = Configuraciones.getRutaDefault(getContext());
+        if (rx != null) { // SELECCIONAMOS EL ITEM QUE ANTES TENIAMOS
+            dataAdapter.setSelectedItem(rx);
+            rutaSeleccionada = rx;
+        }
+
     }
 
 
@@ -161,6 +178,16 @@ public class CheckFragment extends Fragment {
         tultimocheck.setText(TimeHelper.getDate(infoTarjeta.getUltimoCheck(), "dd MMM yyyy - HH:mm:ss"));
 
         bguardar.setVisibility(View.VISIBLE);
+    }
+
+    private void limpiarInfo(){
+        tplaca.setText("");
+        tinterno.setText("");
+        tempresa.setText("");
+        thoraregistro.setText("");
+        tultimocheck.setText("");
+
+        bguardar.setVisibility(View.GONE);
     }
 
 }

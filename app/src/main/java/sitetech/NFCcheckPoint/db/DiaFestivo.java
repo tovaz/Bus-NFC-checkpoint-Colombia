@@ -15,8 +15,6 @@ public class DiaFestivo {
 
     @Id(autoincrement = true)
     private Long id;
-
-    @NotNull
     private String nombre;
 
     @NotNull
@@ -50,13 +48,11 @@ public class DiaFestivo {
         this.id = id;
     }
 
-    @NotNull
     public String getNombre() {
         return nombre;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setNombre(@NotNull String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 

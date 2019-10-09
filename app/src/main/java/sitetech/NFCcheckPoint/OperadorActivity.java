@@ -5,8 +5,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,12 +16,16 @@ import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.concurrent.locks.Lock;
+
 import sitetech.NFCcheckPoint.Adapters.TabsAdapter;
 import sitetech.NFCcheckPoint.Helpers.Dialog;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
+import sitetech.NFCcheckPoint.Helpers.checkHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
+import sitetech.NFCcheckPoint.ui.operador.HistoryFragment;
 import sitetech.routecheckapp.R;
 
 public class OperadorActivity extends AppCompatActivity {
@@ -27,6 +33,9 @@ public class OperadorActivity extends AppCompatActivity {
     public Usuario usuarioLog;
     private TextView tusuario;
     private Button blogout;
+
+    private int mInterval = 2000; // 2 seconds by default, can be changed later
+    private Handler mHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +50,53 @@ public class OperadorActivity extends AppCompatActivity {
 
         cargarTabs();
         cargarUsuario();
+
+        mHandler = new Handler();
+        startChecking();
+    }
+
+    Runnable CheckerTime = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                checking(); //this function can change value of mInterval.
+            } finally {
+                // 100% guarantee that this always happens, even if
+                // your update method throws an exception
+                mHandler.postDelayed(CheckerTime, mInterval);
+            }
+        }
+    };
+
+
+    boolean isCheckActivity = false;
+    private void checking(){
+        if (checkHelper.isNfcEnable(this) && checkHelper.isTimeAutomatic(this) && checkHelper.isPrinterConnected()) {
+            isCheckActivity = false;
+            finishActivity(2);
+        }
+        else {
+            if (!isCheckActivity) {
+                Intent intent = new Intent(this, LockActivity.class);
+                startActivityForResult(intent, 2);
+                isCheckActivity = true;
+            }
+        }
+    }
+
+    void startChecking() {
+        CheckerTime.run();
+    }
+
+    void stopChecking() {
+        mHandler.removeCallbacks(CheckerTime);
     }
 
     private  void cargarTabs(){
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         //tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager =(ViewPager)findViewById(R.id.view_pager);
-        TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        final TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(tabsAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -56,6 +105,13 @@ public class OperadorActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(tab.getPosition());
                 int color = ContextCompat.getColor(getBaseContext(), R.color.colorAccent);
                 tab.getIcon().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+                if (tab.getPosition() == 1) {
+                    HistoryFragment hf = (HistoryFragment) tabsAdapter.getItem(tab.getPosition());
+                    hf.cargarLista();
+                }
+
+                ToastHelper.aviso("TAB SELECCIONADA " + tab.getPosition());
             }
 
             @Override
@@ -69,7 +125,7 @@ public class OperadorActivity extends AppCompatActivity {
             }
         });
 
-        tabLayout.getTabAt(0).select();
+        //tabLayout.getTabAt(0).select();
     }
 
     public void cargarUsuario(){
@@ -98,5 +154,11 @@ public class OperadorActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onDestroy() { // AL FINALIZAR LA ACTIVIDAD
+        super.onDestroy();
+        stopChecking();
     }
 }

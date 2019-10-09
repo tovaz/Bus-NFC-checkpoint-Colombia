@@ -131,8 +131,8 @@ public class horarioPorRutaAdapter extends OmegaRecyclerView.Adapter<horarioPorR
             if (rx.getHorario().getNombre() == null) tnombre.setText("");
             else tnombre.setText(rx.getHorario().getNombre().toString());
 
-            thora.setText(rx.getHorario().getHora() + " Min Max: " + rx.getHorario().getMaxMinutos());
-            thoraFestivo.setText(rx.getHorario().getHoraFestivo() + " Min Max: " + rx.getHorario().getMaxMinutosFestivo());
+            thora.setText(rx.getHorario().getHoraDesde() + " a " + rx.getHorario().getHoraHasta() + " Min Max: " + rx.getHorario().getMaxMinutos());
+            thoraFestivo.setText(rx.getHorario().getHoraFestivoDesde() + " a " + rx.getHorario().getHoraFestivoHasta() + " Min Max: " + rx.getHorario().getMaxMinutosFestivo());
         }
     }
 }

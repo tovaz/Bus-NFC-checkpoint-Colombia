@@ -8,7 +8,7 @@
     tools:context="sitetech.NFCcheckPoint.LoginActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,9 +16,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/lnotificacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Si es primer inicio; usuario: admin y sin contraseña"
+            android:textAlignment="center"
+            android:textColor="@color/ErrorColor"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/biniciar2"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
@@ -53,18 +62,9 @@
             android:hint="Contraseña"
             android:inputType="textPassword" />
 
-        <TextView
-            android:id="@+id/lnotificacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Si es primero inicio; usuario: admin y sin contraseña"
-            android:textColor="@color/ErrorColor"
-            android:visibility="gone" />
-
         <Button
             android:id="@+id/biniciar"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"

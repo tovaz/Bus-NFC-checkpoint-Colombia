@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <application
         android:name="sitetech.NFCcheckPoint.AppController"
         android:allowBackup="true"
@@ -14,7 +18,10 @@
         android:roundIcon="@drawable/route"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="sitetech.NFCcheckPoint.OperadorActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name="sitetech.NFCcheckPoint.LockActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="sitetech.NFCcheckPoint.OperadorActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="sitetech.NFCcheckPoint.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />

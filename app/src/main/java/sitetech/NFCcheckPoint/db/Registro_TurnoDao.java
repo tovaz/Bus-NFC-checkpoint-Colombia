@@ -31,10 +31,11 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         public final static Property MinAtrazado = new Property(3, Integer.class, "minAtrazado", false, "MIN_ATRAZADO");
         public final static Property MinAdelantado = new Property(4, Integer.class, "minAdelantado", false, "MIN_ADELANTADO");
         public final static Property Justificacion = new Property(5, String.class, "justificacion", false, "JUSTIFICACION");
-        public final static Property BusId = new Property(6, long.class, "busId", false, "BUS_ID");
-        public final static Property RutaId = new Property(7, long.class, "rutaId", false, "RUTA_ID");
-        public final static Property TurnoId = new Property(8, long.class, "turnoId", false, "TURNO_ID");
-        public final static Property OperadorId = new Property(9, long.class, "operadorId", false, "OPERADOR_ID");
+        public final static Property Despacho = new Property(6, String.class, "despacho", false, "DESPACHO");
+        public final static Property BusId = new Property(7, long.class, "busId", false, "BUS_ID");
+        public final static Property RutaId = new Property(8, long.class, "rutaId", false, "RUTA_ID");
+        public final static Property TurnoId = new Property(9, long.class, "turnoId", false, "TURNO_ID");
+        public final static Property UserId = new Property(10, long.class, "userId", false, "USER_ID");
     }
 
     private DaoSession daoSession;
@@ -59,10 +60,11 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
                 "\"MIN_ATRAZADO\" INTEGER," + // 3: minAtrazado
                 "\"MIN_ADELANTADO\" INTEGER," + // 4: minAdelantado
                 "\"JUSTIFICACION\" TEXT," + // 5: justificacion
-                "\"BUS_ID\" INTEGER NOT NULL ," + // 6: busId
-                "\"RUTA_ID\" INTEGER NOT NULL ," + // 7: rutaId
-                "\"TURNO_ID\" INTEGER NOT NULL ," + // 8: turnoId
-                "\"OPERADOR_ID\" INTEGER NOT NULL );"); // 9: operadorId
+                "\"DESPACHO\" TEXT," + // 6: despacho
+                "\"BUS_ID\" INTEGER NOT NULL ," + // 7: busId
+                "\"RUTA_ID\" INTEGER NOT NULL ," + // 8: rutaId
+                "\"TURNO_ID\" INTEGER NOT NULL ," + // 9: turnoId
+                "\"USER_ID\" INTEGER NOT NULL );"); // 10: userId
     }
 
     /** Drops the underlying database table. */
@@ -104,10 +106,15 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         if (justificacion != null) {
             stmt.bindString(6, justificacion);
         }
-        stmt.bindLong(7, entity.getBusId());
-        stmt.bindLong(8, entity.getRutaId());
-        stmt.bindLong(9, entity.getTurnoId());
-        stmt.bindLong(10, entity.getOperadorId());
+ 
+        String despacho = entity.getDespacho();
+        if (despacho != null) {
+            stmt.bindString(7, despacho);
+        }
+        stmt.bindLong(8, entity.getBusId());
+        stmt.bindLong(9, entity.getRutaId());
+        stmt.bindLong(10, entity.getTurnoId());
+        stmt.bindLong(11, entity.getUserId());
     }
 
     @Override
@@ -143,10 +150,15 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         if (justificacion != null) {
             stmt.bindString(6, justificacion);
         }
-        stmt.bindLong(7, entity.getBusId());
-        stmt.bindLong(8, entity.getRutaId());
-        stmt.bindLong(9, entity.getTurnoId());
-        stmt.bindLong(10, entity.getOperadorId());
+ 
+        String despacho = entity.getDespacho();
+        if (despacho != null) {
+            stmt.bindString(7, despacho);
+        }
+        stmt.bindLong(8, entity.getBusId());
+        stmt.bindLong(9, entity.getRutaId());
+        stmt.bindLong(10, entity.getTurnoId());
+        stmt.bindLong(11, entity.getUserId());
     }
 
     @Override
@@ -169,10 +181,11 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // minAtrazado
             cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // minAdelantado
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // justificacion
-            cursor.getLong(offset + 6), // busId
-            cursor.getLong(offset + 7), // rutaId
-            cursor.getLong(offset + 8), // turnoId
-            cursor.getLong(offset + 9) // operadorId
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // despacho
+            cursor.getLong(offset + 7), // busId
+            cursor.getLong(offset + 8), // rutaId
+            cursor.getLong(offset + 9), // turnoId
+            cursor.getLong(offset + 10) // userId
         );
         return entity;
     }
@@ -185,10 +198,11 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         entity.setMinAtrazado(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
         entity.setMinAdelantado(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
         entity.setJustificacion(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setBusId(cursor.getLong(offset + 6));
-        entity.setRutaId(cursor.getLong(offset + 7));
-        entity.setTurnoId(cursor.getLong(offset + 8));
-        entity.setOperadorId(cursor.getLong(offset + 9));
+        entity.setDespacho(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setBusId(cursor.getLong(offset + 7));
+        entity.setRutaId(cursor.getLong(offset + 8));
+        entity.setTurnoId(cursor.getLong(offset + 9));
+        entity.setUserId(cursor.getLong(offset + 10));
      }
     
     @Override
@@ -234,7 +248,7 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
             builder.append(" LEFT JOIN BUS T0 ON T.\"BUS_ID\"=T0.\"_id\"");
             builder.append(" LEFT JOIN RUTA T1 ON T.\"RUTA_ID\"=T1.\"_id\"");
             builder.append(" LEFT JOIN TURNO T2 ON T.\"TURNO_ID\"=T2.\"_id\"");
-            builder.append(" LEFT JOIN USUARIO T3 ON T.\"OPERADOR_ID\"=T3.\"_id\"");
+            builder.append(" LEFT JOIN USUARIO T3 ON T.\"USER_ID\"=T3.\"_id\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }

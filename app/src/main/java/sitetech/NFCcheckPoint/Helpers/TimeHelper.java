@@ -19,4 +19,17 @@ public class TimeHelper {
     public static String getTime(Date d){
         return TimeHelper.formatTime.format(d);
     }
+
+    public static String formatTime(int h, int m){
+        if (h < 10)
+            if (m>9)
+                return "0" + h + ":" + m;
+            else
+                return "0" + h + ":0" + m;
+        else if (m>9)
+            return h + ":" + m;
+        else
+            return h + ":0" + m;
+
+    }
 }

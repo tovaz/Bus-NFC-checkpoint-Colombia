@@ -12,9 +12,14 @@ import android.widget.TimePicker;
 
 import androidx.fragment.app.Fragment;
 
+import com.codetroopers.betterpickers.hmspicker.HmsPickerBuilder;
+import com.codetroopers.betterpickers.timepicker.TimePickerBuilder;
+import com.codetroopers.betterpickers.timepicker.TimePickerDialogFragment;
+
 import java.io.Serializable;
 
 import sitetech.NFCcheckPoint.AppController;
+import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.db.Horario;
 import sitetech.NFCcheckPoint.db.HorarioDao;
@@ -34,8 +39,16 @@ public class HorarioAgregarFragment extends Fragment implements Serializable {
     private EditText tnombre;
     private EditText tmaxMinutos;
     private EditText tmaxMinutosFestivos;
+
     private Button bhora;
     private Button bhoraFestivo;
+    private Button bhora_hasta;
+    private Button bhoraFestivo_hasta;
+
+    private EditText thora;
+    private EditText thoraFestivo;
+    private EditText thoraHasta;
+    private EditText thoraFestivoHasta;
 
     private Button bcancelar;
     private Button bguardar;
@@ -76,8 +89,10 @@ public class HorarioAgregarFragment extends Fragment implements Serializable {
         tmaxMinutosFestivos.setText(horario.getMaxMinutosFestivo().toString());
 
         tnombre.setText(horario.getNombre());
-        bhora.setText(horario.getHora().toString());
-        bhoraFestivo.setText(horario.getHoraFestivo().toString());
+        thora.setText(horario.getHoraDesde() == null ? "" : horario.getHoraDesde());
+        thoraHasta.setText(horario.getHoraHasta() == null ? "" : horario.getHoraHasta());
+        thoraFestivo.setText(horario.getHoraFestivoDesde() == null ? "" : horario.getHoraFestivoDesde());
+        thoraFestivoHasta.setText(horario.getHoraFestivoHasta() == null ? "" : horario.getHoraFestivoHasta());
     }
 
     private void cargarControles(){
@@ -87,6 +102,13 @@ public class HorarioAgregarFragment extends Fragment implements Serializable {
         tmaxMinutosFestivos = vista.findViewById(R.id.tmaxMinutosFestivos);
         bhora = vista.findViewById(R.id.bhora);
         bhoraFestivo = vista.findViewById(R.id.bhoraFestivo);
+        bhora_hasta = vista.findViewById(R.id.bhora_hasta);
+        bhoraFestivo_hasta = vista.findViewById(R.id.bhoraFestivoHasta);
+
+        thora = vista.findViewById(R.id.thora);
+        thoraFestivo = vista.findViewById(R.id.thoraFestivo);
+        thoraHasta = vista.findViewById(R.id.thoraHasta);
+        thoraFestivoHasta = vista.findViewById(R.id.thoraFestivoHasta);
 
         bcancelar = vista.findViewById(R.id.bcancelar);
         bguardar = vista.findViewById(R.id.bguardar);
@@ -96,30 +118,100 @@ public class HorarioAgregarFragment extends Fragment implements Serializable {
         bhora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String horaActual = bhora.getText().toString();
-                TimePickerDialog timePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                final String horaActual = thora.getText().toString();
+                /*TimePickerDialog timePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        bhora.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                        thora.setText(String.format("%02d:%02d", hourOfDay, minutes));
                     }
                 }, 9, 0, false);
                 if (!horaActual.isEmpty()) timePicker.updateTime(Integer.parseInt(horaActual.substring(0, 2)), Integer.parseInt(horaActual.substring(3)));
-                timePicker.show();
+                timePicker.show();*/
+
+                TimePickerBuilder tpb = new TimePickerBuilder()
+                        .setFragmentManager(getFragmentManager())
+                        .setStyleResId(R.style.BetterPickersDialogFragment);
+                tpb.show();
+                tpb.addTimePickerDialogHandler(new TimePickerDialogFragment.TimePickerDialogHandler() {
+                    @Override
+                    public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
+                        thora.setText(TimeHelper.formatTime(hourOfDay, minute));
+                    }
+                });
+
             }
         });
 
         bhoraFestivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String horaActual = bhoraFestivo.getText().toString();
+                String horaActual = thoraFestivo.getText().toString();
+                /*TimePickerDialog timePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        thoraFestivo.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, 9, 0, false);
+                if (!horaActual.isEmpty()) timePicker.updateTime(Integer.parseInt(horaActual.substring(0, 2)), Integer.parseInt(horaActual.substring(3)));
+                timePicker.show();*/
+
+                TimePickerBuilder tpb = new TimePickerBuilder().setFragmentManager(getFragmentManager()).setStyleResId(R.style.BetterPickersDialogFragment);
+                tpb.show();
+                tpb.addTimePickerDialogHandler(new TimePickerDialogFragment.TimePickerDialogHandler() {
+                        @Override
+                        public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
+                            thoraFestivo.setText(TimeHelper.formatTime(hourOfDay, minute));
+                        }
+                    });
+            }
+        });
+
+        bhora_hasta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*String horaActual = thoraHasta.getText().toString();
                 TimePickerDialog timePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        bhoraFestivo.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                        thoraHasta.setText(String.format("%02d:%02d", hourOfDay, minutes));
                     }
                 }, 9, 0, false);
                 if (!horaActual.isEmpty()) timePicker.updateTime(Integer.parseInt(horaActual.substring(0, 2)), Integer.parseInt(horaActual.substring(3)));
                 timePicker.show();
+                 */
+                TimePickerBuilder tpb = new TimePickerBuilder().setFragmentManager(getFragmentManager()).setStyleResId(R.style.BetterPickersDialogFragment);
+                tpb.show();
+                tpb.addTimePickerDialogHandler(new TimePickerDialogFragment.TimePickerDialogHandler() {
+                    @Override
+                    public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
+                        thoraHasta.setText(TimeHelper.formatTime(hourOfDay, minute));
+                    }
+                });
+            }
+        });
+
+        bhoraFestivo_hasta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*String horaActual = thoraFestivoHasta.getText().toString();
+                TimePickerDialog timePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        thoraFestivoHasta.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, 9, 0, false);
+                if (!horaActual.isEmpty()) timePicker.updateTime(Integer.parseInt(horaActual.substring(0, 2)), Integer.parseInt(horaActual.substring(3)));
+
+                timePicker.show();
+                 */
+                TimePickerBuilder tpb = new TimePickerBuilder().setFragmentManager(getFragmentManager()).setStyleResId(R.style.BetterPickersDialogFragment);
+                tpb.show();
+                tpb.addTimePickerDialogHandler(new TimePickerDialogFragment.TimePickerDialogHandler() {
+                    @Override
+                    public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
+                        thoraFestivoHasta.setText(TimeHelper.formatTime(hourOfDay, minute));
+                    }
+                });
             }
         });
 
@@ -141,9 +233,12 @@ public class HorarioAgregarFragment extends Fragment implements Serializable {
                     horario = mainFragment.Itemseleccionado;
 
                 horario.setNombre(tnombre.getText().toString());
-                horario.setHora(bhora.getText().toString());
+                horario.setHoraDesde(thora.getText().toString());
+                horario.setHoraFestivoDesde(thoraFestivo.getText().toString());
+                horario.setHoraHasta(thoraHasta.getText().toString());
+                horario.setHoraFestivoHasta(thoraFestivoHasta.getText().toString());
                 horario.setMaxMinutos(Integer.parseInt(tmaxMinutos.getText().toString()));
-                horario.setHoraFestivo(bhoraFestivo.getText().toString());
+
                 horario.setMaxMinutosFestivo(Integer.parseInt(tmaxMinutosFestivos.getText().toString()));
 
                 if (mainFragment.Itemseleccionado == null) {

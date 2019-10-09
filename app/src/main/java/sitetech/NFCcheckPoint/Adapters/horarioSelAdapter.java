@@ -102,8 +102,8 @@ public class horarioSelAdapter extends OmegaRecyclerView.Adapter<horarioSelAdapt
             if (rx.getNombre() == null) tnombre.setText("");
             else tnombre.setText(rx.getNombre().toString());
 
-            thora.setText(rx.getHora() + " Min Max: " + rx.getMaxMinutos());
-            thoraFestivo.setText("Dia Festivo y FD: " + rx.getHoraFestivo() + " Min Max: " + rx.getMaxMinutosFestivo());
+            thora.setText(rx.getHoraDesde() + " a " + rx.getHoraHasta() + " Min Max: " + rx.getMaxMinutos());
+            thoraFestivo.setText("Dia Fest y FD: " + rx.getHoraFestivoDesde() + " a " + rx.getHoraFestivoHasta() + " Min Max: " + rx.getMaxMinutosFestivo());
         }
     }
 }
