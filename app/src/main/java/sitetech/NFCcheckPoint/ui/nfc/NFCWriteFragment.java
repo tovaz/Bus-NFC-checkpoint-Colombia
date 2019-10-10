@@ -15,9 +15,12 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import sitetech.NFCcheckPoint.Helpers.Dialog;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.MainActivity;
 import sitetech.routecheckapp.R;
@@ -68,19 +71,26 @@ public class NFCWriteFragment extends DialogFragment {
     }
 
     private void writeToNfc(Ndef ndef, String message){
+        Gson g = new Gson();
+        if (ndef != null)
+            Dialog.showAlert(vista, "writeToNfc", g.toJson(ndef));
+        else
+            Dialog.showAlert(vista, "writeToNfc", "NULL");
 
         mTvMessage.setText("Escribiendo en la tarjeta nfc.");
         if (ndef != null) {
-
             try {
+                Dialog.showAlert(vista, "writeToNfc - TRY -l83", g.toJson(ndef));
                 ndef.connect();
                 NdefRecord mimeRecord = NdefRecord.createMime("text/plain", message.getBytes(Charset.forName("US-ASCII")));
                 ndef.writeNdefMessage(new NdefMessage(mimeRecord));
+                Dialog.showAlert(vista, "writeToNfc - TRY -l87", g.toJson(ndef));
                 ndef.close();
                 //Write Successful
                 mTvMessage.setText("Tarjeta escrita con exito.");
 
             } catch (IOException | FormatException e) {
+                Dialog.showAlert(vista, "writeToNfc - TRY -l93", e.getMessage());
                 e.printStackTrace();
                 mTvMessage.setText("Error al escribir la tarjeta");
 

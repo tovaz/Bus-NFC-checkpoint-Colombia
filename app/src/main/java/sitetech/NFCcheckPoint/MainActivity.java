@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -234,10 +235,11 @@ public class MainActivity extends AppCompatActivity implements Listener {
             Toast.makeText(this, "Tarjeta detectada.", Toast.LENGTH_SHORT).show();
             Ndef ndef = Ndef.get(tag);
 
+            Gson g = new Gson();
+            ToastHelper.aviso(g.toJson(tag));
             if (isDialogDisplayed) {
 
                 if (isWrite) {
-
                     nfcData nfcdata = new nfcData(busNFC);
                     String messageToWrite = nfcHelper.convertnfcData(nfcdata);
                     nfcWriteF = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);

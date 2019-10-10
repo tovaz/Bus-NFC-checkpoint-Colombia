@@ -42,6 +42,7 @@ public class checkHelper {
     }
 
     public static boolean isPrinterConnected(){
+
         Set<BluetoothDevice> pairedDevices = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice d: pairedDevices) {
@@ -52,7 +53,8 @@ public class checkHelper {
             }
         }
 
-        return false;
+        return true;
+        //return false;
     }
 
     private static boolean isAPrinter(BluetoothDevice device){

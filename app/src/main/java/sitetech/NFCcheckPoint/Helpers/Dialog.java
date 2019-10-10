@@ -1,10 +1,12 @@
 package sitetech.NFCcheckPoint.Helpers;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Looper;
 import android.view.View;
 
+import sitetech.NFCcheckPoint.AppController;
 import sitetech.routecheckapp.R;
 
 public class Dialog {
@@ -59,5 +61,15 @@ public class Dialog {
             }
         });
         alert.show();
+    }
+
+    public static void showAlert(View v, String titulo, String mensaje){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(AppController.getAppContext());
+        builder1.setTitle(titulo);
+        builder1.setMessage(mensaje);
+        builder1.setCancelable(true);
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }

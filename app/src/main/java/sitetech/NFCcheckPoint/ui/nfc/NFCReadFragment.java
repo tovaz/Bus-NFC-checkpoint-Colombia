@@ -14,9 +14,13 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 
+import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
+import sitetech.NFCcheckPoint.Helpers.Dialog;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.MainActivity;
@@ -66,25 +70,33 @@ public class NFCReadFragment extends DialogFragment {
 
     private void readFromNFC(Ndef ndef) {
         //((OperadorActivity)  getActivity()).updateCheckFragment("PRUEBA"); //ACTUALIZAR MENSAJE EN FRAGMENTO
+        Gson g = new Gson();
+        if (ndef != null)
+            Dialog.showAlert(vista, "readFromNFC", g.toJson(ndef));
+        else
+            Dialog.showAlert(vista, "readFromNFC", "NULL");
+
         try {
             if (ndef != null) {
                 ndef.connect();
                 NdefMessage ndefMessage = ndef.getNdefMessage();
                 String message = new String(ndefMessage.getRecords()[0].getPayload());
 
+                Dialog.showAlert(vista, "readFromNFC - TRY l84", g.toJson(ndef));
+
                 ToastHelper.info("NDEF : " + message);
                 Configuraciones.setUltimoTag(getActivity().getBaseContext(), message.toString());
                 ((OperadorActivity)  getActivity()).updateCheckFragment(message); //ACTUALIZAR MENSAJE EN FRAGMENTO
 
-                Log.d(TAG, "Read From NFC: " + message);
+                Log.d(TAG, "Read From NFC l90: " + message);
                 mTvMessage.setText(message);
 
 
                 ndef.close();
             }
         } catch (IOException | FormatException e) {
+            Dialog.showAlert(vista, "readFromNFC - TRY -l97", e.getMessage());
             e.printStackTrace();
-
         }
     }
 }
