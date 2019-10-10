@@ -1,6 +1,11 @@
 package sitetech.NFCcheckPoint;
 
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -16,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,16 +29,23 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
+import sitetech.NFCcheckPoint.Helpers.nfcData;
+import sitetech.NFCcheckPoint.Helpers.nfcHelper;
+import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
+import sitetech.NFCcheckPoint.ui.nfc.NFCReadFragment;
+import sitetech.NFCcheckPoint.ui.nfc.NFCWriteFragment;
 import sitetech.NFCcheckPoint.ui.rutas.RutaAgregarFragment;
 import sitetech.routecheckapp.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Listener {
 
     private AppBarConfiguration mAppBarConfiguration;
     public MainActivity mainActivity;
@@ -41,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView trol;
     private Button blogout;
     private NavigationView navigationView;
+
+    private NfcAdapter mNfcAdapter;
+    private NFCWriteFragment nfcWriteF;
+    private NFCReadFragment nfcReadF;
+    private boolean isDialogDisplayed = false;
+    private boolean isWrite = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +94,10 @@ public class MainActivity extends AppCompatActivity {
         mainActivity = this;
 
         cargarControles();
-
         cargarUsuario();
+
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
         startService(new Intent(this, miServicio.class)); //INICIAR EL SERVICIO
     }
 
@@ -144,4 +166,90 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
+    /***************************************************************************/
+    private Bus busNFC;
+    public void escribirNFC(Bus bus){
+        isWrite = true;
+        busNFC = bus;
+        nfcWriteF = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
+
+        if (nfcWriteF == null) {
+            nfcWriteF = NFCWriteFragment.newInstance();
+        }
+
+        nfcWriteF.show(getFragmentManager(),NFCWriteFragment.TAG);
+    }
+
+    public void leerNFC() {
+        nfcReadF = (NFCReadFragment) getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
+
+        if (nfcReadF == null) {
+
+            nfcReadF = NFCReadFragment.newInstance();
+        }
+        nfcReadF.show(getFragmentManager(),NFCReadFragment.TAG);
+    }
+
+    @Override
+    public void onDialogDisplayed() {
+        isDialogDisplayed = true;
+    }
+
+    @Override
+    public void onDialogDismissed() {
+        isDialogDisplayed = false;
+        isWrite = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+        IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected,tagDetected,ndefDetected};
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        if(mNfcAdapter!= null)
+           mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mNfcAdapter!= null)
+            mNfcAdapter.disableForegroundDispatch(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        Log.d("TAG RECIVIDO: ", tag.toString());
+        Log.d("NEW INTENT", "on New Intent: "+intent.getAction());
+
+        if(tag != null) {
+            Toast.makeText(this, "Tarjeta detectada.", Toast.LENGTH_SHORT).show();
+            Ndef ndef = Ndef.get(tag);
+
+            if (isDialogDisplayed) {
+
+                if (isWrite) {
+
+                    nfcData nfcdata = new nfcData(busNFC);
+                    String messageToWrite = nfcHelper.convertnfcData(nfcdata);
+                    nfcWriteF = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
+                    nfcWriteF.onNfcDetected(ndef,messageToWrite);
+
+                } /*else {
+                    nfcReadF = (NFCReadFragment)getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
+                    nfcReadF.onNfcDetected(ndef);
+                }*/
+            }
+        }
+    }
+
+
 }

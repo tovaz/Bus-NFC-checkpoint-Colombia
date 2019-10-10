@@ -1,5 +1,6 @@
 package sitetech.NFCcheckPoint.ui.operador;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,11 +29,14 @@ import sitetech.NFCcheckPoint.Adapters.rutaAdapter;
 import sitetech.NFCcheckPoint.Adapters.rutaSelAdapter;
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
+import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.nfcData;
 import sitetech.NFCcheckPoint.Helpers.nfcHelper;
+import sitetech.NFCcheckPoint.MainActivity;
+import sitetech.NFCcheckPoint.OperadorActivity;
 import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
@@ -43,7 +47,7 @@ import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.ui.rutas.RutaAgregarFragment;
 import sitetech.routecheckapp.R;
 
-public class CheckFragment extends Fragment {
+public class CheckFragment extends Fragment implements Listener {
     public RecyclerView rlista;
     public View vista;
     private TextView tfecha, tusuario;
@@ -114,6 +118,7 @@ public class CheckFragment extends Fragment {
                 /*Log.d("NFC DATA EXAMPLE: ", nfcHelper.convertnfcData(new nfcData(
                         AppController.daoSession.getBusDao().queryBuilder().where(BusDao.Properties.Id.eq(1)).unique()
                 )));*/
+
                 if (rutaSeleccionada != null)
                     leerTarjeta();
                 else
@@ -157,14 +162,17 @@ public class CheckFragment extends Fragment {
 
     /******************************************************************************/
     nfcData infoTarjeta;
-    private void checkNFC(){
 
+    public void callBackNfc(String mensaje){
+        ToastHelper.exito("LLEGO HASTA AQUI");
+        infoTarjeta = nfcHelper.getnfcData(mensaje);
+        if (infoTarjeta != null)
+            cargarInfo();
     }
 
     private void leerTarjeta(){
-        infoTarjeta = nfcHelper.getnfcData(nfcPrueba);
-        if (infoTarjeta != null)
-            cargarInfo();
+        OperadorActivity activity = (OperadorActivity) getActivity();
+        activity.leerNFC();
     }
 
     private void cargarInfo(){
@@ -188,6 +196,16 @@ public class CheckFragment extends Fragment {
         tultimocheck.setText("");
 
         bguardar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDialogDisplayed() {
+
+    }
+
+    @Override
+    public void onDialogDismissed() {
+
     }
 
 }

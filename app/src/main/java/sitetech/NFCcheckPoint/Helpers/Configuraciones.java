@@ -49,4 +49,18 @@ public class Configuraciones{
 
         return null;
     }
+
+    public static String getUltimoTag(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
+        String tag = sharedPref.getString("ultimoTag", "-1");
+        return tag;
+    }
+
+    public static void setUltimoTag(Context context, String tag){
+        SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ultimoTag", tag);
+        editor.commit();
+    }
+
 }

@@ -20,11 +20,14 @@ import java.util.List;
 
 import sitetech.NFCcheckPoint.Adapters.customAdapter;
 import sitetech.NFCcheckPoint.AppController;
+import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
+import sitetech.NFCcheckPoint.MainActivity;
 import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.NFCcheckPoint.db.Empresa;
 import sitetech.NFCcheckPoint.db.EmpresaDao;
+import sitetech.NFCcheckPoint.ui.nfc.NFCWriteFragment;
 import sitetech.routecheckapp.R;
 
 public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSelectedListener, Serializable {
@@ -36,6 +39,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
     private TextView tinterno;
     private TextView ttitulo;
     private Spinner selempresa;
+    private Button bescribirNFC;
     private Button bcancelar;
     private Button bguardar;
 
@@ -66,6 +70,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         cargarControles();
         onClick();
 
+        bescribirNFC.setVisibility(View.GONE);
         if (mainFragment.Itemseleccionado != null)
             cargarInfo();
         return vista;
@@ -77,6 +82,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         tplaca.setText(bus.getPlaca());
         tinterno.setText(bus.getInterno());
 
+        bescribirNFC.setVisibility(View.VISIBLE);
         for (int i=0; i<=listaEmpresas.size()-1; i++)
             if ((listaEmpresas.get(i).getId() + " - " + listaEmpresas.get(i).getNombre()).equals(bus.getEmpresa().getId() + " - " + bus.getEmpresa().getNombre()))
                 selempresa.setSelection(i);
@@ -90,6 +96,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         bcancelar = vista.findViewById(R.id.bcancelar);
         bguardar = vista.findViewById(R.id.bguardar);
 
+        bescribirNFC = vista.findViewById(R.id.bescribirNFC);
         cargarEmpresas();
     }
 
@@ -122,6 +129,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
 
         /**********************************************************************************/
 
+        private boolean isWrite;
     private void onClick(){
         bcancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,5 +168,13 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
             }
         });
 
+        bescribirNFC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity activity = (MainActivity)getActivity();
+                activity.escribirNFC(mainFragment.Itemseleccionado);
+            }
+        });
     }
+
 }
