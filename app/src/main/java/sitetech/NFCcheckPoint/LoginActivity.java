@@ -1,9 +1,5 @@
 package sitetech.NFCcheckPoint;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,13 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import java.util.List;
 
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
-import sitetech.NFCcheckPoint.db.horarioPorRutaDao;
 import sitetech.routecheckapp.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -74,24 +72,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkDatabase(){
-        List<Usuario> lusuarios = obtenerUsuarios();
-        if (lusuarios.size() == 0) {
+        if (Configuraciones.getPrimerUso(this)) {
             lnotificacion.setVisibility(View.VISIBLE);
-            crearPrimerUsuario();
+            lnotificacion.setText("SE DETECTO PRIMER USO: Se han creado 2 usuarios de prueba, admin y A ambos sin contraseña.");
         }
-    }
-
-    public void crearPrimerUsuario(){
-        Usuario ux = new Usuario();
-        ux.setNombre("admin");
-        ux.setCedula("000");
-        ux.setActivo(true);
-        ux.setPassword("");
-        ux.setEliminado(false);
-        ux.setRol("Administrador");
-        ux.setTelefono("");
-
-        userD.insert(ux);
     }
 
     private void checkLogin(){
@@ -110,7 +94,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (uLogeado != null) {
+            Configuraciones.setPrimerUso(this, false);
+            lnotificacion.setVisibility(View.GONE);
             Configuraciones.setUsuarioLog(this, uLogeado);
+
             if (uLogeado.getRol().equals("Administrador"))
                 iniciarAdmin();
             if (uLogeado.getRol().equals("Operador"))

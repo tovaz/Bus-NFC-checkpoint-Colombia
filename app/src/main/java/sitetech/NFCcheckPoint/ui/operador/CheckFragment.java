@@ -122,7 +122,7 @@ public class CheckFragment extends Fragment implements Listener {
                 if (rutaSeleccionada != null)
                     leerTarjeta();
                 else
-                    ToastHelper.exito("Debe de seleccionar una ruta, para poder escanear una tarjeta.");
+                    ToastHelper.aviso("Debe de seleccionar una ruta, para poder escanear una tarjeta.");
             }
         });
     }

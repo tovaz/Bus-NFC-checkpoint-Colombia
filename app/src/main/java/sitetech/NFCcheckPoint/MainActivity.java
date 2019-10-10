@@ -26,9 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +41,6 @@ import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
 import sitetech.NFCcheckPoint.ui.nfc.NFCReadFragment;
 import sitetech.NFCcheckPoint.ui.nfc.NFCWriteFragment;
-import sitetech.NFCcheckPoint.ui.rutas.RutaAgregarFragment;
 import sitetech.routecheckapp.R;
 
 public class MainActivity extends AppCompatActivity implements Listener {
@@ -82,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements Listener {
         navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_usuarios, R.id.nav_buses, R.id.nav_empresas,
-                R.id.nav_rutas, R.id.nav_share, R.id.nav_horarios)
+                R.id.nav_usuarios, R.id.nav_empresas, R.id.nav_buses,
+                R.id.nav_rutas, R.id.nav_historial, R.id.nav_horarios, R.id.nav_dias_festivos, R.id.nav_configuracion)
                 .setDrawerLayout(drawer)
                 .build();
 

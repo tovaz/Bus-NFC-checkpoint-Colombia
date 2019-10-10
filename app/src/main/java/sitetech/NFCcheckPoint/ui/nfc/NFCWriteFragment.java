@@ -73,24 +73,24 @@ public class NFCWriteFragment extends DialogFragment {
     private void writeToNfc(Ndef ndef, String message){
         Gson g = new Gson();
         if (ndef != null)
-            Dialog.showAlert(vista, "writeToNfc", g.toJson(ndef));
+            Dialog.showAlert(vista.getRootView(), "writeToNfc", g.toJson(ndef));
         else
-            Dialog.showAlert(vista, "writeToNfc", "NULL");
+            Dialog.showAlert(vista.getRootView(), "writeToNfc", "NULL");
 
         mTvMessage.setText("Escribiendo en la tarjeta nfc.");
         if (ndef != null) {
             try {
-                Dialog.showAlert(vista, "writeToNfc - TRY -l83", g.toJson(ndef));
+                Dialog.showAlert(vista.getRootView(), "writeToNfc - TRY -l83", g.toJson(ndef));
                 ndef.connect();
                 NdefRecord mimeRecord = NdefRecord.createMime("text/plain", message.getBytes(Charset.forName("US-ASCII")));
                 ndef.writeNdefMessage(new NdefMessage(mimeRecord));
-                Dialog.showAlert(vista, "writeToNfc - TRY -l87", g.toJson(ndef));
+                Dialog.showAlert(vista.getRootView(), "writeToNfc - TRY -l87", g.toJson(ndef));
                 ndef.close();
                 //Write Successful
                 mTvMessage.setText("Tarjeta escrita con exito.");
 
             } catch (IOException | FormatException e) {
-                Dialog.showAlert(vista, "writeToNfc - TRY -l93", e.getMessage());
+                Dialog.showAlert(vista.getRootView(), "writeToNfc - TRY -l93", e.getMessage());
                 e.printStackTrace();
                 mTvMessage.setText("Error al escribir la tarjeta");
 

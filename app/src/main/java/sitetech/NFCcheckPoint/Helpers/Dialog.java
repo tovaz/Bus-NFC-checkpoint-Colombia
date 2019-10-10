@@ -1,13 +1,8 @@
 package sitetech.NFCcheckPoint.Helpers;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Looper;
 import android.view.View;
-
-import sitetech.NFCcheckPoint.AppController;
-import sitetech.routecheckapp.R;
 
 public class Dialog {
     public static synchronized boolean showAsk(View vista, String titulo, String mensaje, String boton1, String boton2){
@@ -64,9 +59,9 @@ public class Dialog {
     }
 
     public static void showAlert(View v, String titulo, String mensaje){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(AppController.getAppContext());
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(v.getContext());
         builder1.setTitle(titulo);
-        builder1.setMessage(mensaje);
+        builder1.setMessage(titulo + " <> " + mensaje);
         builder1.setCancelable(true);
 
         AlertDialog alert11 = builder1.create();

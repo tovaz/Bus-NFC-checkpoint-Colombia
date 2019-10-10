@@ -30,7 +30,7 @@
         tools:layout="@layout/rutas_fragment" />
 
     <fragment
-        android:id="@+id/nav_share"
+        android:id="@+id/nav_historial"
         android:name="sitetech.NFCcheckPoint.ui.historial.HistorialFragment"
         android:label="@string/menu_share"
         tools:layout="@layout/historial_fragment" />
@@ -45,4 +45,9 @@
         android:name="sitetech.NFCcheckPoint.ui.diasFestivos.DiasFestivoFragment"
         android:label="Dias Festivos"
         tools:layout="@layout/dia_festivo_fragment" />
+    <activity
+        android:id="@+id/nav_configuracion"
+        android:name="sitetech.NFCcheckPoint.SettingsActivity"
+        android:label="Configuracion"
+        tools:layout="@layout/settings_activity" />
 </navigation>

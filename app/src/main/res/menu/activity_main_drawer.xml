@@ -28,7 +28,7 @@
 
             <item
                 android:id="@+id/nav_dias_festivos"
-                android:icon="@drawable/dias_festivo"
+                android:icon="@drawable/calendario"
                 android:title="Dias Festivos" />
 
         </group>
@@ -37,9 +37,18 @@
     <item android:title="Historial de registros">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:id="@+id/nav_historial"
+                android:icon="@drawable/reports"
                 android:title="Historial" />
+        </menu>
+    </item>
+
+    <item android:title="Configuraciones">
+        <menu>
+            <item
+                android:id="@+id/nav_configuracion"
+                android:icon="@drawable/settings2"
+                android:title="Configuracion" />
         </menu>
     </item>
 

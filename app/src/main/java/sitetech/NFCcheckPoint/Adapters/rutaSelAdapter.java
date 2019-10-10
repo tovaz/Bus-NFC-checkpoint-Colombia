@@ -55,6 +55,17 @@ public class rutaSelAdapter extends RecyclerView.Adapter<rutaSelAdapter.ViewHold
         holder.display(dato);
         holder.itemView.setSelected(selectedItem == position);
 
+        TextView tx = holder.itemView.findViewById(R.id.tnombre);
+        ImageView rimg = holder.itemView.findViewById(R.id.rimg);
+
+        if (holder.itemView.isSelected()) {
+            tx.setTextColor(Color.rgb(240,240,240));
+            rimg.getDrawable().setTint(Color.rgb(240,240,240));
+        } else {
+            tx.setTextColor(Color.rgb(32, 66, 134));
+            rimg.getDrawable().setTint(Color.rgb(32, 66, 134));
+        }
+
         //holder.itemView.setBackgroundColor(selectedItem == position ? Color.GREEN : Color.TRANSPARENT);
     }
 
@@ -94,6 +105,8 @@ public class rutaSelAdapter extends RecyclerView.Adapter<rutaSelAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView tnombre;
+        private final ImageView rimg;
+
         private LinearLayout linearFondo;
         HorarioDao horarioManager = AppController.daoSession.getHorarioDao();
 
@@ -103,6 +116,7 @@ public class rutaSelAdapter extends RecyclerView.Adapter<rutaSelAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             tnombre = itemView.findViewById(R.id.tnombre);
+            rimg = itemView.findViewById(R.id.rimg);
             linearFondo = itemView.findViewById(R.id.linearFondo);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

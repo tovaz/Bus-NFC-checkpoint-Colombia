@@ -72,9 +72,9 @@ public class NFCReadFragment extends DialogFragment {
         //((OperadorActivity)  getActivity()).updateCheckFragment("PRUEBA"); //ACTUALIZAR MENSAJE EN FRAGMENTO
         Gson g = new Gson();
         if (ndef != null)
-            Dialog.showAlert(vista, "readFromNFC", g.toJson(ndef));
+            Dialog.showAlert(vista.getRootView(), "readFromNFC", g.toJson(ndef));
         else
-            Dialog.showAlert(vista, "readFromNFC", "NULL");
+            Dialog.showAlert(vista.getRootView(), "readFromNFC", "NULL");
 
         try {
             if (ndef != null) {
@@ -82,7 +82,7 @@ public class NFCReadFragment extends DialogFragment {
                 NdefMessage ndefMessage = ndef.getNdefMessage();
                 String message = new String(ndefMessage.getRecords()[0].getPayload());
 
-                Dialog.showAlert(vista, "readFromNFC - TRY l84", g.toJson(ndef));
+                Dialog.showAlert(vista.getRootView(), "readFromNFC - TRY l84", g.toJson(ndef));
 
                 ToastHelper.info("NDEF : " + message);
                 Configuraciones.setUltimoTag(getActivity().getBaseContext(), message.toString());
@@ -95,7 +95,7 @@ public class NFCReadFragment extends DialogFragment {
                 ndef.close();
             }
         } catch (IOException | FormatException e) {
-            Dialog.showAlert(vista, "readFromNFC - TRY -l97", e.getMessage());
+            Dialog.showAlert(vista.getRootView(), "readFromNFC - TRY -l97", e.getMessage());
             e.printStackTrace();
         }
     }

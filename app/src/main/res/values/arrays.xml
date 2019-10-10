@@ -1,0 +1,13 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="check_list">
+        <item>NFC</item>
+        <item>Impresora Bluetooth</item>
+        <item>Fecha y hora automatica</item>
+    </string-array>
+
+    <string-array name="check_list_values">
+        <item>true</item>
+        <item>false</item>
+    </string-array>
+</resources>

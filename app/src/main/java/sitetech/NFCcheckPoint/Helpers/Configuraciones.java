@@ -63,4 +63,16 @@ public class Configuraciones{
         editor.commit();
     }
 
+    public static Boolean getPrimerUso(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
+        Boolean tag = sharedPref.getBoolean("primerUso", true);
+        return tag;
+    }
+
+    public static void setPrimerUso(Context context, Boolean tag){
+        SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("primerUso", tag);
+        editor.commit();
+    }
 }

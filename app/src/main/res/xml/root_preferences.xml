@@ -1,0 +1,52 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:isScrollContainer="false"
+    app:iconSpaceReserved="false">
+
+    <PreferenceCategory app:title="Empresa">
+
+        <EditTextPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:key="edit_text_preference_1"
+            app:key="nombre_empresa"
+            app:title="Nombre"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:key="telefono_empresa"
+            app:title="Telefono "
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Requiere tener Habilitado">
+
+        <SwitchPreferenceCompat
+            app:key="nfc"
+            app:title="NFC" />
+
+        <SwitchPreferenceCompat
+            app:key="impresora"
+            app:title="Impresora Bluetooth" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="fecha"
+            android:title="Fecha y hora automatica" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Copia de Seguridad">
+        <Preference
+            android:background="@drawable/btn_default_sel"
+            android:key="btn_backup"
+            android:summary="Crear una copia de la base de datos."
+            android:title="Crear Backup"
+            app:icon="@drawable/save" />
+
+        <Preference
+            android:key="btn_import"
+            android:summary="Importar datos desde una copia de seguridad."
+            android:title="Cargar desde Backup"
+            app:icon="@drawable/import2" />
+    </PreferenceCategory>
+</PreferenceScreen>
