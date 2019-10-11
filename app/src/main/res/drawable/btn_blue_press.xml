@@ -8,7 +8,7 @@
     </corners>
     <stroke
         android:width="1dp"
-        android:color="#999999">
+        android:color="#0130A8">
     </stroke>
     <gradient
         android:startColor="#0130A8"

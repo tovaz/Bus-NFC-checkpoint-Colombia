@@ -42,7 +42,9 @@ public class TurnoFragment extends Fragment {
         Turno turno = Configuraciones.getTurnoAbierto();
         Usuario ulog = Configuraciones.getUsuarioLog(vista.getContext());
         tusuario.setText(ulog.getNombre());
-        tbuses.setText(turno.getTotalBuses().toString());
+
+        if (turno.getTotalBuses() != null)
+            tbuses.setText(turno.getTotalBuses().toString());
         //tatiempo.setText(turno.get);
     }
 }

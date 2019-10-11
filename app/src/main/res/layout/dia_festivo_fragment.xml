@@ -53,7 +53,7 @@
             android:divider="#888"
             android:dividerHeight="0dp"
             app:itemSpace="3dp"
-            tools:listitem="@layout/empresa_template" />
+            tools:listitem="@layout/dia_festivo_template" />
 
         <TextView
             android:id="@+id/lnotificar"

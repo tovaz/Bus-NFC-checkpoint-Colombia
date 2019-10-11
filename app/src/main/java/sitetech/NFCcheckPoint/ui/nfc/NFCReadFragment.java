@@ -12,18 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.google.gson.Gson;
+import com.skyfishjy.library.RippleBackground;
 
 import java.io.IOException;
 
-import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
-import sitetech.NFCcheckPoint.MainActivity;
 import sitetech.NFCcheckPoint.OperadorActivity;
 import sitetech.routecheckapp.R;
 
@@ -38,16 +35,19 @@ public class NFCReadFragment extends DialogFragment {
 
     private TextView mTvMessage;
     private Listener mListener;
-
+    private RippleBackground ripple;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.nfc_read_fragment,container,false);
+        vista = inflater.inflate(R.layout.nfc_read_fragment,container,false);
         cargarControles(vista);
         return vista;
     }
 
     private void cargarControles(View _vista) {
         mTvMessage = (TextView) _vista.findViewById(R.id.tv_message);
+        ripple = _vista.findViewById(R.id.ripple);
+
+        ripple.startRippleAnimation();
     }
 
     @Override
@@ -64,7 +64,6 @@ public class NFCReadFragment extends DialogFragment {
     }
 
     public void onNfcDetected(Ndef ndef){
-
         readFromNFC(ndef);
     }
 
@@ -72,9 +71,9 @@ public class NFCReadFragment extends DialogFragment {
         //((OperadorActivity)  getActivity()).updateCheckFragment("PRUEBA"); //ACTUALIZAR MENSAJE EN FRAGMENTO
         Gson g = new Gson();
         if (ndef != null)
-            Dialog.showAlert(vista.getRootView(), "readFromNFC", g.toJson(ndef));
+            DialogHelper.showAlert(vista.getRootView(), "readFromNFC", g.toJson(ndef));
         else
-            Dialog.showAlert(vista.getRootView(), "readFromNFC", "NULL");
+            DialogHelper.showAlert(vista.getRootView(), "readFromNFC", "NULL");
 
         try {
             if (ndef != null) {
@@ -82,7 +81,7 @@ public class NFCReadFragment extends DialogFragment {
                 NdefMessage ndefMessage = ndef.getNdefMessage();
                 String message = new String(ndefMessage.getRecords()[0].getPayload());
 
-                Dialog.showAlert(vista.getRootView(), "readFromNFC - TRY l84", g.toJson(ndef));
+                DialogHelper.showAlert(vista.getRootView(), "readFromNFC - TRY l84", g.toJson(ndef));
 
                 ToastHelper.info("NDEF : " + message);
                 Configuraciones.setUltimoTag(getActivity().getBaseContext(), message.toString());
@@ -95,7 +94,7 @@ public class NFCReadFragment extends DialogFragment {
                 ndef.close();
             }
         } catch (IOException | FormatException e) {
-            Dialog.showAlert(vista.getRootView(), "readFromNFC - TRY -l97", e.getMessage());
+            DialogHelper.showAlert(vista.getRootView(), "readFromNFC - TRY -l97", e.getMessage());
             e.printStackTrace();
         }
     }

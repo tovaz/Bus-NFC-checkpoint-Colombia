@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context="sitetech.NFCcheckPoint.ui.buses.BusAgregarFragment">
 
     <TextView
@@ -25,8 +24,9 @@
         android:layout_marginBottom="70dp"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 app:flv_colorActivated="@color/colorLabelFloat"
                 app:flv_ownerView="@+id/tnombre"
-                app:flv_textDefault="Numero de Placa"/>
+                app:flv_textDefault="Numero de Placa" />
 
             <EditText
                 android:id="@+id/tnombre"

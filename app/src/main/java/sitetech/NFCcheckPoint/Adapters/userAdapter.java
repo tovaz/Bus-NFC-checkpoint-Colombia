@@ -12,7 +12,7 @@ import com.omega_r.libs.omegarecyclerview.swipe_menu.SwipeViewHolder;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.db.Usuario;
@@ -126,7 +126,7 @@ public class userAdapter extends OmegaRecyclerView.Adapter<userAdapter.MyViewHol
                     break;
 */
                 case R.id.beliminar:
-                    Dialog.showAsk2(v, "Eliminar usuario", "¿Desea realmente eliminar este usuario?",
+                    DialogHelper.showAsk2(v, "Eliminar usuario", "¿Desea realmente eliminar este usuario?",
                             "Eliminar", "Cancelar", new myDialogInterface() {
                                 @Override
                                 public View onBuildDialog() {

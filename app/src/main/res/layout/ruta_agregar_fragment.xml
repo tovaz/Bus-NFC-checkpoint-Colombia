@@ -79,6 +79,12 @@
             tools:layout_editor_absoluteX="264dp"
             tools:layout_editor_absoluteY="674dp" />
 
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horarios asignados" />
+
         <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView
             android:id="@+id/hlista"
             android:layout_width="match_parent"

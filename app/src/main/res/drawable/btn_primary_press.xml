@@ -11,7 +11,7 @@
             </corners>
             <stroke
                 android:width="1dp"
-                android:color="#999999">
+                android:color="@color/colorPrimaryDark">
             </stroke>
             <gradient
                 android:startColor="@color/colorPrimaryDark"
@@ -24,6 +24,4 @@
                 android:bottom="10dp" />
         </shape>
     </item>
-    <item android:drawable="@drawable/agregar" android:color="@color/colorAccent" android:width="25dp"
-        android:left="20dp" android:gravity="left"/>
 </layer-list>

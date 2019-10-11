@@ -1,11 +1,15 @@
 package sitetech.NFCcheckPoint;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import sitetech.NFCcheckPoint.Helpers.checkHelper;
@@ -33,6 +37,16 @@ public class LockActivity extends AppCompatActivity {
         startChecking();
     }
 
+    private void Necesita(){
+        boolean needNFC = getPreferences(MODE_PRIVATE).getBoolean("nfc", true);
+        boolean needBT = getPreferences(MODE_PRIVATE).getBoolean("impresora", true);
+        boolean needFecha = getPreferences(MODE_PRIVATE).getBoolean("fecha", true);
+
+        if (!needNFC) bnfc.setVisibility(View.GONE); else bnfc.setVisibility(View.VISIBLE);
+        if (!needBT) bimpresora.setVisibility(View.GONE); else bimpresora.setVisibility(View.VISIBLE);
+        if (!needFecha) bfecha.setVisibility(View.GONE); else bfecha.setVisibility(View.VISIBLE);
+    }
+
     Runnable CheckerTime = new Runnable() {
         @Override
         public void run() {
@@ -48,7 +62,8 @@ public class LockActivity extends AppCompatActivity {
 
 
     private void checking(){
-        if (checkHelper.isNfcEnable(this) && checkHelper.isTimeAutomatic(this) && checkHelper.isPrinterConnected())
+        Necesita();
+        if (checkHelper.verificarNFC(this) && checkHelper.verificarImpresora(this) && checkHelper.verificarFecha(this))
             finish();
         else {
             if (checkHelper.isNfcEnable(this)) bnfc.setBackground(getResources().getDrawable(R.drawable.btn_checked));
@@ -61,6 +76,8 @@ public class LockActivity extends AppCompatActivity {
             else bimpresora.setBackground(getResources().getDrawable(R.drawable.btn_default));
         }
     }
+
+
 
     void startChecking() {
         CheckerTime.run();

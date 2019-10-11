@@ -11,7 +11,7 @@ import com.omega_r.libs.omegarecyclerview.swipe_menu.SwipeViewHolder;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.db.Empresa;
@@ -99,7 +99,7 @@ public class empresaAdapter extends OmegaRecyclerView.Adapter<empresaAdapter.Vie
         public void onClick(final View v) {
             switch (v.getId()) {
                 case R.id.beliminar:
-                    Dialog.showAsk2(v, "Eliminar Empresa", "¿Desea realmente eliminar esta empresa?",
+                    DialogHelper.showAsk2(v, "Eliminar Empresa", "¿Desea realmente eliminar esta empresa?",
                             "Eliminar", "Cancelar", new myDialogInterface() {
                                 @Override
                                 public View onBuildDialog() {

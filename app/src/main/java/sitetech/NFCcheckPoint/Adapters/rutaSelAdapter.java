@@ -10,16 +10,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
-import com.omega_r.libs.omegarecyclerview.swipe_menu.SwipeViewHolder;
-
 import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
-import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
-import sitetech.NFCcheckPoint.db.Horario;
 import sitetech.NFCcheckPoint.db.HorarioDao;
 import sitetech.NFCcheckPoint.db.Ruta;
 import sitetech.routecheckapp.R;

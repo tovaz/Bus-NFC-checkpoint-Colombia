@@ -9,7 +9,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PorterDuff;
-import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
@@ -18,19 +17,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
-
 import sitetech.NFCcheckPoint.Adapters.TabsAdapter;
-import sitetech.NFCcheckPoint.Helpers.Configuraciones;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.checkHelper;
@@ -96,7 +89,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
 
     boolean isCheckActivity = false;
     private void checking(){
-        if (checkHelper.isNfcEnable(this) && checkHelper.isTimeAutomatic(this) && checkHelper.isPrinterConnected()) {
+        if (checkHelper.verificarNFC(this) && checkHelper.verificarImpresora(this) && checkHelper.verificarFecha(this)) {
             isCheckActivity = false;
             finishActivity(2);
         }
@@ -165,7 +158,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
         blogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog.showAsk2(v, "Cerrar Sesion", "¿Quiere cerrar sesion ahora?", "Cerrar ahora", "Cancelar", new myDialogInterface() {
+                DialogHelper.showAsk2(v, "Cerrar Sesion", "¿Quiere cerrar sesion ahora?", "Cerrar ahora", "Cancelar", new myDialogInterface() {
                     @Override
                     public View onBuildDialog() {  return null; }
 

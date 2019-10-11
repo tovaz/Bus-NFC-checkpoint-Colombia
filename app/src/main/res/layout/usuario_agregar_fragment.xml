@@ -107,20 +107,13 @@
                 android:hint="Telefono"
                 android:inputType="phone" />
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/sactivo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="30dp"
                 android:checked="true"
-                android:padding="10dp"
-                android:showText="true"
-                android:textColor="#555"
-                android:textIsSelectable="false"
-                android:textOff="Inactivo"
-                android:textOn="Activo"
-                android:textSize="15sp"
-                tools:text="Estado del usuario" />
+                android:text="Estado del usuario"
+                android:textColor="#333" />
 
             <TextView
                 android:id="@+id/textView2"

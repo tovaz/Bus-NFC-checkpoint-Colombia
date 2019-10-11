@@ -11,10 +11,9 @@ import com.omega_r.libs.omegarecyclerview.swipe_menu.SwipeViewHolder;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
-import sitetech.NFCcheckPoint.db.HorarioDao;
 import sitetech.NFCcheckPoint.db.Ruta;
 import sitetech.NFCcheckPoint.db.RutaDao;
 import sitetech.NFCcheckPoint.db.horarioPorRutaDao;
@@ -99,7 +98,7 @@ public class rutaAdapter extends OmegaRecyclerView.Adapter<rutaAdapter.ViewHolde
         public void onClick(final View v) {
             switch (v.getId()) {
                 case R.id.beliminar:
-                    Dialog.showAsk2(v, "Eliminar Ruta", "¿Desea realmente eliminar esta ruta?",
+                    DialogHelper.showAsk2(v, "Eliminar Ruta", "¿Desea realmente eliminar esta ruta?",
                             "Eliminar", "Cancelar", new myDialogInterface() {
                                 @Override
                                 public View onBuildDialog() {

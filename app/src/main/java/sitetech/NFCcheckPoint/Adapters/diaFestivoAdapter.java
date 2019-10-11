@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.db.DiaFestivo;
@@ -100,7 +100,7 @@ public class diaFestivoAdapter extends OmegaRecyclerView.Adapter<diaFestivoAdapt
         public void onClick(final View v) {
             switch (v.getId()) {
                 case R.id.beliminar:
-                    Dialog.showAsk2(v, "Eliminar Dia Festivo", "¿Desea realmente eliminar este dia?",
+                    DialogHelper.showAsk2(v, "Eliminar Dia Festivo", "¿Desea realmente eliminar este dia?",
                             "Eliminar", "Cancelar", new myDialogInterface() {
                                 @Override
                                 public View onBuildDialog() {

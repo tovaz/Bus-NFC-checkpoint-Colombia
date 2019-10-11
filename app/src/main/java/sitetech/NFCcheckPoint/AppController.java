@@ -61,6 +61,7 @@ public class AppController extends Application {
             turno.setFechaCreacion(new Date());
             turno.setEliminada(false);
             turno.setFechaCierre(null);
+            turno.setTotalBuses(new Long(0));
             turnoManager.insert(turno);
         }
     }

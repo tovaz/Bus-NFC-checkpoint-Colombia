@@ -3,6 +3,7 @@ package sitetech.NFCcheckPoint.ui.usuarios;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ public class Usuario_AgregarFragment extends Fragment implements Serializable {
     private TextView tpassword;
     private TextView ttelefono;
     private TextView ttitulo;
-    private Switch sactivo;
+    private SwitchCompat sactivo;
     private View vista;
     private UsuariosFragment mainFragment;
 

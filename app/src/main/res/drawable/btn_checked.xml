@@ -11,7 +11,7 @@
             </corners>
             <stroke
                 android:width="1dp"
-                android:color="@color/SuccessColor">
+                android:color="#4CFDC6">
             </stroke>
             <gradient
                 android:startColor="#4CFDC6"
@@ -23,7 +23,7 @@
                 android:right="10dp"
                 android:bottom="10dp" />
         </shape>
+
     </item>
-    <item android:drawable="@drawable/check_24x24" android:color="@color/colorAccent" android:width="25dp"
-        android:left="20dp" android:gravity="left"/>
+
 </layer-list>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/navbar_header"
+    android:background="@drawable/lock_background"
     tools:context="sitetech.NFCcheckPoint.LockActivity">
 
     <ScrollView
@@ -28,7 +28,7 @@
                 android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                app:srcCompat="@drawable/checklist" />
+                app:srcCompat="@drawable/ic_check_dark" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -38,7 +38,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="Necesita tener habilitado"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorPrimary" />
 
             <Button
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/btn_default_sel"
+                android:background="@drawable/btn_checked"
                 android:text="NFC" />
 
             <Button
@@ -72,8 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Si no esta habilitado no podra realizar registros."
-                android:textAlignment="center"
-                android:textColor="@color/ErrorColor" />
+                android:textAlignment="center" />
         </LinearLayout>
     </ScrollView>
 

@@ -2,7 +2,6 @@ package sitetech.NFCcheckPoint.Adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
@@ -11,15 +10,9 @@ import com.omega_r.libs.omegarecyclerview.swipe_menu.SwipeViewHolder;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
-import sitetech.NFCcheckPoint.Helpers.ToastHelper;
-import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
-import sitetech.NFCcheckPoint.db.HorarioDao;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
-import sitetech.NFCcheckPoint.db.Ruta;
 import sitetech.NFCcheckPoint.db.RutaDao;
-import sitetech.NFCcheckPoint.db.horarioPorRutaDao;
 import sitetech.routecheckapp.R;
 
 public class registroAdapter extends OmegaRecyclerView.Adapter<registroAdapter.ViewHolder>  {

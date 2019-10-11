@@ -11,7 +11,7 @@ import com.omega_r.libs.omegarecyclerview.swipe_menu.SwipeViewHolder;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.db.Bus;
@@ -100,7 +100,7 @@ public class busAdapter extends OmegaRecyclerView.Adapter<busAdapter.ViewHolder>
             ToastHelper.info("HOLA dio click aqui...");
             switch (v.getId()) {
                 case R.id.beliminar:
-                    Dialog.showAsk2(v, "Eliminar Bus", "¿Desea realmente eliminar este bus?",
+                    DialogHelper.showAsk2(v, "Eliminar Bus", "¿Desea realmente eliminar este bus?",
                     "Eliminar", "Cancelar", new myDialogInterface() {
                         @Override
                         public View onBuildDialog() {

@@ -9,12 +9,13 @@
 
     <ImageView
         android:id="@+id/beliminar"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_gravity="center|center_horizontal"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
-        app:srcCompat="@drawable/trash" />
+        android:background="@drawable/btn_red_sel"
+        app:srcCompat="@drawable/remove_b" />
 
     <ImageView
         android:id="@+id/bestado"

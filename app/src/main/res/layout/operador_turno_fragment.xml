@@ -138,14 +138,14 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_red_sel"
                     android:text="Cerrar Turno"
-                    android:textColor="#333" />
+                    android:textColor="#eee" />
 
                 <Button
                     android:id="@+id/tcerrarSesion"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:background="@drawable/btn_save_sel"
+                    android:background="@drawable/btn_default_sel"
                     android:text="Cerrar Sesion" />
 
             </LinearLayout>

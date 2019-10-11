@@ -3,9 +3,12 @@ package sitetech.NFCcheckPoint;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
+import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -30,7 +33,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
@@ -142,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
         blogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog.showAsk2(navigationView, "Cerrar Sesion", "¿Quiere cerrar sesion ahora?", "Cerrar ahora", "Cancelar", new myDialogInterface() {
+                DialogHelper.showAsk2(navigationView, "Cerrar Sesion", "¿Quiere cerrar sesion ahora?", "Cerrar ahora", "Cancelar", new myDialogInterface() {
                     @Override
                     public View onBuildDialog() {  return null; }
 
@@ -206,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected,tagDetected,ndefDetected};
+        IntentFilter[] nfcIntentFilter = new IntentFilter[]{ndefDetected,techDetected,tagDetected};
 
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -228,14 +231,21 @@ public class MainActivity extends AppCompatActivity implements Listener {
         Log.d("TAG RECIVIDO: ", tag.toString());
         Log.d("NEW INTENT", "on New Intent: "+intent.getAction());
 
+        String[] techList = tag.getTechList();
+        Log.d("TECH LIST", "");
+        for ( String x : techList)
+            Log.d("l", x);
+
+
         if(tag != null) {
             Toast.makeText(this, "Tarjeta detectada.", Toast.LENGTH_SHORT).show();
             Ndef ndef = Ndef.get(tag);
 
-            Gson g = new Gson();
-            ToastHelper.aviso(g.toJson(tag));
-            if (isDialogDisplayed) {
+            if (ndef == null) ndef = formatearTag(ndef, tag);
 
+            Gson g = new Gson();
+            //ToastHelper.aviso(ndef.toString());
+            if (isDialogDisplayed) {
                 if (isWrite) {
                     nfcData nfcdata = new nfcData(busNFC);
                     String messageToWrite = nfcHelper.convertnfcData(nfcdata);
@@ -250,5 +260,17 @@ public class MainActivity extends AppCompatActivity implements Listener {
         }
     }
 
+    private Ndef formatearTag(Ndef ndefTag, Tag tag){
+        if (ndefTag.get(tag) == null) {
+            try {
+                Log.d("FORMATEANDO TAG tipo", ndefTag.getType());
+                ndefTag.writeNdefMessage(new NdefMessage(new NdefRecord(NdefRecord.TNF_EMPTY, null, null, null)));
+            } catch (Exception e) {
+                Log.d("FORMATEANDO TAG", e.getMessage());
+            }
+        }
+
+        return ndefTag;
+    }
 
 }

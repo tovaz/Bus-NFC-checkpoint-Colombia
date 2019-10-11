@@ -21,7 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingRight="10dp">
 
                 <ImageView
                     android:id="@+id/bpruebas"
@@ -38,6 +39,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/btn_default_sel"
                     android:src="@drawable/route_24x24"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/route_32" />
 
                 <ImageView
@@ -46,13 +48,15 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/btn_default_sel"
                     android:src="@drawable/print_24x242"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/print_32" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="5dp">
+                    android:padding="5dp"
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:id="@+id/tusuario"
@@ -70,9 +74,9 @@
                         android:layout_height="32dp"
                         android:layout_gravity="right"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/btn_red_sel"
+                        android:background="@drawable/btn_default_sel"
                         android:text="Salir"
-                        android:textColor="#eee"
+                        android:textColor="#333"
                         android:textSize="10sp" />
 
                 </LinearLayout>

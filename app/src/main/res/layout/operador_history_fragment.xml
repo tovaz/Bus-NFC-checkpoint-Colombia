@@ -22,14 +22,10 @@
             android:id="@+id/text_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Usuarios"
+            android:text="Haz click en un registro para reimprimirlo."
             android:textAlignment="center"
-            android:textSize="20sp"
-            android:visibility="gone" />
+            android:textSize="14sp"
+            android:visibility="visible" />
 
         <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView
             android:id="@+id/rlista"

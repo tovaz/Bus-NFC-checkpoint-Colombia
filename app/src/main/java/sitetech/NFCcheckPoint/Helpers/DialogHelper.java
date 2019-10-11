@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.View;
 
-public class Dialog {
+public class DialogHelper {
     public static synchronized boolean showAsk(View vista, String titulo, String mensaje, String boton1, String boton2){
         final boolean[] respuesta = new boolean[1];
         AlertDialog.Builder alert = new AlertDialog.Builder(vista.getContext());
@@ -61,7 +61,7 @@ public class Dialog {
     public static void showAlert(View v, String titulo, String mensaje){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(v.getContext());
         builder1.setTitle(titulo);
-        builder1.setMessage(titulo + " <> " + mensaje);
+        builder1.setMessage(mensaje);
         builder1.setCancelable(true);
 
         AlertDialog alert11 = builder1.create();

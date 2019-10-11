@@ -12,11 +12,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Dialog;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
-import sitetech.NFCcheckPoint.db.Horario;
-import sitetech.NFCcheckPoint.db.HorarioDao;
 import sitetech.NFCcheckPoint.db.horarioPorRuta;
 import sitetech.NFCcheckPoint.db.horarioPorRutaDao;
 import sitetech.routecheckapp.R;
@@ -102,7 +100,7 @@ public class horarioPorRutaAdapter extends OmegaRecyclerView.Adapter<horarioPorR
         public void onClick(final View v) {
             switch (v.getId()) {
                 case R.id.beliminar:
-                    Dialog.showAsk2(v, "Quitar Horario", "¿Desea realmente quitar el horario de la ruta?",
+                    DialogHelper.showAsk2(v, "Quitar Horario", "¿Desea realmente quitar el horario de la ruta?",
                             "Quitar", "Cancelar", new myDialogInterface() {
                                 @Override
                                 public View onBuildDialog() {

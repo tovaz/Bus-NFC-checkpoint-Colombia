@@ -7,71 +7,96 @@
     android:background="@drawable/login_fondo"
     tools:context="sitetech.NFCcheckPoint.LoginActivity">
 
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/lnotificacion"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Si es primer inicio; usuario: admin y sin contraseña"
-            android:textAlignment="center"
-            android:textColor="@color/ErrorColor"
-            android:visibility="gone" />
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/biniciar2"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_red_sel"
-            android:text="Iniciar como Admin"
-            android:textColor="#eee" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/login_image" />
+            <TextView
+                android:id="@+id/lnotificacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Si es primer inicio; usuario: admin y sin contraseña"
+                android:textAlignment="center"
+                android:textColor="@color/ErrorColor"
+                android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/tnombre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="Usuario o Cedula"
-            android:inputType="textPersonName" />
+            <Button
+                android:id="@+id/biniciar2"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_red_sel"
+                android:text="Iniciar como Admin"
+                android:textColor="#eee" />
 
-        <EditText
-            android:id="@+id/tcontraseña"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPassword" />
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/login_image2" />
 
-        <Button
-            android:id="@+id/biniciar"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_blue_sel"
-            android:text="Iniciar Sesion"
-            android:textColor="#eee" />
+            <net.xpece.material.floatinglabel.FloatingLabelView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:textSize="15sp"
+                app:flv_colorActivated="@color/colorLabelFloat"
+                app:flv_ownerView="@+id/tnombre"
+                app:flv_textDefault="Usuario o Cedula" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/tnombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/text_edit_sel"
+                android:ems="10"
+                android:hint="Usuario o Cedula"
+                android:inputType="textPersonName" />
+
+            <net.xpece.material.floatinglabel.FloatingLabelView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:textSize="15sp"
+                app:flv_colorActivated="@color/colorLabelFloat"
+                app:flv_ownerView="@+id/tcontraseña"
+                app:flv_textDefault="Contraseña" />
+
+            <EditText
+                android:id="@+id/tcontraseña"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/text_edit_sel"
+                android:ems="10"
+                android:hint="Contraseña"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/biniciar"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_blue_sel"
+                android:text="Iniciar Sesion"
+                android:textColor="#eee" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

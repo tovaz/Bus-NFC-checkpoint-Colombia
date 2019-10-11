@@ -1,6 +1,10 @@
 package sitetech.NFCcheckPoint.ui.operador;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +32,7 @@ import sitetech.NFCcheckPoint.Adapters.onItemClick;
 import sitetech.NFCcheckPoint.Adapters.rutaAdapter;
 import sitetech.NFCcheckPoint.Adapters.rutaSelAdapter;
 import sitetech.NFCcheckPoint.AppController;
+import sitetech.NFCcheckPoint.Core.BluetoothPrinter;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
@@ -53,6 +58,7 @@ public class CheckFragment extends Fragment implements Listener {
     private TextView tfecha, tusuario;
     private Button bguardar;
     private Button bpruebas;
+    private Button bimprimir;
 
     private TextView tplaca, tinterno, tempresa, thoraregistro, tultimocheck, tjustificacion;
 
@@ -80,6 +86,7 @@ public class CheckFragment extends Fragment implements Listener {
         tusuario = vista.findViewById(R.id.tusuario);
         bguardar = vista.findViewById(R.id.bguardar);
         bpruebas = vista.findViewById(R.id.bpruebas);
+        bimprimir = vista.findViewById(R.id.bimprimir);
 
         //Datos de la tarjeta leida
         tplaca = vista.findViewById(R.id.tplaca);
@@ -92,6 +99,7 @@ public class CheckFragment extends Fragment implements Listener {
         bguardar.setVisibility(View.GONE);
     }
 
+    private Registro_Turno ultimoRegistro;
     private void Click(){
         bguardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,11 +114,79 @@ public class CheckFragment extends Fragment implements Listener {
                 registrosManager.insert(nuevoRegistro);
 
                 ToastHelper.exito("Bus registrado con exito.");
-                limpiarInfo();
+                ultimoRegistro = nuevoRegistro;
+            }
+        });
+
+        bimprimir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+                BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
+
+                final BluetoothPrinter mPrinter = new BluetoothPrinter(mBtDevice);
+                mPrinter.connectPrinter(new BluetoothPrinter.PrinterConnectListener() {
+
+                    @Override
+                    public void onConnected() {
+                        imprimir(mPrinter);
+                        limpiarInfo();
+                        ToastHelper.exito("Registro impreso correctamente.");
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        ToastHelper.error("Error al enviar la impresion, verifica la impresora.");
+                        Log.d("Impresora bluetooth", "Error de conexion");
+                    }
+
+                });
             }
         });
     }
 
+    private void imprimir(BluetoothPrinter impresora){
+        Bitmap logoEmpresa = BitmapFactory.decodeResource(getResources(), R.drawable.logo_empresa);
+        impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
+        impresora.printImage(logoEmpresa);
+        impresora.addNewLine();
+
+        impresora.setBold(true);
+        impresora.printText("PUNTO DE CONTROL");
+        impresora.setAlign(BluetoothPrinter.ALIGN_LEFT);
+        impresora.setBold(false);
+        impresora.printText(ultimoRegistro.getRuta().getNombre().toUpperCase());
+
+        impresora.setBold(true);
+        impresora.printText("TIEMPO AL PUNTO: Como se calcula ?");
+
+        impresora.addNewLine();
+        impresora.printText("DETALLE DE CONTROL");
+        impresora.setBold(false);
+        impresora.setLineSpacing(1);
+        imprimirValor(impresora, "EMPRESA", ultimoRegistro.getBus().getEmpresa().getNombre().toUpperCase());
+        imprimirValor(impresora, "PLACA", ultimoRegistro.getBus().getPlaca().toUpperCase());
+        imprimirValor(impresora, "INTERNO", ultimoRegistro.getBus().getInterno().toUpperCase());
+        imprimirValor(impresora, "FECHA", TimeHelper.getDate(ultimoRegistro.getFecha()));
+        imprimirValor(impresora, "HORA DESPACHO", ultimoRegistro.getDespacho());
+        imprimirValor(impresora, "HORA REGISTRO", TimeHelper.getTime(ultimoRegistro.getFecha()));
+
+        impresora.addNewLine();
+        imprimirValor(impresora, "Dato extra 1", "");
+        imprimirValor(impresora, "Dato extra 2", "");
+
+        impresora.printLine();
+        impresora.feedPaper();
+
+        impresora.finish();
+    }
+
+    private void imprimirValor(BluetoothPrinter print, String campo, String valor){
+        print.setAlign(BluetoothPrinter.ALIGN_LEFT);
+        print.printText(campo);
+        print.setAlign(BluetoothPrinter.ALIGN_RIGHT);
+        print.printText(valor);
+    }
     private void pruebas(){
         bpruebas.setOnClickListener(new View.OnClickListener() {
             @Override
