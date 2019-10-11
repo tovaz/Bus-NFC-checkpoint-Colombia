@@ -1,6 +1,5 @@
 package sitetech.NFCcheckPoint.Helpers;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -31,5 +30,18 @@ public class TimeHelper {
         else
             return h + ":0" + m;
 
+    }
+
+    public static Long calcularDiferencia(String time1, String time2){
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        try {
+            Date date1 = format.parse(time1);
+            Date date2 = format.parse(time2);
+            long difference = date2.getTime() - date1.getTime();
+
+            return difference / 1000;
+        }catch (Exception e){
+            return null;
+        }
     }
 }

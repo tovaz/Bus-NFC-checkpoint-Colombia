@@ -5,8 +5,6 @@ import org.greenrobot.greendao.generator.Entity;
 import org.greenrobot.greendao.generator.Property;
 import org.greenrobot.greendao.generator.Schema;
 
-import java.util.function.LongPredicate;
-
 public class daoGenerator {
     private Entity user, empresa, bus, ruta, horario, horarioPorRuta, turno, registroTurno, diaFestivo;
 
@@ -81,16 +79,16 @@ public class daoGenerator {
         horario = schema.addEntity("Horario"); //hora de inicio
         horario.addIdProperty().primaryKey().autoincrement();
         horario.addStringProperty("nombre");
-        horario.addStringProperty("horaDesde");
-        horario.addStringProperty("horaHasta");
+        horario.addLongProperty("horaDesde");
+        horario.addLongProperty("horaHasta");
         horario.addIntProperty("maxMinutos");
 
-        horario.addStringProperty("horaFestivoDesde");
-        horario.addStringProperty("horaFestivoHasta");
+        horario.addLongProperty("horaFestivoDesde");
+        horario.addLongProperty("horaFestivoHasta");
         horario.addIntProperty("maxMinutosFestivo");
 
-        horario.addStringProperty("horaFinSemanaDesde"); //hora no en uso
-        horario.addStringProperty("horaFinSemanaHasta"); //hora
+        horario.addLongProperty("horaFinSemanaDesde"); //hora no en uso
+        horario.addLongProperty("horaFinSemanaHasta"); //hora
         horario.addIntProperty("maxMinutosFinSemana"); // hora
 
         horario.addBooleanProperty("eliminado").notNull();

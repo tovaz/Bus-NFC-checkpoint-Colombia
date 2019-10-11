@@ -10,6 +10,7 @@ import java.util.Date;
 
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.TestDataHelper;
+import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.db.DaoMaster;
 import sitetech.NFCcheckPoint.db.DaoSession;
 import sitetech.NFCcheckPoint.db.Turno;
@@ -38,7 +39,17 @@ public class AppController extends Application {
         AppController.context = getApplicationContext();
         checkTurno(); // PRIMORDIAL PARA CREAR EL PRIMER TURNO.
 
+        testFunction();
         if (esPrimerUso()) TestDataHelper.crearData();
+    }
+
+    public void testFunction(){
+        Log.d("TIEMPO CALCULO", TimeHelper.calcularDiferencia("10:50:00", "13:05:00").toString());
+        Log.d("TIEMPO CALCULO", TimeHelper.calcularDiferencia("11:25:00", "13:05:00").toString());
+        Log.d("TIEMPO CALCULO", TimeHelper.calcularDiferencia("13:00:00", "13:05:00").toString());
+        Log.d("TIEMPO CALCULO", TimeHelper.calcularDiferencia("13:35:00", "13:05:00").toString());
+        Log.d("TIEMPO CALCULO", TimeHelper.calcularDiferencia("13:45:00", "13:05:00").toString());
+
     }
 
     public void AgregarColumna(Database db, String tabla, String columna, String tipo){

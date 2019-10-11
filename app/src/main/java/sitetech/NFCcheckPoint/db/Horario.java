@@ -16,14 +16,14 @@ public class Horario {
     @Id(autoincrement = true)
     private Long id;
     private String nombre;
-    private String horaDesde;
-    private String horaHasta;
+    private Long horaDesde;
+    private Long horaHasta;
     private Integer maxMinutos;
-    private String horaFestivoDesde;
-    private String horaFestivoHasta;
+    private Long horaFestivoDesde;
+    private Long horaFestivoHasta;
     private Integer maxMinutosFestivo;
-    private String horaFinSemanaDesde;
-    private String horaFinSemanaHasta;
+    private Long horaFinSemanaDesde;
+    private Long horaFinSemanaHasta;
     private Integer maxMinutosFinSemana;
     private boolean eliminado;
 
@@ -39,7 +39,7 @@ public class Horario {
     }
 
     @Generated
-    public Horario(Long id, String nombre, String horaDesde, String horaHasta, Integer maxMinutos, String horaFestivoDesde, String horaFestivoHasta, Integer maxMinutosFestivo, String horaFinSemanaDesde, String horaFinSemanaHasta, Integer maxMinutosFinSemana, boolean eliminado) {
+    public Horario(Long id, String nombre, Long horaDesde, Long horaHasta, Integer maxMinutos, Long horaFestivoDesde, Long horaFestivoHasta, Integer maxMinutosFestivo, Long horaFinSemanaDesde, Long horaFinSemanaHasta, Integer maxMinutosFinSemana, boolean eliminado) {
         this.id = id;
         this.nombre = nombre;
         this.horaDesde = horaDesde;
@@ -70,19 +70,19 @@ public class Horario {
         this.nombre = nombre;
     }
 
-    public String getHoraDesde() {
+    public Long getHoraDesde() {
         return horaDesde;
     }
 
-    public void setHoraDesde(String horaDesde) {
+    public void setHoraDesde(Long horaDesde) {
         this.horaDesde = horaDesde;
     }
 
-    public String getHoraHasta() {
+    public Long getHoraHasta() {
         return horaHasta;
     }
 
-    public void setHoraHasta(String horaHasta) {
+    public void setHoraHasta(Long horaHasta) {
         this.horaHasta = horaHasta;
     }
 
@@ -94,19 +94,19 @@ public class Horario {
         this.maxMinutos = maxMinutos;
     }
 
-    public String getHoraFestivoDesde() {
+    public Long getHoraFestivoDesde() {
         return horaFestivoDesde;
     }
 
-    public void setHoraFestivoDesde(String horaFestivoDesde) {
+    public void setHoraFestivoDesde(Long horaFestivoDesde) {
         this.horaFestivoDesde = horaFestivoDesde;
     }
 
-    public String getHoraFestivoHasta() {
+    public Long getHoraFestivoHasta() {
         return horaFestivoHasta;
     }
 
-    public void setHoraFestivoHasta(String horaFestivoHasta) {
+    public void setHoraFestivoHasta(Long horaFestivoHasta) {
         this.horaFestivoHasta = horaFestivoHasta;
     }
 
@@ -118,19 +118,19 @@ public class Horario {
         this.maxMinutosFestivo = maxMinutosFestivo;
     }
 
-    public String getHoraFinSemanaDesde() {
+    public Long getHoraFinSemanaDesde() {
         return horaFinSemanaDesde;
     }
 
-    public void setHoraFinSemanaDesde(String horaFinSemanaDesde) {
+    public void setHoraFinSemanaDesde(Long horaFinSemanaDesde) {
         this.horaFinSemanaDesde = horaFinSemanaDesde;
     }
 
-    public String getHoraFinSemanaHasta() {
+    public Long getHoraFinSemanaHasta() {
         return horaFinSemanaHasta;
     }
 
-    public void setHoraFinSemanaHasta(String horaFinSemanaHasta) {
+    public void setHoraFinSemanaHasta(Long horaFinSemanaHasta) {
         this.horaFinSemanaHasta = horaFinSemanaHasta;
     }
 
