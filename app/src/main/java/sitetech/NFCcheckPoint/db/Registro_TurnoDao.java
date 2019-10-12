@@ -28,8 +28,8 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Fecha = new Property(1, java.util.Date.class, "fecha", false, "FECHA");
         public final static Property Eliminado = new Property(2, Boolean.class, "eliminado", false, "ELIMINADO");
-        public final static Property MinAtrazado = new Property(3, Integer.class, "minAtrazado", false, "MIN_ATRAZADO");
-        public final static Property MinAdelantado = new Property(4, Integer.class, "minAdelantado", false, "MIN_ADELANTADO");
+        public final static Property MinAtrazado = new Property(3, String.class, "minAtrazado", false, "MIN_ATRAZADO");
+        public final static Property MinAdelantado = new Property(4, String.class, "minAdelantado", false, "MIN_ADELANTADO");
         public final static Property Justificacion = new Property(5, String.class, "justificacion", false, "JUSTIFICACION");
         public final static Property Despacho = new Property(6, String.class, "despacho", false, "DESPACHO");
         public final static Property BusId = new Property(7, long.class, "busId", false, "BUS_ID");
@@ -57,8 +57,8 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"FECHA\" INTEGER," + // 1: fecha
                 "\"ELIMINADO\" INTEGER," + // 2: eliminado
-                "\"MIN_ATRAZADO\" INTEGER," + // 3: minAtrazado
-                "\"MIN_ADELANTADO\" INTEGER," + // 4: minAdelantado
+                "\"MIN_ATRAZADO\" TEXT," + // 3: minAtrazado
+                "\"MIN_ADELANTADO\" TEXT," + // 4: minAdelantado
                 "\"JUSTIFICACION\" TEXT," + // 5: justificacion
                 "\"DESPACHO\" TEXT," + // 6: despacho
                 "\"BUS_ID\" INTEGER NOT NULL ," + // 7: busId
@@ -92,14 +92,14 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
             stmt.bindLong(3, eliminado ? 1L: 0L);
         }
  
-        Integer minAtrazado = entity.getMinAtrazado();
+        String minAtrazado = entity.getMinAtrazado();
         if (minAtrazado != null) {
-            stmt.bindLong(4, minAtrazado);
+            stmt.bindString(4, minAtrazado);
         }
  
-        Integer minAdelantado = entity.getMinAdelantado();
+        String minAdelantado = entity.getMinAdelantado();
         if (minAdelantado != null) {
-            stmt.bindLong(5, minAdelantado);
+            stmt.bindString(5, minAdelantado);
         }
  
         String justificacion = entity.getJustificacion();
@@ -136,14 +136,14 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
             stmt.bindLong(3, eliminado ? 1L: 0L);
         }
  
-        Integer minAtrazado = entity.getMinAtrazado();
+        String minAtrazado = entity.getMinAtrazado();
         if (minAtrazado != null) {
-            stmt.bindLong(4, minAtrazado);
+            stmt.bindString(4, minAtrazado);
         }
  
-        Integer minAdelantado = entity.getMinAdelantado();
+        String minAdelantado = entity.getMinAdelantado();
         if (minAdelantado != null) {
-            stmt.bindLong(5, minAdelantado);
+            stmt.bindString(5, minAdelantado);
         }
  
         String justificacion = entity.getJustificacion();
@@ -178,8 +178,8 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // fecha
             cursor.isNull(offset + 2) ? null : cursor.getShort(offset + 2) != 0, // eliminado
-            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // minAtrazado
-            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // minAdelantado
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // minAtrazado
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // minAdelantado
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // justificacion
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // despacho
             cursor.getLong(offset + 7), // busId
@@ -195,8 +195,8 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setFecha(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
         entity.setEliminado(cursor.isNull(offset + 2) ? null : cursor.getShort(offset + 2) != 0);
-        entity.setMinAtrazado(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
-        entity.setMinAdelantado(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setMinAtrazado(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setMinAdelantado(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setJustificacion(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setDespacho(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setBusId(cursor.getLong(offset + 7));

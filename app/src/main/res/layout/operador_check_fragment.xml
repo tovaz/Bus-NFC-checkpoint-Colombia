@@ -204,7 +204,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Cambiar hora de despacho"
+                        android:text="Hora de Despacho"
                         android:textAlignment="center" />
 
                     <EditText
@@ -213,6 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:background="@drawable/text_edit"
+                        android:editable="false"
                         android:inputType="textMultiLine"
                         android:textSize="16sp" />
 
@@ -221,27 +222,27 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
                     android:layout_weight="2"
                     android:background="#cef"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:paddingBottom="10dp">
+                    android:padding="10dp">
 
                     <TextView
+                        android:id="@+id/tinfo1"
                         android:layout_width="79dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Observacion"
+                        android:text="Adelantado/Atrazado"
                         android:textAlignment="center" />
 
-                    <EditText
-                        android:id="@+id/tjustificacion"
+                    <TextView
+                        android:id="@+id/tminutos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:background="@drawable/text_edit"
+                        android:editable="false"
                         android:inputType="textMultiLine"
                         android:textSize="16sp" />
 

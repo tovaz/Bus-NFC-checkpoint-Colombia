@@ -17,9 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.codetroopers.betterpickers.hmspicker.HmsPickerBuilder;
+import com.codetroopers.betterpickers.hmspicker.HmsPickerDialogFragment;
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
 import com.omega_r.libs.omegarecyclerview.expandable_recycler_view.OmegaExpandableRecyclerView;
 
@@ -33,6 +37,7 @@ import sitetech.NFCcheckPoint.Adapters.rutaAdapter;
 import sitetech.NFCcheckPoint.Adapters.rutaSelAdapter;
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Core.BluetoothPrinter;
+import sitetech.NFCcheckPoint.Core.calculos;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
@@ -43,6 +48,7 @@ import sitetech.NFCcheckPoint.Helpers.nfcHelper;
 import sitetech.NFCcheckPoint.MainActivity;
 import sitetech.NFCcheckPoint.OperadorActivity;
 import sitetech.NFCcheckPoint.db.BusDao;
+import sitetech.NFCcheckPoint.db.Horario;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
 import sitetech.NFCcheckPoint.db.Ruta;
@@ -60,7 +66,8 @@ public class CheckFragment extends Fragment implements Listener {
     private Button bpruebas;
     private Button bimprimir;
 
-    private TextView tplaca, tinterno, tempresa, thoraregistro, tultimocheck, tjustificacion;
+    private TextView tplaca, tinterno, tempresa, thoraregistro, tultimocheck, tminutos, tinfo1;
+    private EditText tdespacho;
 
     private Registro_TurnoDao registrosManager = AppController.daoSession.getRegistro_TurnoDao();
 
@@ -94,7 +101,9 @@ public class CheckFragment extends Fragment implements Listener {
         tinterno = vista.findViewById(R.id.tinterno);
         thoraregistro = vista.findViewById(R.id.thoraregistro);
         tultimocheck = vista.findViewById(R.id.tultimocheck);
-        tjustificacion = vista.findViewById(R.id.tjustificacion);
+        tdespacho = vista.findViewById(R.id.tdespacho);
+        tminutos = vista.findViewById(R.id.tminutos);
+        tinfo1 = vista.findViewById(R.id.tinfo1);
 
         bguardar.setVisibility(View.GONE);
     }
@@ -110,6 +119,15 @@ public class CheckFragment extends Fragment implements Listener {
                 nuevoRegistro.setRuta(rutaSeleccionada);
                 nuevoRegistro.setTurno(Configuraciones.getTurnoAbierto());
                 nuevoRegistro.setUsuario(Configuraciones.getUsuarioLog(getContext()));
+                nuevoRegistro.setDespacho(tdespacho.getText().toString());
+
+                Long difTiempo = TimeHelper.calcularDiferencia(tdespacho.getText().toString(), tfecha.getText().toString());
+
+                if (difTiempo > 0)
+                    nuevoRegistro.setMinAtrazado(TimeHelper.segundosahoras(difTiempo));
+                else
+                    nuevoRegistro.setMinAdelantado(TimeHelper.segundosahoras(difTiempo));
+
                 nuevoRegistro.setEliminado(false);
                 registrosManager.insert(nuevoRegistro);
 
@@ -143,6 +161,25 @@ public class CheckFragment extends Fragment implements Listener {
                 });
             }
         });
+
+        tdespacho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String horaActual = tdespacho.getText().toString();
+                HmsPickerBuilder hpb = new HmsPickerBuilder()
+                        .setFragmentManager(getActivity().getSupportFragmentManager())
+                        .setStyleResId(R.style.BetterPickersDialogFragment);
+                hpb.show();
+
+                hpb.setTimeInSeconds(TimeHelper.getTime(horaActual).intValue());
+                hpb.addHmsPickerDialogHandler(new HmsPickerDialogFragment.HmsPickerDialogHandlerV2() {
+                    @Override
+                    public void onDialogHmsSet(int reference, boolean isNegative, int hours, int minutes, int seconds) {
+                        tdespacho.setText(TimeHelper.formatTime(hours, minutes, seconds));
+                    }
+                });
+            }
+        });
     }
 
     private void imprimir(BluetoothPrinter impresora){
@@ -172,7 +209,7 @@ public class CheckFragment extends Fragment implements Listener {
         imprimirValor(impresora, "HORA REGISTRO", TimeHelper.getTime(ultimoRegistro.getFecha()));
 
         impresora.addNewLine();
-        imprimirValor(impresora, "Dato extra 1", "");
+        imprimirValor(impresora, tinfo1.getText().toString(), tminutos.getText().toString());
         imprimirValor(impresora, "Dato extra 2", "");
 
         impresora.printLine();
@@ -240,7 +277,7 @@ public class CheckFragment extends Fragment implements Listener {
     nfcData infoTarjeta;
 
     public void callBackNfc(String mensaje){
-        ToastHelper.exito("LLEGO HASTA AQUI");
+        ToastHelper.exito("UF LLEGO HASTA AQUI");
         infoTarjeta = nfcHelper.getnfcData(mensaje);
         if (infoTarjeta != null)
             cargarInfo();
@@ -248,20 +285,41 @@ public class CheckFragment extends Fragment implements Listener {
 
     private void leerTarjeta(){
         OperadorActivity activity = (OperadorActivity) getActivity();
-        activity.leerNFC();
+        //activity.leerNFC();
+        callBackNfc(nfcPrueba);
     }
 
+
     private void cargarInfo(){
-        infoTarjeta.setUltimoCheck(new Date());
-        fechaCheck = new Date();
+        Horario hora = calculos.getHorarioCercano(rutaSeleccionada, new Date());
 
-        tplaca.setText(infoTarjeta.getBus().getPlaca());
-        tinterno.setText(infoTarjeta.getBus().getInterno());
-        tempresa.setText(infoTarjeta.getEmpresa().getNombre());
-        thoraregistro.setText(TimeHelper.getTime(fechaCheck));
-        tultimocheck.setText(TimeHelper.getDate(infoTarjeta.getUltimoCheck(), "dd MMM yyyy - HH:mm:ss"));
+        if (hora != null) {
+            infoTarjeta.setUltimoCheck(new Date());
+            fechaCheck = new Date();
 
-        bguardar.setVisibility(View.VISIBLE);
+            tplaca.setText(infoTarjeta.getBus().getPlaca());
+            tinterno.setText(infoTarjeta.getBus().getInterno());
+            tempresa.setText(infoTarjeta.getEmpresa().getNombre());
+            thoraregistro.setText(TimeHelper.getTime(fechaCheck));
+            tultimocheck.setText(TimeHelper.getDate(infoTarjeta.getUltimoCheck(), "dd MMM yyyy - HH:mm:ss"));
+
+            if (TimeHelper.esFindeSemana(new Date()) || calculos.esDiaFestivo(new Date()))
+                tdespacho.setText(hora.getHoraFestivoHasta());
+            else
+                tdespacho.setText(hora.getHoraHasta());
+
+            Long difTiempo = TimeHelper.calcularDiferencia(tdespacho.getText().toString(), tfecha.getText().toString());
+            tminutos.setText(TimeHelper.segundosahoras(difTiempo));
+            if (difTiempo > 0)
+                tinfo1.setText("Demorado");
+            else
+                tinfo1.setText("Adelantado");
+
+
+            bguardar.setVisibility(View.VISIBLE);
+        }
+        else
+            ToastHelper.error("Error al intentar obtener el horario de despacho cercano.");
     }
 
     private void limpiarInfo(){

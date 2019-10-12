@@ -26,6 +26,13 @@ public class TestDataHelper {
         em.setNombre("Empresa ejemplo 1");
         em.setTelefono("5555-9999");
         AppController.daoSession.getEmpresaDao().insert(em);
+
+        em = new Empresa();
+        em.setEliminado(false);
+        em.setNombre("Empresa ejemplo 2");
+        em.setTelefono("0000-9999");
+        AppController.daoSession.getEmpresaDao().insert(em);
+
         Log.d("TEST DATA", "Empresa creada con exito");
     }
 
@@ -85,20 +92,36 @@ public class TestDataHelper {
         Horario h = new Horario();
         h.setNombre("Horario ejemplo 1");
         h.setEliminado(false);
-        h.setHoraDesde("08:00");
+        h.setHoraDesde("08:00:00");
+        h.setHoraHasta("09:50:59");
         h.setMaxMinutos(3);
 
-        h.setHoraFestivoDesde("9:00");
+        h.setHoraFestivoDesde("9:00:00");
+        h.setHoraFestivoHasta("10:50:59");
         h.setMaxMinutosFestivo(10);
         AppController.daoSession.getHorarioDao().insert(h);
 
         h = new Horario();
-        h.setNombre("Horario ejemplo 1");
+        h.setNombre("Horario ejemplo 2");
         h.setEliminado(false);
-        h.setHoraDesde("08:30");
+        h.setHoraDesde("08:30:00");
+        h.setHoraHasta("10:55:59");
         h.setMaxMinutos(3);
 
-        h.setHoraFestivoDesde("9:30");
+        h.setHoraFestivoDesde("9:30:00");
+        h.setHoraFestivoHasta("9:55:59");
+        h.setMaxMinutosFestivo(10);
+        AppController.daoSession.getHorarioDao().insert(h);
+
+        h = new Horario();
+        h.setNombre("Horario ejemplo 3");
+        h.setEliminado(false);
+        h.setHoraDesde("09:10:00");
+        h.setHoraHasta("09:30:59");
+        h.setMaxMinutos(3);
+
+        h.setHoraFestivoDesde("9:10:00");
+        h.setHoraFestivoHasta("9:12:59");
         h.setMaxMinutosFestivo(10);
         AppController.daoSession.getHorarioDao().insert(h);
 
@@ -109,19 +132,19 @@ public class TestDataHelper {
         horarioPorRuta hr = new horarioPorRuta();
         hr.setEliminado(false);
         hr.setHorario(AppController.daoSession.getHorarioDao().loadAll().get(1));
-        hr.setRuta(AppController.daoSession.getRutaDao().loadAll().get(1));
+        hr.setRuta(AppController.daoSession.getRutaDao().loadAll().get(0));
         AppController.daoSession.getHorarioPorRutaDao().insert(hr);
 
         hr = new horarioPorRuta();
         hr.setEliminado(false);
         hr.setHorario(AppController.daoSession.getHorarioDao().loadAll().get(2));
-        hr.setRuta(AppController.daoSession.getRutaDao().loadAll().get(1));
+        hr.setRuta(AppController.daoSession.getRutaDao().loadAll().get(0));
         AppController.daoSession.getHorarioPorRutaDao().insert(hr);
 
         hr = new horarioPorRuta();
         hr.setEliminado(false);
-        hr.setHorario(AppController.daoSession.getHorarioDao().loadAll().get(1));
-        hr.setRuta(AppController.daoSession.getRutaDao().loadAll().get(2));
+        hr.setHorario(AppController.daoSession.getHorarioDao().loadAll().get(0));
+        hr.setRuta(AppController.daoSession.getRutaDao().loadAll().get(0));
         AppController.daoSession.getHorarioPorRutaDao().insert(hr);
 
         Log.d("TEST DATA", "Rutas relacionadas con exito");

@@ -20,8 +20,8 @@ public class Registro_Turno {
     private Long id;
     private java.util.Date fecha;
     private Boolean eliminado;
-    private Integer minAtrazado;
-    private Integer minAdelantado;
+    private String minAtrazado;
+    private String minAdelantado;
     private String justificacion;
     private String despacho;
     private long busId;
@@ -73,7 +73,7 @@ public class Registro_Turno {
     }
 
     @Generated
-    public Registro_Turno(Long id, java.util.Date fecha, Boolean eliminado, Integer minAtrazado, Integer minAdelantado, String justificacion, String despacho, long busId, long rutaId, long turnoId, long userId) {
+    public Registro_Turno(Long id, java.util.Date fecha, Boolean eliminado, String minAtrazado, String minAdelantado, String justificacion, String despacho, long busId, long rutaId, long turnoId, long userId) {
         this.id = id;
         this.fecha = fecha;
         this.eliminado = eliminado;
@@ -118,19 +118,19 @@ public class Registro_Turno {
         this.eliminado = eliminado;
     }
 
-    public Integer getMinAtrazado() {
+    public String getMinAtrazado() {
         return minAtrazado;
     }
 
-    public void setMinAtrazado(Integer minAtrazado) {
+    public void setMinAtrazado(String minAtrazado) {
         this.minAtrazado = minAtrazado;
     }
 
-    public Integer getMinAdelantado() {
+    public String getMinAdelantado() {
         return minAdelantado;
     }
 
-    public void setMinAdelantado(Integer minAdelantado) {
+    public void setMinAdelantado(String minAdelantado) {
         this.minAdelantado = minAdelantado;
     }
 

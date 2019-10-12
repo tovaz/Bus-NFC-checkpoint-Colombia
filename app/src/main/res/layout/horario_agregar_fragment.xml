@@ -77,6 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
+                        android:textColor="#333"
                         tools:text="Desde" />
 
                     <EditText
@@ -85,16 +86,14 @@
                         android:layout_height="match_parent"
                         android:inputType="time" />
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/bhora"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
                         android:background="@drawable/btn_default_sel"
-                        android:drawableRight="@drawable/agregar_horario"
-                        android:textAlignment="textStart"
-                        android:textSize="14sp"
-                        tools:text="Seleccionar" />
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/horario" />
 
                 </LinearLayout>
 
@@ -109,6 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:textColor="#333"
                         tools:text="Hasta" />
 
                     <EditText
@@ -117,16 +117,14 @@
                         android:layout_height="wrap_content"
                         android:inputType="time" />
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/bhora_hasta"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
                         android:background="@drawable/btn_default_sel"
-                        android:drawableRight="@drawable/agregar_horario"
-                        android:text="Seleccionar"
-                        android:textAlignment="textStart"
-                        android:textSize="14sp" />
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/horario" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -134,19 +132,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <net.xpece.material.floatinglabel.FloatingLabelView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:flv_ownerView="@+id/tmaxMinutos"
-                    app:flv_textDefault="Minutos Maximo" />
+                    android:text="Tiempo al Punto" />
 
-                <EditText
-                    android:id="@+id/tmaxMinutos"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/talpunto"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/text_edit_sel"
+                    android:editable="false"
                     android:ems="10"
                     android:hint="Minutos Maximo"
                     android:inputType="phone"
@@ -195,16 +194,14 @@
                         android:layout_height="match_parent"
                         android:inputType="time" />
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/bhoraFestivo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
                         android:background="@drawable/btn_default_sel"
-                        android:drawableRight="@drawable/agregar_horario"
-                        android:text="Seleccionar"
-                        android:textAlignment="textStart"
-                        android:textSize="14sp" />
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/horario" />
 
                 </LinearLayout>
 
@@ -227,16 +224,14 @@
                         android:layout_height="wrap_content"
                         android:inputType="time" />
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/bhoraFestivoHasta"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
                         android:background="@drawable/btn_default_sel"
-                        android:drawableRight="@drawable/agregar_horario"
-                        android:textAlignment="textStart"
-                        android:textSize="14sp"
-                        tools:text="Seleccionar" />
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/horario" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -244,17 +239,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <net.xpece.material.floatinglabel.FloatingLabelView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:flv_ownerView="@+id/tmaxMinutosFestivos"
-                    app:flv_textDefault="Minutos Maximo" />
+                    android:text="Tiempo al Punto" />
 
-                <EditText
-                    android:id="@+id/tmaxMinutosFestivos"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/talpuntoFestivo"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/text_edit_sel"
                     android:ems="10"

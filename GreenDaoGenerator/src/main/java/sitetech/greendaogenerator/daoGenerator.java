@@ -56,6 +56,7 @@ public class daoGenerator {
         bus.addIdProperty().primaryKey().autoincrement();
         bus.addStringProperty("placa").notNull();
         bus.addStringProperty("interno");
+        bus.addStringProperty("tagNfc");
         bus.addLongProperty("recorridos");
         bus.addBooleanProperty("eliminado").notNull();
         Property empresaId = bus.addLongProperty("empresaId").notNull().getProperty();
@@ -79,16 +80,19 @@ public class daoGenerator {
         horario = schema.addEntity("Horario"); //hora de inicio
         horario.addIdProperty().primaryKey().autoincrement();
         horario.addStringProperty("nombre");
-        horario.addLongProperty("horaDesde");
-        horario.addLongProperty("horaHasta");
+        horario.addStringProperty("horaDesde");
+        horario.addStringProperty("horaHasta");
         horario.addIntProperty("maxMinutos");
+        horario.addStringProperty("tiempoNormal");
 
-        horario.addLongProperty("horaFestivoDesde");
-        horario.addLongProperty("horaFestivoHasta");
+        horario.addStringProperty("horaFestivoDesde");
+        horario.addStringProperty("horaFestivoHasta");
+        horario.addStringProperty("tiempoDiaFestivo");
         horario.addIntProperty("maxMinutosFestivo");
 
-        horario.addLongProperty("horaFinSemanaDesde"); //hora no en uso
-        horario.addLongProperty("horaFinSemanaHasta"); //hora
+        horario.addStringProperty("horaFinSemanaDesde"); //hora no en uso
+        horario.addStringProperty("horaFinSemanaHasta"); //hora
+        horario.addStringProperty("tiempoFinSemana");
         horario.addIntProperty("maxMinutosFinSemana"); // hora
 
         horario.addBooleanProperty("eliminado").notNull();
@@ -150,8 +154,8 @@ public class daoGenerator {
         registroTurno.addIdProperty().primaryKey().autoincrement();
         registroTurno.addDateProperty("fecha");
         registroTurno.addBooleanProperty("eliminado");
-        registroTurno.addIntProperty("minAtrazado");
-        registroTurno.addIntProperty("minAdelantado");
+        registroTurno.addStringProperty("minAtrazado");
+        registroTurno.addStringProperty("minAdelantado");
         registroTurno.addStringProperty("justificacion");
         registroTurno.addStringProperty("despacho");
         Property busId = registroTurno.addLongProperty("busId").notNull().getProperty();
