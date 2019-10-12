@@ -1,7 +1,9 @@
 package sitetech.NFCcheckPoint.ui.horarios;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +13,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.codetroopers.betterpickers.hmspicker.HmsPickerBuilder;
 import com.codetroopers.betterpickers.hmspicker.HmsPickerDialogFragment;
 import com.codetroopers.betterpickers.timepicker.TimePickerBuilder;
 import com.codetroopers.betterpickers.timepicker.TimePickerDialogFragment;
+import com.ikovac.timepickerwithseconds.MyTimePickerDialog;
+import com.vicmikhailau.maskededittext.MaskedEditText;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import sitetech.NFCcheckPoint.AppController;
+import sitetech.NFCcheckPoint.Core.TimePickerFragment;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.db.Horario;
@@ -120,76 +128,73 @@ public class HorarioAgregarFragment extends Fragment implements Serializable {
         bhora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String horaActual = thora.getText().toString();
-                HmsPickerBuilder hpb = new HmsPickerBuilder()
-                        .setFragmentManager(getActivity().getSupportFragmentManager())
-                        .setStyleResId(R.style.BetterPickersDialogFragment);
-                hpb.show();
-
-                hpb.setTimeInSeconds(TimeHelper.getTime(horaActual).intValue());
-                hpb.addHmsPickerDialogHandler(new HmsPickerDialogFragment.HmsPickerDialogHandlerV2() {
-                    @Override
-                    public void onDialogHmsSet(int reference, boolean isNegative, int hours, int minutes, int seconds) {
-                        thora.setText(TimeHelper.formatTime(hours, minutes, seconds));
-                    }
-                });
+                Date dx = TimeHelper.separarString(thora.getText().toString());
+                Calendar mcurrentTime = Calendar.getInstance();
+                TimePickerDialog picker = new TimePickerDialog(getContext(),android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+                                thora.setText(TimeHelper.formatTime(sHour, sMinute, 0));
+                            }
+                        }, dx.getHours(), dx.getMinutes(), true);
+                picker.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                picker .show();
             }
         });
 
         bhoraFestivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String horaActual = thoraFestivo.getText().toString();
-                HmsPickerBuilder hpb = new HmsPickerBuilder()
-                        .setFragmentManager(getActivity().getSupportFragmentManager())
-                        .setStyleResId(R.style.BetterPickersDialogFragment);
-                hpb.show();
+                Date dx = TimeHelper.separarString(thoraFestivo.getText().toString());
+                Calendar mcurrentTime = Calendar.getInstance();
+                TimePickerDialog picker = new TimePickerDialog(getContext(),android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+                                thoraFestivo.setText(TimeHelper.formatTime(sHour, sMinute, 0));
+                            }
+                        }, dx.getHours(), dx.getMinutes(), true);
+                picker.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                picker .show();
 
-                hpb.setTimeInSeconds(TimeHelper.getTime(horaActual).intValue());
-                hpb.addHmsPickerDialogHandler(new HmsPickerDialogFragment.HmsPickerDialogHandlerV2() {
-                    @Override
-                    public void onDialogHmsSet(int reference, boolean isNegative, int hours, int minutes, int seconds) {
-                        thoraFestivo.setText(TimeHelper.formatTime(hours, minutes, seconds));
-                    }
-                });
             }
         });
 
         bhora_hasta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String horaActual = thoraHasta.getText().toString();
-                HmsPickerBuilder hpb = new HmsPickerBuilder()
-                        .setFragmentManager(getActivity().getSupportFragmentManager())
-                        .setStyleResId(R.style.BetterPickersDialogFragment);
-                hpb.show();
-
-                hpb.setTimeInSeconds(TimeHelper.getTime(horaActual).intValue());
-                hpb.addHmsPickerDialogHandler(new HmsPickerDialogFragment.HmsPickerDialogHandlerV2() {
-                    @Override
-                    public void onDialogHmsSet(int reference, boolean isNegative, int hours, int minutes, int seconds) {
-                        thoraHasta.setText(TimeHelper.formatTime(hours, minutes, seconds));
-                    }
-                });
+                Date dx = TimeHelper.separarString(thoraHasta.getText().toString());
+                Calendar mcurrentTime = Calendar.getInstance();
+                TimePickerDialog picker = new TimePickerDialog(getContext(),android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+                                thoraHasta.setText(TimeHelper.formatTime(sHour, sMinute, 59));
+                                Long diferencia = TimeHelper.calcularDiferencia(thora.getText().toString(), thoraHasta.getText().toString());
+                                talpunto.setText(TimeHelper.segundosahoras(diferencia));
+                            }
+                        }, dx.getHours(), dx.getMinutes(), true);
+                picker.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                picker .show();
             }
         });
 
         bhoraFestivo_hasta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String horaActual = thoraFestivoHasta.getText().toString();
-                HmsPickerBuilder hpb = new HmsPickerBuilder()
-                        .setFragmentManager(getActivity().getSupportFragmentManager())
-                        .setStyleResId(R.style.BetterPickersDialogFragment);
-                hpb.show();
-
-                hpb.setTimeInSeconds(TimeHelper.getTime(horaActual).intValue());
-                hpb.addHmsPickerDialogHandler(new HmsPickerDialogFragment.HmsPickerDialogHandlerV2() {
-                    @Override
-                    public void onDialogHmsSet(int reference, boolean isNegative, int hours, int minutes, int seconds) {
-                        thoraFestivoHasta.setText(TimeHelper.formatTime(hours, minutes, seconds));
-                    }
-                });
+                Date dx = TimeHelper.separarString(thoraFestivoHasta.getText().toString());
+                Calendar mcurrentTime = Calendar.getInstance();
+                TimePickerDialog picker = new TimePickerDialog(getContext(),android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+                                thoraFestivoHasta.setText(TimeHelper.formatTime(sHour, sMinute, 59));
+                                Long diferencia = TimeHelper.calcularDiferencia(thoraFestivo.getText().toString(), thoraFestivoHasta.getText().toString());
+                                talpuntoFestivo.setText(TimeHelper.segundosahoras(diferencia));
+                            }
+                        }, dx.getHours(), dx.getMinutes(), true);
+                picker.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                picker .show();
             }
         });
 

@@ -75,16 +75,24 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:textColor="#333"
-                        tools:text="Desde" />
+                        android:text="Desde" />
 
                     <EditText
                         android:id="@+id/thora"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="time" />
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="00:00:00" />
+
+                    <!--com.vicmikhailau.maskededittext.MaskedEditText
+                        android:id="@+id/thora"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:mask="##:##:##"
+                        android:inputType="phone"/-->
 
                     <ImageButton
                         android:id="@+id/bhora"
@@ -109,13 +117,15 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:textColor="#333"
-                        tools:text="Hasta" />
+                        android:text="Hasta" />
 
                     <EditText
                         android:id="@+id/thoraHasta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="time" />
+                        android:enabled="false"
+                        android:inputType="time"
+                        android:text="00:00:00" />
 
                     <ImageButton
                         android:id="@+id/bhora_hasta"
@@ -138,18 +148,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tiempo al Punto" />
+                    android:text="Tiempo al Punto"
+                    android:textColor="#333" />
 
                 <TextView
                     android:id="@+id/talpunto"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/text_edit_sel"
-                    android:editable="false"
                     android:ems="10"
-                    android:hint="Minutos Maximo"
-                    android:inputType="phone"
-                    android:text="0" />
+                    android:enabled="false"
+                    android:text="00:00:00" />
 
             </LinearLayout>
 
@@ -186,13 +195,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
-                        tools:text="Desde" />
+                        android:text="Desde"
+                        android:textColor="#333" />
 
                     <EditText
                         android:id="@+id/thoraFestivo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="time" />
+                        android:enabled="false"
+                        android:inputType="time"
+                        android:text="00:00:00" />
 
                     <ImageButton
                         android:id="@+id/bhoraFestivo"
@@ -216,13 +228,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        tools:text="Hasta" />
+                        android:text="Hasta"
+                        android:textColor="#333" />
 
                     <EditText
                         android:id="@+id/thoraFestivoHasta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="time" />
+                        android:enabled="false"
+                        android:inputType="time"
+                        android:text="00:00:00" />
 
                     <ImageButton
                         android:id="@+id/bhoraFestivoHasta"
@@ -245,7 +260,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tiempo al Punto" />
+                    android:text="Tiempo al Punto"
+                    android:textColor="#333" />
 
                 <TextView
                     android:id="@+id/talpuntoFestivo"
@@ -253,9 +269,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/text_edit_sel"
                     android:ems="10"
-                    android:hint="Minutos Maximo"
-                    android:inputType="phone"
-                    android:text="0" />
+                    android:enabled="false"
+                    android:text="00:00:00" />
 
             </LinearLayout>
 

@@ -43,6 +43,13 @@ public class TestDataHelper {
         bus.setInterno("0000");
         bus.setPlaca("000-000");
         AppController.daoSession.getBusDao().insert(bus);
+
+        bus = new Bus();
+        bus.setEliminado(false);
+        bus.setEmpresa(AppController.daoSession.getEmpresaDao().loadAll().get(1));
+        bus.setInterno("1111");
+        bus.setPlaca("1111-1111");
+        AppController.daoSession.getBusDao().insert(bus);
         Log.d("TEST DATA", "Bus creado con exito");
     }
 
@@ -94,10 +101,12 @@ public class TestDataHelper {
         h.setEliminado(false);
         h.setHoraDesde("08:00:00");
         h.setHoraHasta("09:50:59");
+        h.setTiempoNormal("01:50:59");
         h.setMaxMinutos(3);
 
         h.setHoraFestivoDesde("9:00:00");
-        h.setHoraFestivoHasta("10:50:59");
+        h.setHoraFestivoHasta("10:40:59");
+        h.setTiempoDiaFestivo("01:40:59");
         h.setMaxMinutosFestivo(10);
         AppController.daoSession.getHorarioDao().insert(h);
 
@@ -105,11 +114,13 @@ public class TestDataHelper {
         h.setNombre("Horario ejemplo 2");
         h.setEliminado(false);
         h.setHoraDesde("08:30:00");
-        h.setHoraHasta("10:55:59");
+        h.setHoraHasta("10:50:59");
+        h.setTiempoNormal("02:20:59");
         h.setMaxMinutos(3);
 
         h.setHoraFestivoDesde("9:30:00");
         h.setHoraFestivoHasta("9:55:59");
+        h.setTiempoDiaFestivo("00:25:59");
         h.setMaxMinutosFestivo(10);
         AppController.daoSession.getHorarioDao().insert(h);
 
@@ -118,10 +129,12 @@ public class TestDataHelper {
         h.setEliminado(false);
         h.setHoraDesde("09:10:00");
         h.setHoraHasta("09:30:59");
+        h.setTiempoNormal("00:20:59");
         h.setMaxMinutos(3);
 
         h.setHoraFestivoDesde("9:10:00");
-        h.setHoraFestivoHasta("9:12:59");
+        h.setHoraFestivoHasta("9:25:59");
+        h.setTiempoDiaFestivo("00:15:59");
         h.setMaxMinutosFestivo(10);
         AppController.daoSession.getHorarioDao().insert(h);
 

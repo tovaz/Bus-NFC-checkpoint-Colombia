@@ -2,6 +2,7 @@ package sitetech.NFCcheckPoint.Helpers;
 
 import android.util.Log;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,8 +47,7 @@ public class TimeHelper {
 
     public static Long calcularDiferencia(String time1, String time2){
         try {
-            long difference = getTime(time2) - getTime(time1);
-            return difference / 1000;
+            return getTime(time2) - getTime(time1);
         }catch (Exception e){
             return null;
         }
@@ -69,7 +69,7 @@ public class TimeHelper {
         return segundosahoras(segundos);
     }
 
-    public static String segundosahoras (Long segs){
+    public static String segundosahoras(Long segs){
         boolean esnegativo = false;
         if (segs < 0) {
             esnegativo = true;
@@ -80,10 +80,17 @@ public class TimeHelper {
         hor = segs.intValue() / 3600;
         min = (segs.intValue() - (3600 * hor)) / 60;
         seg = segs.intValue()- ((hor * 3600) + (min * 60));
-
+        Log.d("SEGUNDOS A HORAS", segs.toString() + " -- " + hor +":" + min + ":" + seg );
         if (esnegativo)
             return "- " + formatTime(hor, min, seg);
         else
             return formatTime(hor, min, seg);
+    }
+
+    public static Date separarString(String timepo){
+        try {
+            DateFormat sdf = new SimpleDateFormat("HH:mm"); // or "hh:mm" for 12 hour format
+            return sdf.parse(timepo);
+        } catch (Exception e){ return null; }
     }
 }

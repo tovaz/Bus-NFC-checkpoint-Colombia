@@ -36,7 +36,6 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState){
         vista = inflater.inflate(R.layout.operador_history_fragment, viewGroup, false);
 
-        turnoActual = Configuraciones.getTurnoAbierto();
         rlista = vista.findViewById(R.id.rlista);
         cargarLista();
 
@@ -46,6 +45,7 @@ public class HistoryFragment extends Fragment {
     registroAdapter dataAdapter;
     List<Registro_Turno> listaTemp;
     public void cargarLista(){
+        turnoActual = Configuraciones.getTurnoAbierto();
         List<Registro_Turno> lista = registrosManager.queryBuilder()
                 .where(Registro_TurnoDao.Properties.TurnoId.eq(turnoActual.getId()))
                 .list();

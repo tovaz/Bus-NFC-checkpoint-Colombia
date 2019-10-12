@@ -8,7 +8,14 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.Date;
+import java.util.List;
+
+import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
+import sitetech.NFCcheckPoint.Helpers.TimeHelper;
+import sitetech.NFCcheckPoint.db.Registro_Turno;
+import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
 import sitetech.NFCcheckPoint.db.Turno;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.routecheckapp.R;
@@ -25,7 +32,7 @@ public class TurnoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState) {
         vista = inflater.inflate(R.layout.operador_turno_fragment, viewGroup, false);
 
-        cargarControles();
+        obtenerDatos();
         cargarTurnoInfo();
         return vista;
     }
@@ -38,13 +45,43 @@ public class TurnoFragment extends Fragment {
         tadelantados = vista.findViewById(R.id.tadelantados);
     }
 
+    int demorados, adelantados, atiempo, totalBuses = 0;
+    private void obtenerDatos(){
+        cargarControles();
+        Turno turnoAbierto = Configuraciones.getTurnoAbierto();
+
+        List<Registro_Turno> rlista = AppController.daoSession.getRegistro_TurnoDao().queryBuilder()
+                .where(Registro_TurnoDao.Properties.TurnoId.eq(turnoAbierto.getId())).list();
+
+        totalBuses = rlista.size();
+        for (Registro_Turno rx : rlista){
+            Date tadelantado = TimeHelper.separarString(rx.getMinAdelantado()) ;
+            Date tatrazado = TimeHelper.separarString(rx.getMinAdelantado());
+            Date tdespacho = TimeHelper.separarString(rx.getDespacho());
+
+            if (tadelantado != null && tatrazado != null) {
+                if (tadelantado.getTime() > tatrazado.getTime())
+                    if (tadelantado.getTime() < 180)
+                        adelantados++;
+                    else
+                        atiempo++;
+                else if (tatrazado.getTime() > 180)
+                    demorados++;
+                else
+                    atiempo++;
+            }
+        }
+
+    }
+
     private void cargarTurnoInfo(){
-        Turno turno = Configuraciones.getTurnoAbierto();
         Usuario ulog = Configuraciones.getUsuarioLog(vista.getContext());
         tusuario.setText(ulog.getNombre());
 
-        if (turno.getTotalBuses() != null)
-            tbuses.setText(turno.getTotalBuses().toString());
+        tbuses.setText(String.valueOf(totalBuses));
+        tadelantados.setText(String.valueOf(adelantados));
+        tdemorados.setText(String.valueOf(demorados));
+        tatiempo.setText(String.valueOf(atiempo));
         //tatiempo.setText(turno.get);
     }
 }

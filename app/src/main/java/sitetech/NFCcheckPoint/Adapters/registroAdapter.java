@@ -109,7 +109,11 @@ public class registroAdapter extends OmegaRecyclerView.Adapter<registroAdapter.V
             truta.setText(rx.getRuta().getNombre());
             tplaca.setText(rx.getBus().getPlaca());
             tinterno.setText(rx.getBus().getInterno());
-            tempresa.setText(rx.getBus().getEmpresa().getNombre());
+
+            try {
+                tempresa.setText(rx.getBus().getEmpresa().getNombre());
+            } catch (Exception e){ tempresa.setText("Error entity detached"); }
+
             tregistro.setText(TimeHelper.getDate(rx.getFecha(), "dd MMM yyyy - HH:mm:ss"));
             tdespacho.setText(rx.getDespacho());
         }

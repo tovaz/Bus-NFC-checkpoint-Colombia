@@ -213,7 +213,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:background="@drawable/text_edit"
-                        android:editable="false"
+                        android:clickable="false"
+                        android:editable="true"
+                        android:focusable="false"
                         android:inputType="textMultiLine"
                         android:textSize="16sp" />
 
