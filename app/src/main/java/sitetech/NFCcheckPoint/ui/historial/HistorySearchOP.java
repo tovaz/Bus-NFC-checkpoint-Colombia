@@ -1,6 +1,5 @@
 package sitetech.NFCcheckPoint.ui.historial;
 
-import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,24 +13,31 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import sitetech.NFCcheckPoint.Adapters.customAdapter;
+import sitetech.NFCcheckPoint.Adapters.onItemClick;
+import sitetech.NFCcheckPoint.Adapters.registroAdapter;
 import sitetech.NFCcheckPoint.AppController;
+import sitetech.NFCcheckPoint.Helpers.Configuraciones;
+import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
+import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.OperadorActivity;
+import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.NFCcheckPoint.db.Empresa;
 import sitetech.NFCcheckPoint.db.EmpresaDao;
+import sitetech.NFCcheckPoint.db.Registro_Turno;
+import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
 import sitetech.routecheckapp.R;
 
 public class HistorySearchOP extends Fragment {
@@ -44,6 +50,7 @@ public class HistorySearchOP extends Fragment {
     private Spinner spempresa;
     private Spinner spsel;
     private View vista;
+    private RecyclerView rlista;
 
     private Empresa selEmpresa;
     final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -68,6 +75,7 @@ public class HistorySearchOP extends Fragment {
         thasta = vista.findViewById(R.id.thasta);
         spempresa = vista.findViewById(R.id.spempresa);
         spsel = vista.findViewById(R.id.spsel);
+        rlista = vista.findViewById(R.id.rlista);
 
         tdesde.setText(df.format(new Date()));
         thasta.setText(df.format(new Date()));
@@ -145,8 +153,48 @@ public class HistorySearchOP extends Fragment {
         spempresa.setAdapter(CustomAdapter);
     }
 
+    registroAdapter dataAdapter;
+    private void buscar(){
+        Date fdesde = df.parse(tdesde.getText().toString());
+        Date fhasta = df.parse(thasta.getText().toString());
 
+        List<Registro_Turno> lresultado = AppController.daoSession.getRegistro_TurnoDao().queryRawCreate(
+                "JOIN " + BusDao.TABLENAME + " B " + " ON T." + Registro_TurnoDao.Properties.Id.columnName +
+                        " = B." + BusDao.Properties.Id.columnName + " INNER JOIN " + EmpresaDao.TABLENAME + " E " +
+                        " ON B." + BusDao.Properties.EmpresaId + " = " + ""
+        )
+    }
 
+    public void actualizarRegistros(List<Registro_Turno> lista){
+        final List<Registro_Turno> lnueva = lista;
+
+        dataAdapter = new registroAdapter(lnueva, new onItemClick() {
+            @Override
+            public void onClickItemList(View v, final int position) {
+                ToastHelper.info("Desea Reimprimirlo" + lnueva.get(position).getBus().getPlaca());
+                DialogHelper.showAsk2(v, "¿Reimprimir comprobante?", "Desea Reimprimir este registro.", "Imprimir", "Cancelar", new myDialogInterface() {
+                    @Override
+                    public View onBuildDialog() {
+                        return null;
+                    }
+
+                    @Override
+                    public void onCancel() {
+                    }
+
+                    @Override
+                    public void onResult(View vista) {
+                        imprimir(lnueva.get(position));
+                    }
+
+                });
+            }
+        });
+
+        rlista.setHasFixedSize(true);
+        rlista.setLayoutManager(new LinearLayoutManager(getContext()));
+        rlista.setAdapter(dataAdapter);
+    }
 
     @Override
     public void onStop() {
