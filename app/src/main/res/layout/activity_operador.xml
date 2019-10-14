@@ -1,7 +1,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
 
+    android:id="@+id/contenedor"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -25,7 +26,7 @@
                 android:paddingRight="10dp">
 
                 <ImageView
-                    android:id="@+id/bpruebas"
+                    android:id="@+id/bbuses"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_default_sel"
@@ -124,7 +125,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        app:layout_scrollFlags="snapMargins|scroll|enterAlways" >
+        app:layout_scrollFlags="snapMargins|scroll|enterAlways">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"

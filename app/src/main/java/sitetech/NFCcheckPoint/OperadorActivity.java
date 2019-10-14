@@ -1,10 +1,6 @@
 package sitetech.NFCcheckPoint;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
-
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,22 +13,31 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.Serializable;
+import java.math.BigInteger;
 
 import sitetech.NFCcheckPoint.Adapters.TabsAdapter;
 import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.Listener;
-import sitetech.NFCcheckPoint.Helpers.ToastHelper;
+import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.checkHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
-import sitetech.NFCcheckPoint.Helpers.nfcData;
-import sitetech.NFCcheckPoint.Helpers.nfcHelper;
 import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
+import sitetech.NFCcheckPoint.ui.historial.HistorySearchOP;
 import sitetech.NFCcheckPoint.ui.nfc.NFCReadFragment;
 import sitetech.NFCcheckPoint.ui.nfc.NFCWriteFragment;
 import sitetech.NFCcheckPoint.ui.operador.CheckFragment;
@@ -41,11 +46,12 @@ import sitetech.routecheckapp.R;
 
 import static sitetech.NFCcheckPoint.Helpers.nfcHelper.getUid;
 
-public class OperadorActivity extends AppCompatActivity implements Listener {
+public class OperadorActivity extends AppCompatActivity implements Listener, Serializable {
 
     public Usuario usuarioLog;
     private TextView tusuario;
     private Button blogout;
+    private ImageView bbuses;
 
     private int mInterval = 2000; // 2 seconds by default, can be changed later
     private Handler mHandler;
@@ -55,6 +61,8 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
     private NFCReadFragment nfcReadF;
     private boolean isDialogDisplayed = false;
     private boolean isWrite = false;
+    private CoordinatorLayout contendor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +73,8 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
 
         tusuario = findViewById(R.id.tusuario);
         blogout = findViewById(R.id.blogout);
-
+        contendor = findViewById(R.id.contenedor);
+        bbuses = findViewById(R.id.bbuses);
 
         cargarTabs();
         cargarUsuario();
@@ -73,6 +82,8 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         mHandler = new Handler();
         startChecking();
+
+        Click();
     }
 
     Runnable CheckerTime = new Runnable() {
@@ -88,6 +99,14 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
         }
     };
 
+    private void Click(){
+        bbuses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarHistorial();
+            }
+        });
+    }
 
     boolean isCheckActivity = false;
     private void checking(){
@@ -255,7 +274,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
         Log.d("NEW INTENT", "on New Intent: "+intent.getAction());
 
         if(tag != null) {
-            Toast.makeText(this, "Tarjeta detectada.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Tarjeta detectada. ID: " + new BigInteger(1, tag.getId()).toString(), Toast.LENGTH_SHORT).show();
             //ToastHelper.aviso(tag.toString());
             Ndef ndef = Ndef.get(tag);
 
@@ -276,5 +295,11 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
                 }
             }*/
         }
+    }
+
+    @SuppressLint("ResourceType")
+    private void mostrarHistorial(){
+        HistorySearchOP hsp = new HistorySearchOP();
+        activityHelper.cargarFragmento2(this, hsp.getTargetFragment(), R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
     }
 }
