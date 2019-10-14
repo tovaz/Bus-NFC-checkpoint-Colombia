@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +22,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
@@ -62,6 +66,8 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     private boolean isDialogDisplayed = false;
     private boolean isWrite = false;
     private CoordinatorLayout contendor;
+    private AppBarLayout appbar;
+    private LinearLayout contenedor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,8 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         blogout = findViewById(R.id.blogout);
         contendor = findViewById(R.id.contenedor);
         bbuses = findViewById(R.id.bbuses);
+        appbar = findViewById(R.id.appbar);
+        contenedor = findViewById(R.id.opcontenedor);
 
         cargarTabs();
         cargarUsuario();
@@ -297,9 +305,25 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         }
     }
 
+    private HistorySearchOP hsp;
     @SuppressLint("ResourceType")
     private void mostrarHistorial(){
-        HistorySearchOP hsp = new HistorySearchOP();
-        activityHelper.cargarFragmento2(this, hsp.getTargetFragment(), R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
+        if (hsp == null)
+            hsp = new HistorySearchOP();
+
+        appbar.setVisibility(View.GONE);
+        contenedor.setVisibility(View.VISIBLE);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.opcontenedor, hsp);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+        //activityHelper.cargarFragmento2(this, hsp.getTargetFragment(), R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    public void cerrarHistorial(){
+        appbar.setVisibility(View.VISIBLE);
+        contenedor.setVisibility(View.GONE);
     }
 }

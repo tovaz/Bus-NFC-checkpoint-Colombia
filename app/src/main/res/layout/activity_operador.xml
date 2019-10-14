@@ -134,5 +134,12 @@
     </androidx.core.widget.NestedScrollView>
 
 
+    <LinearLayout
+        android:id="@+id/opcontenedor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#555"
+        android:visibility="gone" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

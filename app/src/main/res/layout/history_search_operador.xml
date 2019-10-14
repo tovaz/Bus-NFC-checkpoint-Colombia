@@ -8,24 +8,92 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
-
         android:layout_width="match_parent"
-        android:layout_height="192dp"
-        android:padding="10dp">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            app:layout_scrollFlags="scroll|enterAlways">
 
-            app:toolbarId="@+id/toolbar">
-
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"></androidx.appcompat.widget.Toolbar>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/batraz"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:tint="#eee"
+                    app:srcCompat="@drawable/back" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="Buscar en el registro de buses"
+                    android:textColor="#eee" />
+
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="Empresa"
+                    android:textColor="#eee" />
+
+                <Spinner
+                    android:id="@+id/spinner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_style" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/placa_interno_array"
+                    android:spinnerMode="dropdown"
+                    android:textColor="#eee"
+                    />
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_edit_sel"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Name" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,22 +101,69 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Empresa" />
+                    android:layout_weight="1"
+                    android:text="Desde"
+                    android:textColor="#eee" />
 
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:text="Hasta"
+                    android:textColor="#eee" />
             </LinearLayout>
 
-            <SearchView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_edit_sel"
+                    android:text="20/12/2019" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_edit_sel"
+                    android:text="25/12/2019" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Hoy" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:text="Buscar" />
+            </LinearLayout>
+
+        </LinearLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView

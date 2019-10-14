@@ -65,19 +65,6 @@ public class activityHelper {
                 .commit();
     }
 
-    public static void cargarFragmento2(Serializable back, Fragment fragmento, int animacionEntrada1, int animacionEntrada2, int animacionSalida1, int animacionSalida2){
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("mainFragment", back);
-        fragmento.setArguments(bundle);
-
-        ((Activity)back).getFragmentManager().beginTransaction()
-                //.remove((Fragment)back)
-                .setCustomAnimations(animacionEntrada1, animacionEntrada2, animacionSalida1, animacionSalida2)
-                .replace(R.id.contenedor, fragmento)
-                .addToBackStack(null)
-                .commit();
-    }
-
     public static void goBackStack(View vista){
         AppCompatActivity activity = (AppCompatActivity) vista.getContext();
         activity.getSupportFragmentManager().popBackStack();
