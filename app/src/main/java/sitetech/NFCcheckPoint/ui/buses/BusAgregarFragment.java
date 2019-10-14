@@ -118,12 +118,12 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         selempresa.setOnItemSelectedListener(this);
 
         ArrayList<String> lEmpresas = new ArrayList<>();
-        listaEmpresas = empresaDao.loadAll();
+        listaEmpresas = empresaDao.queryBuilder().where(EmpresaDao.Properties.Eliminado.eq(false)).list();
         empresa = listaEmpresas.get(0);
 
         selempresa.setOnItemSelectedListener(this);
 
-        customAdapter CustomAdapter=new customAdapter(AppController.getAppContext(), listaEmpresas);
+        customAdapter CustomAdapter=new customAdapter(AppController.getAppContext(), listaEmpresas, R.layout.custom_spinner);
         selempresa.setAdapter(CustomAdapter);
     }
 

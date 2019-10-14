@@ -17,11 +17,12 @@ public class customAdapter extends BaseAdapter {
     Context context;
     List<Empresa> empresas;
     LayoutInflater inflter;
-
-    public customAdapter(Context applicationContext, List<Empresa> _empresas) {
+    int itemTemplate;
+    public customAdapter(Context applicationContext, List<Empresa> _empresas, int _itemTemplate) {
         this.context = applicationContext;
         empresas = _empresas;
         inflter = (LayoutInflater.from(applicationContext));
+        itemTemplate = _itemTemplate;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class customAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflter.inflate(R.layout.custom_spinner, null);
+        view = inflter.inflate(itemTemplate, null);
         ImageView icon = (ImageView) view.findViewById(R.id.imageView);
         TextView names = (TextView) view.findViewById(R.id.textView);
         names.setText(empresas.get(i).getNombre());

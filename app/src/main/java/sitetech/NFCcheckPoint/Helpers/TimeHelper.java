@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class TimeHelper {
     public static SimpleDateFormat formatDate = new SimpleDateFormat("dd MMM yyyy");
@@ -92,5 +93,11 @@ public class TimeHelper {
             DateFormat sdf = new SimpleDateFormat("HH:mm"); // or "hh:mm" for 12 hour format
             return sdf.parse(timepo);
         } catch (Exception e){ return null; }
+    }
+
+    public static Calendar getCalendario(Date fecha){
+        Calendar calendario = Calendar.getInstance(TimeZone.getTimeZone("America/Colombia"));
+        calendario.setTime(fecha);
+        return calendario;
     }
 }
