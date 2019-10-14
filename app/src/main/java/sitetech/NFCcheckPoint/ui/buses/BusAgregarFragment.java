@@ -21,6 +21,7 @@ import java.util.List;
 import sitetech.NFCcheckPoint.Adapters.customAdapter;
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Listener;
+import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.MainActivity;
 import sitetech.NFCcheckPoint.db.Bus;
@@ -36,13 +37,13 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
     private View vista;
 
     private TextView tplaca;
+    private TextView tuid;
     private TextView tinterno;
     private TextView ttitulo;
     private Spinner selempresa;
     private Button bescribirNFC;
     private Button bcancelar;
     private Button bguardar;
-
     List<Empresa> listaEmpresas;
     ArrayAdapter<String> empresasAdapter;
 
@@ -53,6 +54,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         Bundle args = new Bundle();
         args.putSerializable(MAINFRAGMENT_KEY, _main);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -83,6 +85,13 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         tinterno.setText(bus.getInterno());
 
         bescribirNFC.setVisibility(View.VISIBLE);
+        tuid.setText("N/A");
+
+        if (bus.getTagNfc() != null) {
+            tuid.setText(bus.getTagNfc());
+            bescribirNFC.setVisibility(View.GONE);
+        }
+
         for (int i=0; i<=listaEmpresas.size()-1; i++)
             if ((listaEmpresas.get(i).getId() + " - " + listaEmpresas.get(i).getNombre()).equals(bus.getEmpresa().getId() + " - " + bus.getEmpresa().getNombre()))
                 selempresa.setSelection(i);
@@ -91,10 +100,13 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
     private void cargarControles(){
         ttitulo = vista.findViewById(R.id.ttitulo);
         tplaca = vista.findViewById(R.id.tnombre);
-        tinterno = vista.findViewById(R.id.tcedula);
+        tinterno = vista.findViewById(R.id.tinterno);
         selempresa = vista.findViewById(R.id.selempresa);
+        tuid = vista.findViewById(R.id.tuid);
+
         bcancelar = vista.findViewById(R.id.bcancelar);
         bguardar = vista.findViewById(R.id.bguardar);
+
 
         bescribirNFC = vista.findViewById(R.id.bescribirNFC);
         cargarEmpresas();
@@ -130,6 +142,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         /**********************************************************************************/
 
         private boolean isWrite;
+        private String tagUid = null;
     private void onClick(){
         bcancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +165,9 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
                 bus.setInterno(tinterno.getText().toString());
                 bus.setEmpresa(empresa);
 
+                bus.setTagNfc(tuid.getText().toString());
+                if (tuid.getText().equals("")) bus.setTagNfc(null);
+
                 if (mainFragment.Itemseleccionado == null) {
                     bus.setEliminado(false);
                     inserted = busManager.insert(bus);
@@ -168,13 +184,20 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
             }
         });
 
+        final BusAgregarFragment fragment = this;
         bescribirNFC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity activity = (MainActivity)getActivity();
-                activity.escribirNFC(mainFragment.Itemseleccionado);
+                activity.escribirNFC(mainFragment.Itemseleccionado, fragment);
             }
         });
+    }
+
+    public void asignarTarjeta(String uid){
+        tuid.setText(uid);
+        ToastHelper.info("Tarjeta asignada con exito.");
+        bescribirNFC.setVisibility(View.GONE);
     }
 
 }

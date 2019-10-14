@@ -23,7 +23,7 @@ public class BluetoothPrinter {
     public static final int ALIGN_LEFT = 102;
 
     private static final byte[] NEW_LINE = {10};
-    private static final byte[] ESC_ALIGN_CENTER = new byte[]{0x1b, 'a', 0x01};
+    public static final byte[] ESC_ALIGN_CENTER = new byte[]{0x1b, 'a', 0x01};
     private static final byte[] ESC_ALIGN_RIGHT = new byte[]{0x1b, 'a', 0x02};
     private static final byte[] ESC_ALIGN_LEFT = new byte[]{0x1b, 'a', 0x00};
 
@@ -372,5 +372,18 @@ public class BluetoothPrinter {
 
     public BluetoothDevice getDevice() {
         return printer;
+    }
+
+    public void writePrint(byte[] align, String msg){
+            printUnicode(align);
+            String space = "   ";
+            int l = msg.length();
+            if(l < 31){
+                for(int x = 31-l; x >= 0; x--) {
+                    space = space+" ";
+                }
+            }
+            msg = msg.replace(" : ", space);
+            printUnicode(msg.getBytes());
     }
 }

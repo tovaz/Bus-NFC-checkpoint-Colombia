@@ -50,6 +50,7 @@ import sitetech.NFCcheckPoint.Helpers.nfcData;
 import sitetech.NFCcheckPoint.Helpers.nfcHelper;
 import sitetech.NFCcheckPoint.MainActivity;
 import sitetech.NFCcheckPoint.OperadorActivity;
+import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.NFCcheckPoint.db.Horario;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
@@ -87,6 +88,8 @@ public class CheckFragment extends Fragment implements Listener {
         showFechayHora();
         Click();
         pruebas();
+        leerTarjeta();
+
         return vista;
     }
 
@@ -133,11 +136,12 @@ public class CheckFragment extends Fragment implements Listener {
                     BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
 
                     final BluetoothPrinter mPrinter = new BluetoothPrinter(mBtDevice);
+
                     mPrinter.connectPrinter(new BluetoothPrinter.PrinterConnectListener() {
 
                         @Override
                         public void onConnected() {
-                            imprimir(mPrinter);
+                            imprimir(mPrinter, ultimoRegistro);
                             //limpiarInfo();
                             //bimprimir.setVisibility(View.GONE);
                             ToastHelper.exito("Registro impreso correctamente.");
@@ -163,31 +167,20 @@ public class CheckFragment extends Fragment implements Listener {
         tdespacho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date dx = TimeHelper.separarString(tdespacho.getText().toString());
-                Calendar mcurrentTime = Calendar.getInstance();
-                TimePickerDialog picker = new TimePickerDialog(getContext(),android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
-                                tdespacho.setText(TimeHelper.formatTime(sHour, sMinute, 0));
-                            }
-                        }, dx.getHours(), dx.getMinutes(), true);
-                picker.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                picker .show();
+                if (!tdespacho.getText().toString().equals("")) {
+                    Date dx = TimeHelper.separarString(tdespacho.getText().toString());
 
-                /*final String horaActual = tdespacho.getText().toString();
-                HmsPickerBuilder hpb = new HmsPickerBuilder()
-                        .setFragmentManager(getActivity().getSupportFragmentManager())
-                        .setStyleResId(R.style.BetterPickersDialogFragment);
-                hpb.show();
-
-                hpb.setTimeInSeconds(TimeHelper.getTime(horaActual).intValue());
-                hpb.addHmsPickerDialogHandler(new HmsPickerDialogFragment.HmsPickerDialogHandlerV2() {
-                    @Override
-                    public void onDialogHmsSet(int reference, boolean isNegative, int hours, int minutes, int seconds) {
-                        tdespacho.setText(TimeHelper.formatTime(hours, minutes, seconds));
-                    }
-                });*/
+                    Calendar mcurrentTime = Calendar.getInstance();
+                    TimePickerDialog picker = new TimePickerDialog(getContext(), android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                            new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+                                    tdespacho.setText(TimeHelper.formatTime(sHour, sMinute, 0));
+                                }
+                            }, dx.getHours(), dx.getMinutes(), true);
+                    picker.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    picker.show();
+                }
             }
         });
     }
@@ -220,49 +213,62 @@ public class CheckFragment extends Fragment implements Listener {
         yaGuardo = true;
     }
 
-    private void imprimir(BluetoothPrinter impresora){
-        //Bitmap logoEmpresa = BitmapFactory.decodeResource(getResources(), R.drawable.logo_empresa);
-        //impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
+    private void imprimir(BluetoothPrinter impresora, Registro_Turno registro){
+        //Bitmap logoEmpresa = BitmapFactory.decodeResource(getResources(), R.drawable.logo_empresa2);
+        impresora.setAlign(BluetoothPrinter.ALIGN_LEFT);
         //impresora.printImage(logoEmpresa);
         //impresora.addNewLine();
 
-        //impresora.setBold(true);
+        impresora.printLine();
+        impresora.addNewLine();
+
+        impresora.setBold(true);
         impresora.printText("PUNTO DE CONTROL"); impresora.addNewLine();
+        impresora.setBold(false);
+        impresora.printText("Nombre del punto"); impresora.addNewLine();
         //impresora.setAlign(BluetoothPrinter.ALIGN_LEFT);
         //impresora.setBold(false);
-        impresora.addNewLine();
-        impresora.printText(ultimoRegistro.getRuta().getNombre().toUpperCase());
 
-        impresora.addNewLine();
-        //impresora.setBold(true);
-        impresora.printText("TIEMPO AL PUNTO: " + tdespacho.getText().toString()); impresora.addNewLine();
+        //impresora.printText(registro.getRuta().getNombre().toUpperCase());
+
+        impresora.setBold(true);
+        imprimirValor(impresora, "TIEMPO AL PUNTO ",  registro.getDespacho()); impresora.addNewLine();
 
         impresora.printText("DETALLE DE CONTROL");
-        //impresora.setBold(false);
+        impresora.setBold(false);
         //impresora.setLineSpacing(1);
         impresora.addNewLine();
 
         String empresa = "ninguna";
         try {
-            empresa = ultimoRegistro.getBus().getEmpresa().getNombre().toUpperCase();
+            empresa = registro.getBus().getEmpresa().getNombre().toUpperCase();
         } catch (Exception e){ empresa = "Error entity detached"; }
 
-        imprimirValor(impresora, "EMPRESA", empresa);
+        imprimirValor(impresora, "EMPRESA ", empresa);
         impresora.addNewLine();
-        imprimirValor(impresora, "PLACA", ultimoRegistro.getBus().getPlaca().toUpperCase());
+        imprimirValor(impresora, "PLACA ", registro.getBus().getPlaca().toUpperCase());
         impresora.addNewLine();
-        imprimirValor(impresora, "INTERNO", ultimoRegistro.getBus().getInterno().toUpperCase());
+        imprimirValor(impresora, "INTERNO ", registro.getBus().getInterno().toUpperCase());
         impresora.addNewLine();
-        imprimirValor(impresora, "FECHA", TimeHelper.getDate(ultimoRegistro.getFecha()));
+        imprimirValor(impresora, "FECHA ", TimeHelper.getDate(registro.getFecha()));
         impresora.addNewLine();
-        imprimirValor(impresora, "HORA DESPACHO", ultimoRegistro.getDespacho());
+        imprimirValor(impresora, "HORA DESPACHO ", registro.getDespacho());
         impresora.addNewLine();
-        imprimirValor(impresora, "HORA REGISTRO", TimeHelper.getTime(ultimoRegistro.getFecha()));
+        imprimirValor(impresora, "HORA REGISTRO ", TimeHelper.getTime(registro.getFecha()));
 
         impresora.addNewLine();
-        imprimirValor(impresora, tinfo1.getText().toString(), tminutos.getText().toString());
+        if (registro.getMinAdelantado().equals("00:00:00"))
+            imprimirValor(impresora, "Demorado ", registro.getMinAtrazado());
+        else
+            imprimirValor(impresora, "Adelantado ", registro.getMinAdelantado());
+
+
+        impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
         impresora.addNewLine();
-        imprimirValor(impresora, "Dato extra 2", "");
+        impresora.printText("OPERARIO");
+        impresora.addNewLine();
+        impresora.printText(registro.getUsuario().getNombre().toUpperCase());
+
 
         impresora.printLine();
         impresora.feedPaper();
@@ -271,11 +277,14 @@ public class CheckFragment extends Fragment implements Listener {
     }
 
     private void imprimirValor(BluetoothPrinter print, String campo, String valor){
+        print.writePrint(BluetoothPrinter.ESC_ALIGN_CENTER, "| " + campo + " : " + valor +" |");
+        print.setAlign(BluetoothPrinter.ALIGN_LEFT);
         //print.setAlign(BluetoothPrinter.ALIGN_LEFT);
-        print.printText(campo);
+        //print.printText(campo);
         //print.setAlign(BluetoothPrinter.ALIGN_RIGHT);
-        print.printText(valor);
+        //print.printText(valor);
     }
+
     private void pruebas(){
         bpruebas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -335,11 +344,26 @@ public class CheckFragment extends Fragment implements Listener {
             cargarInfo();
     }
 
+    public void callBackNfcUid(String mensaje){
+        if (mensaje != null){
+            Bus bx = AppController.daoSession.getBusDao().queryBuilder().where(BusDao.Properties.TagNfc.eq(mensaje), BusDao.Properties.Eliminado.eq(false)).unique();
+            limpiarInfo();
+            if (bx != null) {
+                infoTarjeta = new nfcData(bx);
+                cargarInfo();
+            }
+            else
+                ToastHelper.error("Tarjeta no asignada a ningun bus.");
+        }
+        else
+            ToastHelper.error("Error al leer la tarjeta");
+    }
+
     private void leerTarjeta(){
         OperadorActivity activity = (OperadorActivity) getActivity();
-        //activity.leerNFC();
+        activity.leerNFC(this);
         //Log.d("JSON PRUEBA", nfcHelper.convertnfcData(new nfcData(AppController.daoSession.getBusDao().loadAll().get(0))));
-        callBackNfc(nfcPrueba);
+        //callBackNfc(nfcPrueba);
     }
 
 
@@ -348,14 +372,14 @@ public class CheckFragment extends Fragment implements Listener {
         Horario hora = calculos.getHorarioCercano(rutaSeleccionada, new Date());
 
         if (hora != null) {
-            infoTarjeta.setUltimoCheck(new Date());
+            //infoTarjeta.setUltimoCheck(new Date());
             fechaCheck = new Date();
 
             tplaca.setText(infoTarjeta.getBus().getPlaca());
             tinterno.setText(infoTarjeta.getBus().getInterno());
             tempresa.setText(infoTarjeta.getEmpresa().getNombre());
             thoraregistro.setText(TimeHelper.getTime(fechaCheck));
-            tultimocheck.setText(TimeHelper.getDate(infoTarjeta.getUltimoCheck(), "dd MMM yyyy - HH:mm:ss"));
+            //tultimocheck.setText(TimeHelper.getDate(infoTarjeta.getUltimoCheck(), "dd MMM yyyy - HH:mm:ss"));
 
             if (TimeHelper.esFindeSemana(new Date()) || calculos.esDiaFestivo(new Date()))
                 tdespacho.setText(hora.getHoraFestivoHasta());
@@ -366,9 +390,10 @@ public class CheckFragment extends Fragment implements Listener {
             tminutos.setText(TimeHelper.segundosahoras(difTiempo));
             if (difTiempo > 0)
                 tinfo1.setText("Demorado");
-            else
+            else {
+                tminutos.setText(TimeHelper.segundosahoras(difTiempo*-1));
                 tinfo1.setText("Adelantado");
-
+            }
 
             bimprimir.setVisibility(View.VISIBLE);
             //bguardar.setVisibility(View.VISIBLE);
@@ -383,7 +408,8 @@ public class CheckFragment extends Fragment implements Listener {
         tempresa.setText("");
         thoraregistro.setText("");
         tultimocheck.setText("");
-
+        tdespacho.setText("");
+        tminutos.setText("");
 
     }
 

@@ -71,8 +71,9 @@ public class NFCWriteFragment extends DialogFragment {
     }
 
     public void onNfcDetected(Ndef ndef, String messageToWrite){
-        mProgress.setVisibility(View.VISIBLE);
-        writeToNfc(ndef,messageToWrite);
+        //mProgress.setVisibility(View.VISIBLE);
+        //writeToNfc(ndef,messageToWrite);
+        dismiss();
     }
 
     private void writeToNfc(Ndef ndef, String message){

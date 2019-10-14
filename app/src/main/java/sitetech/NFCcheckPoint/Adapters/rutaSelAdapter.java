@@ -101,7 +101,6 @@ public class rutaSelAdapter extends RecyclerView.Adapter<rutaSelAdapter.ViewHold
         private final TextView tnombre;
         private final ImageView rimg;
 
-        private LinearLayout linearFondo;
         HorarioDao horarioManager = AppController.daoSession.getHorarioDao();
 
         private Ruta currentItem;
@@ -111,16 +110,28 @@ public class rutaSelAdapter extends RecyclerView.Adapter<rutaSelAdapter.ViewHold
             super(itemView);
             tnombre = itemView.findViewById(R.id.tnombre);
             rimg = itemView.findViewById(R.id.rimg);
-            linearFondo = itemView.findViewById(R.id.linearFondo);
+
+            tnombre.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //setSelectedItem(currentItem);
+
+                    onItemClick.onClickItemList(v, getAdapterPosition());
+                    notifyItemChanged(selectedItem);
+                    selectedItem = getLayoutPosition();
+                    notifyItemChanged(selectedItem);
+                }
+            });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //setSelectedItem(currentItem);
+
+                    onItemClick.onClickItemList(v, getAdapterPosition());
                     notifyItemChanged(selectedItem);
                     selectedItem = getLayoutPosition();
                     notifyItemChanged(selectedItem);
-
-                    onItemClick.onClickItemList(v, getAdapterPosition());
                 }
             });
         }

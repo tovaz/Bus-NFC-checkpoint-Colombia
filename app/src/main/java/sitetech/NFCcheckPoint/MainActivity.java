@@ -7,6 +7,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.nfc.tech.MifareClassic;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
@@ -42,9 +43,14 @@ import sitetech.NFCcheckPoint.Helpers.nfcHelper;
 import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
+import sitetech.NFCcheckPoint.ui.buses.BusAgregarFragment;
 import sitetech.NFCcheckPoint.ui.nfc.NFCReadFragment;
 import sitetech.NFCcheckPoint.ui.nfc.NFCWriteFragment;
+import sitetech.NFCcheckPoint.ui.operador.CheckFragment;
 import sitetech.routecheckapp.R;
+
+import static sitetech.NFCcheckPoint.Helpers.nfcHelper.getUid;
+import static sitetech.NFCcheckPoint.Util.typeConverter.bin2hex;
 
 public class MainActivity extends AppCompatActivity implements Listener {
 
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
     private NFCReadFragment nfcReadF;
     private boolean isDialogDisplayed = false;
     private boolean isWrite = false;
+    public BusAgregarFragment busAgragarF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +177,8 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
     /***************************************************************************/
     private Bus busNFC;
-    public void escribirNFC(Bus bus){
+    public void escribirNFC(Bus bus, BusAgregarFragment fragmento){
+        busAgragarF = fragmento;
         isWrite = true;
         busNFC = bus;
         nfcWriteF = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
@@ -225,32 +233,40 @@ public class MainActivity extends AppCompatActivity implements Listener {
             mNfcAdapter.disableForegroundDispatch(this);
     }
 
+    public void updateBus(String uid){
+        if (busAgragarF != null)
+            busAgragarF.asignarTarjeta(uid);
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        Log.d("TAG RECIVIDO: ", tag.toString());
-        Log.d("NEW INTENT", "on New Intent: "+intent.getAction());
 
-        String[] techList = tag.getTechList();
-        Log.d("TECH LIST", "");
-        for ( String x : techList)
-            Log.d("l", x);
+        ToastHelper.info(bin2hex(tag.getId()));
+
+        //String[] techList = tag.getTechList();
+        //Toast.makeText(this, "UID: " + bin2hex(tag.getId()), Toast.LENGTH_SHORT).show();
+
+        //Log.d("TECH LIST", "");
+        //for ( String x : techList)
+        //    Log.d("l", x);
 
 
         if(tag != null) {
-            Toast.makeText(this, "Tarjeta detectada.", Toast.LENGTH_SHORT).show();
             Ndef ndef = Ndef.get(tag);
-
-            if (ndef == null) ndef = formatearTag(ndef, tag);
+            //if (ndef == null) ndef = formatearTag(ndef, tag);
 
             Gson g = new Gson();
             //ToastHelper.aviso(ndef.toString());
             if (isDialogDisplayed) {
                 if (isWrite) {
-                    nfcData nfcdata = new nfcData(busNFC);
-                    String messageToWrite = nfcHelper.convertnfcData(nfcdata);
-                    nfcWriteF = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
-                    nfcWriteF.onNfcDetected(ndef,messageToWrite);
+                    nfcWriteF.onNfcDetected(ndef, getUid(tag));
+                    updateBus(getUid(tag));
+                    //nfcData nfcdata = new nfcData(busNFC);
+                    //String messageToWrite = nfcHelper.convertnfcData(nfcdata);
+                    //nfcWriteF = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
+                    //nfcWriteF.onNfcDetected(ndef,messageToWrite);
+
 
                 } /*else {
                     nfcReadF = (NFCReadFragment)getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
@@ -258,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
                 }*/
             }
         }
+        else ToastHelper.aviso("Error al intentar leer la tarjeta, intanta de nuevo.");
     }
 
     private Ndef formatearTag(Ndef ndefTag, Tag tag){

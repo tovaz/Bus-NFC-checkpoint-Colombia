@@ -54,11 +54,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:flv_colorActivated="@color/colorLabelFloat"
-                app:flv_ownerView="@+id/tcedula"
+                app:flv_ownerView="@+id/tinterno"
                 app:flv_textDefault="Numero Interno" />
 
             <EditText
-                android:id="@+id/tcedula"
+                android:id="@+id/tinterno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_edit_sel"
@@ -83,10 +83,28 @@
                 android:dropDownWidth="wrap_content"
                 android:spinnerMode="dialog" />
 
+            <net.xpece.material.floatinglabel.FloatingLabelView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Tarjeta NFC"
+                app:flv_colorActivated="@color/colorLabelFloat"
+                app:flv_ownerView="@+id/tuid"
+                app:flv_textDefault="Tarjeta NFC" />
+
+            <TextView
+                android:id="@+id/tuid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/text_edit_sel"
+                android:ems="10"
+                android:hint="NFC UID"/>
+
             <Button
                 android:id="@+id/bescribirNFC"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/btn_blue_sel"

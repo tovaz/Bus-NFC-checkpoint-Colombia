@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:id="@+id/linearFondo"
-        android:layout_width="wrap_content"
+        android:layout_width="90dp"
         android:layout_height="60dp"
         android:background="@drawable/item_list2_sel"
         android:orientation="horizontal"
@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/rimg"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ruta"
             tools:srcCompat="@drawable/ruta" />
@@ -31,8 +31,9 @@
             android:layout_marginLeft="5dp"
             android:ellipsize="end"
             android:hint="TEXTO DE LA RUTA"
-            android:inputType="textMultiLine"
-            android:lines="1"
+            android:lines="2"
+            android:maxLines="5"
+            android:singleLine="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="12sp"
             android:textStyle="bold"></TextView>

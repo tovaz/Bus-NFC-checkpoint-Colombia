@@ -39,6 +39,8 @@ import sitetech.NFCcheckPoint.ui.operador.CheckFragment;
 import sitetech.NFCcheckPoint.ui.operador.HistoryFragment;
 import sitetech.routecheckapp.R;
 
+import static sitetech.NFCcheckPoint.Helpers.nfcHelper.getUid;
+
 public class OperadorActivity extends AppCompatActivity implements Listener {
 
     public Usuario usuarioLog;
@@ -130,7 +132,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
                     hf.cargarLista();
                 }
 
-                ToastHelper.aviso("TAB SELECCIONADA " + tab.getPosition());
+                //ToastHelper.aviso("TAB SELECCIONADA " + tab.getPosition());
             }
 
             @Override
@@ -196,30 +198,32 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
         nfcWriteF.show(getFragmentManager(),NFCWriteFragment.TAG);
     }
 
-    public void leerNFC() {
-        nfcReadF = (NFCReadFragment) getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
+    CheckFragment checkFragment;
+    public void leerNFC(CheckFragment fragmentCheck) {
+        //nfcReadF = (NFCReadFragment) getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
 
-        if (nfcReadF == null) {
-            nfcReadF = NFCReadFragment.newInstance();
-        }
-        nfcReadF.show(getFragmentManager(), NFCReadFragment.TAG);
+        //if (nfcReadF == null) {
+        //    nfcReadF = NFCReadFragment.newInstance();
+        //}
+        //nfcReadF.show(getFragmentManager(), NFCReadFragment.TAG);
+        checkFragment = fragmentCheck;
     }
 
     public void updateCheckFragment(String tag){
         CheckFragment chf = (CheckFragment)tabsAdapter.getItem(0);
         if (chf != null)
-            chf.callBackNfc(tag);
+            chf.callBackNfcUid(tag);
     }
 
     @Override
     public void onDialogDisplayed() {
-        isDialogDisplayed = true;
+        //isDialogDisplayed = true;
     }
 
     @Override
     public void onDialogDismissed() {
-        isDialogDisplayed = false;
-        isWrite = false;
+        //isDialogDisplayed = false;
+        //isWrite = false;
     }
 
     @Override
@@ -255,7 +259,11 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
             //ToastHelper.aviso(tag.toString());
             Ndef ndef = Ndef.get(tag);
 
-            if (isDialogDisplayed) {
+            if (checkFragment != null) {
+                checkFragment.callBackNfcUid(getUid(tag));
+            }
+
+            /*if (isDialogDisplayed) {
                 if (isWrite) {
                     nfcData nfcdata = new nfcData(busNFC);
                     String messageToWrite = nfcHelper.convertnfcData(nfcdata);
@@ -264,10 +272,9 @@ public class OperadorActivity extends AppCompatActivity implements Listener {
 
                 } else {
                     nfcReadF = (NFCReadFragment)getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
-
-                    nfcReadF.onNfcDetected(ndef);
+                    nfcReadF.onNfcDetected(null, getUid(tag));
                 }
-            }
+            }*/
         }
     }
 }

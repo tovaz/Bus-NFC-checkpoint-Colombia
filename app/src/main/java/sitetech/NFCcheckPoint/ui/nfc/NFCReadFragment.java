@@ -63,8 +63,10 @@ public class NFCReadFragment extends DialogFragment {
         mListener.onDialogDismissed();
     }
 
-    public void onNfcDetected(Ndef ndef){
-        readFromNFC(ndef);
+    public void onNfcDetected(Ndef ndef, String uid){
+        ((OperadorActivity)  getActivity()).updateCheckFragment(uid);
+        dismiss();
+        //readFromNFC(ndef);
     }
 
     private void readFromNFC(Ndef ndef) {

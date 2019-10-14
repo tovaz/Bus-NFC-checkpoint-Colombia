@@ -1,6 +1,10 @@
 package sitetech.NFCcheckPoint.Helpers;
 
+import android.nfc.Tag;
+
 import com.google.gson.Gson;
+
+import static sitetech.NFCcheckPoint.Util.typeConverter.bin2hex;
 
 public class nfcHelper {
     public static nfcData getnfcData(String _tag){
@@ -24,5 +28,9 @@ public class nfcHelper {
             ToastHelper.error("Error al intentar parsear la informacion, objeto invalido.");
         }
         return null;
+    }
+
+    public static String  getUid(Tag tag){
+        return bin2hex(tag.getId());
     }
 }

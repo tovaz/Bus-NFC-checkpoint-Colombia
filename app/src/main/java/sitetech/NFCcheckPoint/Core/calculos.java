@@ -24,6 +24,7 @@ import sitetech.NFCcheckPoint.db.horarioPorRutaDao;
 public class calculos {
     public static Horario getHorarioCercano(Ruta rx, Date fecha){
         String horarioRegistro = TimeHelper.getDate(fecha, "HH:mm:ss");
+        Log.d("ALGO ", rx.getNombre());
         List<horarioPorRuta> hrl = AppController.daoSession.getHorarioPorRutaDao().queryBuilder() //Obtenemos los horarios de la ruta
                 .where(horarioPorRutaDao.Properties.RutaId.eq(rx.getId()))
                 .list();

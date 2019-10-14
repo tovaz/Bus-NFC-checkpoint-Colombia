@@ -23,6 +23,9 @@ public class Turno {
     private java.util.Date fechaCreacion;
     private java.util.Date fechaCierre;
     private Long totalBuses;
+    private Integer totalAtiempo;
+    private Integer totalDemorados;
+    private Integer totalAtrazaods;
     private boolean eliminada;
     private long operadorCierre;
 
@@ -52,11 +55,14 @@ public class Turno {
     }
 
     @Generated
-    public Turno(Long id, java.util.Date fechaCreacion, java.util.Date fechaCierre, Long totalBuses, boolean eliminada, long operadorCierre) {
+    public Turno(Long id, java.util.Date fechaCreacion, java.util.Date fechaCierre, Long totalBuses, Integer totalAtiempo, Integer totalDemorados, Integer totalAtrazaods, boolean eliminada, long operadorCierre) {
         this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.fechaCierre = fechaCierre;
         this.totalBuses = totalBuses;
+        this.totalAtiempo = totalAtiempo;
+        this.totalDemorados = totalDemorados;
+        this.totalAtrazaods = totalAtrazaods;
         this.eliminada = eliminada;
         this.operadorCierre = operadorCierre;
     }
@@ -100,6 +106,30 @@ public class Turno {
 
     public void setTotalBuses(Long totalBuses) {
         this.totalBuses = totalBuses;
+    }
+
+    public Integer getTotalAtiempo() {
+        return totalAtiempo;
+    }
+
+    public void setTotalAtiempo(Integer totalAtiempo) {
+        this.totalAtiempo = totalAtiempo;
+    }
+
+    public Integer getTotalDemorados() {
+        return totalDemorados;
+    }
+
+    public void setTotalDemorados(Integer totalDemorados) {
+        this.totalDemorados = totalDemorados;
+    }
+
+    public Integer getTotalAtrazaods() {
+        return totalAtrazaods;
+    }
+
+    public void setTotalAtrazaods(Integer totalAtrazaods) {
+        this.totalAtrazaods = totalAtrazaods;
     }
 
     public boolean getEliminada() {

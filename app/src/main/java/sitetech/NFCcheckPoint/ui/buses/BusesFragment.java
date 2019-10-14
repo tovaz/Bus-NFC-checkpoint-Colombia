@@ -21,6 +21,7 @@ import sitetech.NFCcheckPoint.Adapters.busAdapter;
 import sitetech.NFCcheckPoint.Adapters.onItemClick;
 import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
+import sitetech.NFCcheckPoint.MainActivity;
 import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.routecheckapp.R;
@@ -50,6 +51,8 @@ public class BusesFragment extends Fragment implements Serializable {
             public void onClick(View v) {
                 Itemseleccionado = null;
                 activityHelper.cargarFragmento(fragmento, new BusAgregarFragment());
+
+
             }
         });
 

@@ -46,8 +46,9 @@ public class Configuraciones{
         if (id != -1) {
             return AppController.daoSession.getRutaDao().queryBuilder().where(RutaDao.Properties.Id.eq(id)).unique();
         }
+        else
+            return AppController.daoSession.getRutaDao().queryBuilder().where(RutaDao.Properties.Id.eq(1)).unique();
 
-        return null;
     }
 
     public static String getUltimoTag(Context context){

@@ -140,6 +140,9 @@ public class daoGenerator {
         turno.addDateProperty("fechaCreacion").notNull();
         turno.addDateProperty("fechaCierre");
         turno.addLongProperty("totalBuses");
+        turno.addIntProperty("totalAtiempo");
+        turno.addIntProperty("totalDemorados");
+        turno.addIntProperty("totalAtrazaods");
         turno.addBooleanProperty("eliminada").notNull();
         Property operadorCierre = turno.addLongProperty("operadorCierre").notNull().getProperty();
 
