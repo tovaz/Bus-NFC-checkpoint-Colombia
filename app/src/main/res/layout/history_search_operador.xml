@@ -41,7 +41,7 @@
 
                     <ImageView
                         android:id="@+id/batraz"
-                        android:layout_width="40dp"
+                        android:layout_width="49dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
                         android:tint="#eee"
@@ -52,15 +52,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_marginLeft="10dp"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Buscar en el registro de buses"
-                        android:textColor="#eee" />
+                        android:textColor="#eee"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView

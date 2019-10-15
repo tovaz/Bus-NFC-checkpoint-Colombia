@@ -62,6 +62,7 @@ public class HistorySearchOP extends Fragment {
 
     private Empresa selEmpresa;
     final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    final SimpleDateFormat dbDf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vista = inflater.inflate(R.layout.history_search_operador, container, false);
@@ -184,8 +185,9 @@ public class HistorySearchOP extends Fragment {
     registroAdapter dataAdapter;
     private void buscar(){
         try {
-            Date fdesde = df.parse(tdesde.getText().toString());
-            Date fhasta = df.parse(thasta.getText().toString());
+
+            Date fdesde = dbDf.parse(tdesde.getText().toString() + " 00:00:00");
+            Date fhasta = dbDf.parse(thasta.getText().toString()+ " 23:59:59");
 
             String placa = "", interno = "";
             if (spsel.getSelectedItem().equals("Placa")) placa = tplaca.getText().toString();
@@ -200,7 +202,7 @@ public class HistorySearchOP extends Fragment {
                 }
                 else {
                     lresultado = AppController.daoSession.getRegistro_TurnoDao().queryBuilder()
-                            .where(Registro_TurnoDao.Properties.Fecha.between(fdesde, TimeHelper.sumarAfecha(fhasta, 1))
+                            .where(Registro_TurnoDao.Properties.Fecha.between(fdesde, fhasta)
                             ).orderAsc(Registro_TurnoDao.Properties.Fecha).list();
                 }
 

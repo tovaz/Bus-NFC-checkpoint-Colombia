@@ -107,7 +107,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         }
     };
 
-    private void Click(){
+    private void Click() {
         bbuses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,12 +117,12 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     }
 
     boolean isCheckActivity = false;
-    private void checking(){
+
+    private void checking() {
         if (checkHelper.verificarNFC(this) && checkHelper.verificarImpresora(this) && checkHelper.verificarFecha(this)) {
             isCheckActivity = false;
             finishActivity(2);
-        }
-        else {
+        } else {
             if (!isCheckActivity) {
                 Intent intent = new Intent(this, LockActivity.class);
                 startActivityForResult(intent, 2);
@@ -140,10 +140,11 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     }
 
     private TabsAdapter tabsAdapter;
-    private  void cargarTabs(){
+
+    private void cargarTabs() {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         //tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        final ViewPager viewPager =(ViewPager)findViewById(R.id.view_pager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         tabsAdapter = new TabsAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(tabsAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -167,6 +168,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
                 int color = ContextCompat.getColor(getBaseContext(), R.color.colorAccentDark);
                 tab.getIcon().setColorFilter(color, PorterDuff.Mode.SRC_IN);
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
@@ -176,7 +178,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         //tabLayout.getTabAt(0).select();
     }
 
-    public void cargarUsuario(){
+    public void cargarUsuario() {
         long uid = getIntent().getLongExtra("usuario", 0);
         Usuario ux = AppController.daoSession.getUsuarioDao().queryBuilder().where(UsuarioDao.Properties.Id.eq(uid)).unique();
         if (ux != null) {
@@ -189,14 +191,17 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
             public void onClick(View v) {
                 DialogHelper.showAsk2(v, "Cerrar Sesion", "¿Quiere cerrar sesion ahora?", "Cerrar ahora", "Cancelar", new myDialogInterface() {
                     @Override
-                    public View onBuildDialog() {  return null; }
+                    public View onBuildDialog() {
+                        return null;
+                    }
 
                     @Override
-                    public void onCancel() { }
+                    public void onCancel() {
+                    }
 
                     @Override
                     public void onResult(View vista) {
-                        finish();
+                        finish(true);
                     }
                 });
 
@@ -213,7 +218,8 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
 
     /***************************************************************************/
     private Bus busNFC;
-    public void escribirNFC(Bus bus){
+
+    public void escribirNFC(Bus bus) {
         isWrite = true;
         busNFC = bus;
         nfcWriteF = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
@@ -222,10 +228,11 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
             nfcWriteF = NFCWriteFragment.newInstance();
         }
 
-        nfcWriteF.show(getFragmentManager(),NFCWriteFragment.TAG);
+        nfcWriteF.show(getFragmentManager(), NFCWriteFragment.TAG);
     }
 
     CheckFragment checkFragment;
+
     public void leerNFC(CheckFragment fragmentCheck) {
         //nfcReadF = (NFCReadFragment) getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
 
@@ -236,8 +243,8 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         checkFragment = fragmentCheck;
     }
 
-    public void updateCheckFragment(String tag){
-        CheckFragment chf = (CheckFragment)tabsAdapter.getItem(0);
+    public void updateCheckFragment(String tag) {
+        CheckFragment chf = (CheckFragment) tabsAdapter.getItem(0);
         if (chf != null)
             chf.callBackNfcUid(tag);
     }
@@ -259,11 +266,11 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected,tagDetected,ndefDetected};
+        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
 
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        if(mNfcAdapter!= null)
+        if (mNfcAdapter != null)
             mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
 
     }
@@ -271,7 +278,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     @Override
     protected void onPause() {
         super.onPause();
-        if(mNfcAdapter!= null)
+        if (mNfcAdapter != null)
             mNfcAdapter.disableForegroundDispatch(this);
     }
 
@@ -279,9 +286,9 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     protected void onNewIntent(Intent intent) {
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-        Log.d("NEW INTENT", "on New Intent: "+intent.getAction());
+        Log.d("NEW INTENT", "on New Intent: " + intent.getAction());
 
-        if(tag != null) {
+        if (tag != null) {
             Toast.makeText(this, "Tarjeta detectada. ID: " + new BigInteger(1, tag.getId()).toString(), Toast.LENGTH_SHORT).show();
             //ToastHelper.aviso(tag.toString());
             Ndef ndef = Ndef.get(tag);
@@ -306,7 +313,8 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     }
 
     private HistorySearchOP hsp;
-    private void mostrarHistorial(){
+
+    private void mostrarHistorial() {
         if (hsp == null)
             hsp = new HistorySearchOP();
 
@@ -322,8 +330,19 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         //activityHelper.cargarFragmento2(this, hsp.getTargetFragment(), R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
     }
 
-    public void cerrarHistorial(){
+    public void cerrarHistorial() {
         appbar.setVisibility(View.VISIBLE);
         contenedor.setVisibility(View.GONE);
+    }
+
+
+    public void finish(boolean salir){
+        if (salir)
+            super.finish();
+    }
+
+    @Override
+    public void finish() {
+        return ;
     }
 }

@@ -25,7 +25,11 @@ public class Configuraciones{
     public static void setUsuarioLog(Context context, Usuario ux){
         SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putLong("usuarioId", ux.getId());
+        if (ux != null)
+            editor.putLong("usuarioId", ux.getId());
+        else
+            editor.putLong("usuarioId", -1);
+
         editor.commit();
     }
 

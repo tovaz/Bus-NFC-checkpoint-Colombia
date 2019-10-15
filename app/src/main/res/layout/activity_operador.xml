@@ -27,11 +27,11 @@
 
                 <ImageView
                     android:id="@+id/bbuses"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/btn_default_sel"
-                    android:src="@drawable/bus_24x243"
-                    app:srcCompat="@drawable/bus_32" />
+                    app:srcCompat="@drawable/bus_azul"
+                    tools:srcCompat="@drawable/bus_azul" />
 
                 <ImageView
                     android:id="@+id/button2"

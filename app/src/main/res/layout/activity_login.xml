@@ -18,6 +18,51 @@
             android:orientation="vertical">
 
 
+            <Button
+                android:id="@+id/biniciar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_red_sel"
+                android:text="Login Admin"
+                android:textColor="#eee" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/b1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Prueba 1" />
+
+                <Button
+                    android:id="@+id/b2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Prueba 2" />
+
+                <Button
+                    android:id="@+id/b3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Prueba 3" />
+
+                <Button
+                    android:id="@+id/b4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Prueba 4" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/lnotificacion"
                 android:layout_width="match_parent"
@@ -26,17 +71,6 @@
                 android:textAlignment="center"
                 android:textColor="@color/ErrorColor"
                 android:visibility="gone" />
-
-            <Button
-                android:id="@+id/biniciar2"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/btn_red_sel"
-                android:text="Iniciar como Admin"
-                android:textColor="#eee" />
 
             <ImageView
                 android:id="@+id/imageView4"

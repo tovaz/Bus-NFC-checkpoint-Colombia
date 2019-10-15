@@ -129,11 +129,10 @@ public class CheckFragment extends Fragment implements Listener {
         bimprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!yaGuardo)
-                    guardarRegistro();
-
-                printHelper.imprimirRegistro(ultimoRegistro, true, false);
-                limpiarInfo();
+                if (!yaGuardo) {
+                    printHelper.imprimirRegistro(guardarRegistro(), true, false); //IMPRIME Y GUARDA EL REGISTRO
+                    limpiarInfo();
+                }
             }
         });
 
@@ -158,7 +157,19 @@ public class CheckFragment extends Fragment implements Listener {
         });
     }
 
-    private void guardarRegistro(){
+    private void imprimirUltimo(){
+        Turno tn = Configuraciones.getTurnoAbierto();
+        Registro_Turno regX = AppController.daoSession.getRegistro_TurnoDao().queryBuilder()
+                .where(Registro_TurnoDao.Properties.TurnoId.eq(tn.getId())).limit(1).orderDesc(Registro_TurnoDao.Properties.Id).unique();
+
+        if (regX != null)
+            printHelper.imprimirRegistro(regX, false, false);
+        else
+            printHelper.imprimirRegistro(null, false, false);
+
+    }
+
+    private Registro_Turno guardarRegistro(){
         Turno tn = Configuraciones.getTurnoAbierto();
         Registro_Turno nuevoRegistro = new Registro_Turno();
         nuevoRegistro.setFecha(fechaCheck);
@@ -197,6 +208,8 @@ public class CheckFragment extends Fragment implements Listener {
         bguardar.setVisibility(View.GONE);
 
         yaGuardo = true;
+
+        return nuevoRegistro;
     }
 
     private void pruebas(){
@@ -230,8 +243,9 @@ public class CheckFragment extends Fragment implements Listener {
         dataAdapter = new rutaSelAdapter(lista, new onItemClick() {
             @Override
             public void onClickItemList(View v, int position) {
-                ToastHelper.info("RUTA SELECCIONADA : " + lista.get(position).getNombre().toString());
+                //ToastHelper.info("RUTA SELECCIONADA : " + lista.get(position).getNombre().toString());
                 Configuraciones.setRutaDefault(getContext(), lista.get(position));
+                rutaSeleccionada = lista.get(position);
             }
         });
 
@@ -324,7 +338,6 @@ public class CheckFragment extends Fragment implements Listener {
         tultimocheck.setText("");
         tdespacho.setText("");
         tminutos.setText("");
-
     }
 
     @Override

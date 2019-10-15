@@ -15,6 +15,7 @@ import java.util.List;
 
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
+import sitetech.NFCcheckPoint.Helpers.printHelper;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
 import sitetech.routecheckapp.R;
@@ -28,6 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText tcontraseña;
     private UsuarioDao userD;
     private Usuario uLogeado;
+
+    private Button b1, b2, b3, b4;
+
+    private AppCompatActivity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); //ACTIVAR ACTION BAR
 
+        activity = this;
         cargarControles();
     }
 
@@ -48,6 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         tnombre = findViewById(R.id.tnombre);
         tcontraseña = findViewById(R.id.tcontraseña);
 
+        b1 = findViewById(R.id.b1);
+        b2 = findViewById(R.id.b2);
+        b3 = findViewById(R.id.b3);
+        b4 = findViewById(R.id.b4);
 
         Click();
         checkDatabase();
@@ -69,6 +79,34 @@ public class LoginActivity extends AppCompatActivity {
                 iniciarAdmin();
             }
         });
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printHelper.pruerba1();
+            }
+        });
+
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printHelper.pruerba2(activity);
+            }
+        });
+
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printHelper.pruerba3(activity);
+            }
+        });
+
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printHelper.pruerba4(activity);
+            }
+        });
     }
 
     private void checkDatabase(){
@@ -86,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         if (tnombre.getText() != null) username = tnombre.getText().toString();
 
         for( Usuario u : lusuarios){
-            Log.d("USUARIO: ", u.getNombre() + " - " + u.getPassword());
+            //Log.d("USUARIO: ", u.getNombre() + " - " + u.getPassword());
             if (u.getNombre().equals(username) && u.getPassword().equals(contraseña))
                 uLogeado = u;
             if (u.getCedula().equals(username) && u.getPassword().equals(contraseña))
@@ -97,6 +135,9 @@ public class LoginActivity extends AppCompatActivity {
             Configuraciones.setPrimerUso(this, false);
             lnotificacion.setVisibility(View.GONE);
             Configuraciones.setUsuarioLog(this, uLogeado);
+
+            tnombre.setText("");
+            tcontraseña.setText("");
 
             if (uLogeado.getRol().equals("Administrador"))
                 iniciarAdmin();
@@ -125,4 +166,6 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("usuario", uLogeado.getId());
         startActivity(intent);
     }
+
+
 }

@@ -16,7 +16,6 @@ import sitetech.NFCcheckPoint.Helpers.checkHelper;
 import sitetech.routecheckapp.R;
 
 public class LockActivity extends AppCompatActivity {
-
     private Button bnfc;
     private Button bfecha;
     private Button bimpresora;

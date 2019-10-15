@@ -166,7 +166,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
                 bus.setEmpresa(empresa);
 
                 bus.setTagNfc(tuid.getText().toString());
-                if (tuid.getText().equals("")) bus.setTagNfc(null);
+                if (tuid.getText().equals("N/A")) bus.setTagNfc(null);
 
                 if (mainFragment.Itemseleccionado == null) {
                     bus.setEliminado(false);

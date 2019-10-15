@@ -72,7 +72,7 @@ public class TurnoFragment extends Fragment {
         bcerrarTurno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogHelper.showAsk2(v, "¿Cerrar Turno?", "Al cerrar turno, se reiniciaran los registros a 0.", "Cerrar Turno", "Cancelar", new myDialogInterface() {
+                DialogHelper.showAsk2(v, "¿Cerrar Turno y Sesion?", "Al cerrar turno, se reiniciaran los registros a 0.", "Cerrar Turno", "Cancelar", new myDialogInterface() {
                     @Override
                     public View onBuildDialog() {
                         return null;
@@ -101,6 +101,7 @@ public class TurnoFragment extends Fragment {
         turnoAbierto.setFechaCierre(new Date());
         turnoAbierto.setOperadorCierre(ulog.getId());
 
+        AppController.daoSession.getTurnoDao().update(turnoAbierto);
         crearNuevoTurno();
     }
 
@@ -117,6 +118,9 @@ public class TurnoFragment extends Fragment {
         turno.setTotalBuses(new Long(0));
         AppController.daoSession.getTurnoDao().insert(turno);
         ToastHelper.exito("Turno cerrado.");
+
+        getActivity().finish();
+        Configuraciones.setUsuarioLog(getContext(), null);
     }
 
     private void cargarControles(){

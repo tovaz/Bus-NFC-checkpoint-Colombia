@@ -75,7 +75,7 @@ public class HistoryFragment extends Fragment {
         dataAdapter = new registroAdapter(lnueva, new onItemClick() {
             @Override
             public void onClickItemList(View v, final int position) {
-                ToastHelper.info("Desea Reimprimirlo" + lnueva.get(position).getBus().getPlaca());
+                //ToastHelper.info("Desea Reimprimirlo" + lnueva.get(position).getBus().getPlaca());
                 DialogHelper.showAsk2(v, "¿Reimprimir comprobante?", "Desea Reimprimir este registro.", "Imprimir", "Cancelar", new myDialogInterface() {
                     @Override
                     public View onBuildDialog() {
@@ -95,8 +95,10 @@ public class HistoryFragment extends Fragment {
             }
         });
 
-        rlista.setHasFixedSize(true);
-        rlista.setLayoutManager(new LinearLayoutManager(getContext()));
-        rlista.setAdapter(dataAdapter);
+        if (rlista != null) {
+            rlista.setHasFixedSize(true);
+            rlista.setLayoutManager(new LinearLayoutManager(getContext()));
+            rlista.setAdapter(dataAdapter);
+        }
     }
 }
