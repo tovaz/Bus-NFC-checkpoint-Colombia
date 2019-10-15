@@ -15,9 +15,9 @@ public class TestDataHelper {
         crearUsuarios();
         crearEmpresa();
         crearBus();
-        crearRutas();
-        crearHorariosTest();
-        relacionarHorarios();
+        //crearRutas();
+        //crearHorariosTest();
+        //relacionarHorarios();
     }
 
     public static void crearEmpresa(){
@@ -162,4 +162,6 @@ public class TestDataHelper {
 
         Log.d("TEST DATA", "Rutas relacionadas con exito");
     }
+
+
 }

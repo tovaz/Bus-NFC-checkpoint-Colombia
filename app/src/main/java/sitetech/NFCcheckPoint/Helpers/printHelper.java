@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.ByteArrayOutputStream;
 
 import sitetech.NFCcheckPoint.Core.BluetoothPrinter;
+import sitetech.NFCcheckPoint.Core.Utils;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.routecheckapp.R;
 
@@ -178,7 +179,7 @@ public class printHelper {
     }
 
     /*******************************************************************************************/
-    public static void pruerba1(){
+    public static void pruerba1(final Activity ac){
         try {
             BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
             BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
@@ -189,13 +190,22 @@ public class printHelper {
 
                 @Override
                 public void onConnected() {
-                    Bitmap logoEmpresa = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.empresa_logo_100);
-                    mPrinter.setAlign(BluetoothPrinter.ALIGN_LEFT);
-                    mPrinter.printImage(logoEmpresa);
-                    mPrinter.addNewLine();
-
-                    mPrinter.feedPaper();
-                    mPrinter.finish();
+                    try {
+                        Bitmap bmp = BitmapFactory.decodeResource(ac.getResources(),
+                                R.drawable.empresa_logox24);
+                        if(bmp!=null){
+                            byte[] command = Utils.decodeBitmap(bmp);
+                            mPrinter.setAlign(ALIGN_CENTER);
+                            mPrinter.printUnicode(command);
+                            mPrinter.feedPaper();
+                            mPrinter.finish();
+                        }else{
+                            ToastHelper.exito("Error al imprimir la foto " + " no existe el archivo");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ToastHelper.exito("Catch Exception " + e.getMessage());
+                    }
                 }
 
                 @Override
@@ -223,14 +233,22 @@ public class printHelper {
 
                 @Override
                 public void onConnected() {
-                    Bitmap bmp = BitmapFactory.decodeResource(ax.getResources(), R.drawable.empresa_logo_100);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] byteArray = stream.toByteArray();
-
-                    mPrinter.printUnicode(byteArray);
-                    mPrinter.feedPaper();
-                    mPrinter.finish();
+                    try {
+                        Bitmap bmp = BitmapFactory.decodeResource(ax.getResources(),
+                                R.drawable.logo_empresa2);
+                        if(bmp!=null){
+                            byte[] command = Utils.decodeBitmap(bmp);
+                            mPrinter.setAlign(ALIGN_CENTER);
+                            mPrinter.printUnicode(command);
+                            mPrinter.feedPaper();
+                            mPrinter.finish();
+                        }else{
+                            ToastHelper.exito("Error al imprimir la foto " + " no existe el archivo");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ToastHelper.exito("Catch Exception " + e.getMessage());
+                    }
                 }
 
                 @Override
@@ -258,15 +276,22 @@ public class printHelper {
 
                 @Override
                 public void onConnected() {
-                    Bitmap bmp = BitmapFactory.decodeResource(ax.getResources(), R.drawable.empresa_logox24);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] byteArray = stream.toByteArray();
-
-                    mPrinter.setAlign(ALIGN_CENTER);
-                    mPrinter.printUnicode(byteArray);
-                    mPrinter.feedPaper();
-                    mPrinter.finish();
+                    try {
+                        Bitmap bmp = BitmapFactory.decodeResource(ax.getResources(),
+                                R.drawable.empresa_logo_100);
+                        if(bmp!=null){
+                            byte[] command = Utils.decodeBitmap(bmp);
+                            mPrinter.setAlign(ALIGN_CENTER);
+                            mPrinter.printUnicode(command);
+                            mPrinter.feedPaper();
+                            mPrinter.finish();
+                        }else{
+                            ToastHelper.exito("Error al imprimir la foto " + " no existe el archivo");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ToastHelper.exito("Catch Exception " + e.getMessage());
+                    }
                 }
 
                 @Override
@@ -284,48 +309,7 @@ public class printHelper {
     }
 
     public static void pruerba4(final AppCompatActivity ax){
-        try {
-            BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-            BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
 
-            final BluetoothPrinter mPrinter = new BluetoothPrinter(mBtDevice);
-
-            mPrinter.connectPrinter(new BluetoothPrinter.PrinterConnectListener() {
-
-                @Override
-                public void onConnected() {
-                    try {
-                        Bitmap bmp = BitmapFactory.decodeResource(ax.getResources(),
-                                R.drawable.empresa_logox24);
-                        if(bmp!=null){
-                            byte[] command = decodeBitmap(bmp);
-                            mPrinter.setAlign(ALIGN_CENTER);
-                            mPrinter.printUnicode(command);
-
-                            mPrinter.feedPaper();
-                            mPrinter.finish();
-                        }else{
-                            ToastHelper.error("Error al imprimir.");
-                            Log.e("Print Photo error", "the file isn't exists");
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        ToastHelper.error("The file isnt exist");
-                        Log.e("PrintTools", "the file isn't exists");
-                    }
-                }
-
-                @Override
-                public void onFailed() {
-                    ToastHelper.error("Error al enviar la impresion, verifica la impresora.");
-                    Log.d("Impresora bluetooth", "Error de conexion");
-                }
-
-            });
-        }
-        catch (Exception e){
-            ToastHelper.error("Error al intentar imprimir. " + e.getMessage());
-        }
 
     }
 }

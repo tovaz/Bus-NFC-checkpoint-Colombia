@@ -14,6 +14,7 @@ import sitetech.NFCcheckPoint.Core.calculos;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.TestDataHelper;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
+import sitetech.NFCcheckPoint.Helpers.startDataHelper;
 import sitetech.NFCcheckPoint.db.DaoMaster;
 import sitetech.NFCcheckPoint.db.DaoSession;
 import sitetech.NFCcheckPoint.db.Turno;
@@ -33,7 +34,8 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"nfc-checkpoint-db-1.5.1"); //The users-db here is the name of our database.
+        //DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"nfc-checkpoint-db-1.5.1"); //The users-db here is the name of our database.
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"nfc_db"); //The users-db here is the name of our database.
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
 
@@ -42,9 +44,13 @@ public class AppController extends Application {
         AppController.context = getApplicationContext();
         checkTurno(); // PRIMORDIAL PARA CREAR EL PRIMER TURNO.
 
-        if (esPrimerUso()) TestDataHelper.crearData();
+        if (esPrimerUso()) {
+            TestDataHelper.crearData();
+            startDataHelper.loadAllData();
+        }
 
         testFunction();
+
     }
 
     public void testFunction(){

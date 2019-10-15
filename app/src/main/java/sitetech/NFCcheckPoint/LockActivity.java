@@ -11,7 +11,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import java.util.Date;
+
+import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.checkHelper;
 import sitetech.routecheckapp.R;
 
@@ -19,6 +23,7 @@ public class LockActivity extends AppCompatActivity {
     private Button bnfc;
     private Button bfecha;
     private Button bimpresora;
+    private TextView tinfo;
 
     private int mInterval = 2000; // 2 seconds by default, can be changed later
     private Handler mHandler;
@@ -30,6 +35,7 @@ public class LockActivity extends AppCompatActivity {
         bnfc = findViewById(R.id.bnfc);
         bfecha = findViewById(R.id.bfecha);
         bimpresora = findViewById(R.id.bimpresora);
+        tinfo = findViewById(R.id.tinfo);
 
         Drawable checkImg = getResources().getDrawable( R.drawable.check_24x24 );
         mHandler = new Handler();
@@ -63,7 +69,12 @@ public class LockActivity extends AppCompatActivity {
     private void checking(){
         Necesita();
         if (checkHelper.verificarNFC(this) && checkHelper.verificarImpresora(this) && checkHelper.verificarFecha(this))
-            finish();
+
+            if (TimeHelper.yaExpiro())
+                tinfo.setText("DEBE DE COMPRAR LA LICENCIA DEL PROGRAMA ...");
+            else
+                finish();
+
         else {
             if (checkHelper.isNfcEnable(this)) bnfc.setBackground(getResources().getDrawable(R.drawable.btn_checked));
             else bnfc.setBackground(getResources().getDrawable(R.drawable.btn_default));
@@ -75,8 +86,6 @@ public class LockActivity extends AppCompatActivity {
             else bimpresora.setBackground(getResources().getDrawable(R.drawable.btn_default));
         }
     }
-
-
 
     void startChecking() {
         CheckerTime.run();

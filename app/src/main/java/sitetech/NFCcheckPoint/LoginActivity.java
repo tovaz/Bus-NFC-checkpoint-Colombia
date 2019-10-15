@@ -1,5 +1,6 @@
 package sitetech.NFCcheckPoint;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
@@ -33,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button b1, b2, b3, b4;
 
     private AppCompatActivity activity;
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         activity = this;
         cargarControles();
+        requestPermisos();
     }
 
     private void cargarControles(){
@@ -61,6 +67,16 @@ public class LoginActivity extends AppCompatActivity {
 
         Click();
         checkDatabase();
+    }
+
+    private void requestPermisos() {
+        RxPermissions rxPermissions = new RxPermissions(this); // where this is an Activity instance // Must be done during an initialization phase like onCreate
+        rxPermissions.request(Manifest.permission.NFC);
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        rxPermissions.request(Manifest.permission.BLUETOOTH);
+        rxPermissions.request(Manifest.permission.BLUETOOTH_ADMIN);
+        rxPermissions.request(Manifest.permission.BLUETOOTH_PRIVILEGED);
+
     }
 
     private void Click(){
@@ -83,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                printHelper.pruerba1();
+                printHelper.pruerba1(activity);
             }
         });
 
@@ -104,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                printHelper.pruerba4(activity);
+                //printHelper.pruerba4(activity);
             }
         });
     }
@@ -150,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private List<Usuario> obtenerUsuarios(){
-        return   userD.queryBuilder().where(UsuarioDao.Properties.Eliminado.eq(false)).list();
+        return   userD.queryBuilder().where(UsuarioDao.Properties.Eliminado.eq(false), UsuarioDao.Properties.Activo.eq(true)).list();
     }
 
     private void iniciarAdmin(){

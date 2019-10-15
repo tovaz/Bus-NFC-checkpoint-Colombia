@@ -31,10 +31,12 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Date;
 
 import sitetech.NFCcheckPoint.Adapters.TabsAdapter;
 import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.Listener;
+import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.checkHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
@@ -117,16 +119,27 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     }
 
     boolean isCheckActivity = false;
-
+    boolean expiro = false;
     private void checking() {
         if (checkHelper.verificarNFC(this) && checkHelper.verificarImpresora(this) && checkHelper.verificarFecha(this)) {
-            isCheckActivity = false;
-            finishActivity(2);
+            if (!expiro) {
+                isCheckActivity = false;
+                finishActivity(2);
+            }
+
         } else {
             if (!isCheckActivity) {
                 Intent intent = new Intent(this, LockActivity.class);
                 startActivityForResult(intent, 2);
                 isCheckActivity = true;
+            }
+        }
+
+        if (!expiro){
+            if (TimeHelper.yaExpiro()){
+                Intent intent = new Intent(this, LockActivity.class);
+                startActivityForResult(intent, 2);
+                expiro = true;
             }
         }
     }

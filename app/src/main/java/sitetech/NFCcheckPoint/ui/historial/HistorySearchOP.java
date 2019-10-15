@@ -271,7 +271,9 @@ public class HistorySearchOP extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        ((OperadorActivity)getActivity()).cerrarHistorial();
+
+        if (getActivity().getClass().equals(OperadorActivity.class))
+            ((OperadorActivity)getActivity()).cerrarHistorial();
     }
 
 

@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class TimeHelper {
+    public static SimpleDateFormat formatDate2 = new SimpleDateFormat("dd/MM/yyyy");
     public static SimpleDateFormat formatDate = new SimpleDateFormat("dd MMM yyyy");
     public static SimpleDateFormat formatTime = new SimpleDateFormat("hh:mm:ss");
 
@@ -107,5 +108,20 @@ public class TimeHelper {
         c.setTime(fecha);
         c.add(Calendar.DATE, dias);
         return c.getTime();
+    }
+
+    /**************************************** FECHA DE EXPIRACION APP*****/
+    public static boolean yaExpiro(){
+        try {
+            Date d = new Date();
+            Date fechaExpiracion = TimeHelper.formatDate2.parse("28/10/2019");
+            Long diferencia = ( ( fechaExpiracion.getTime() - d.getTime() ) / 1000) / 60 ;
+            Log.d("YA EXPIRO: ", "DIF: " + diferencia.toString());
+
+            if (diferencia < 0)
+                return true;
+        }
+        catch (Exception e){}
+        return false;
     }
 }

@@ -31,9 +31,9 @@
 
     <fragment
         android:id="@+id/nav_historial"
-        android:name="sitetech.NFCcheckPoint.ui.historial.HistorialFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/historial_fragment" />
+        android:name="sitetech.NFCcheckPoint.ui.historial.HistorySearchOP"
+        android:label="Historial"
+        tools:layout="@layout/history_search_operador" />
 
     <fragment
         android:id="@+id/nav_horarios"
