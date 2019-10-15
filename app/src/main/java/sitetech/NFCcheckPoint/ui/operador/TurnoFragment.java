@@ -17,6 +17,7 @@ import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
+import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
@@ -94,7 +95,28 @@ public class TurnoFragment extends Fragment {
 
 
     private void cerrarTurno(){
+        Turno turnoAbierto = Configuraciones.getTurnoAbierto();
+        Usuario ulog = Configuraciones.getUsuarioLog(vista.getContext());
 
+        turnoAbierto.setFechaCierre(new Date());
+        turnoAbierto.setOperadorCierre(ulog.getId());
+
+        crearNuevoTurno();
+    }
+
+    private void crearNuevoTurno(){
+        Turno turno = new Turno();
+        turno.setFechaCreacion(new Date());
+        turno.setEliminada(false);
+        turno.setFechaCierre(null);
+
+        turno.setTotalAtiempo(0);
+        turno.setTotalAdelantados(0);
+        turno.setTotalDemorados(0);
+
+        turno.setTotalBuses(new Long(0));
+        AppController.daoSession.getTurnoDao().insert(turno);
+        ToastHelper.exito("Turno cerrado.");
     }
 
     private void cargarControles(){
@@ -108,7 +130,7 @@ public class TurnoFragment extends Fragment {
         bcerrarTurno = vista.findViewById(R.id.bcerrarTurno);
     }
 
-    int demorados, adelantados, atiempo, totalBuses = 0;
+    int totalBuses = 0;
     private void obtenerDatos(){
         cargarControles();
         Turno turnoAbierto = Configuraciones.getTurnoAbierto();
@@ -117,34 +139,16 @@ public class TurnoFragment extends Fragment {
                 .where(Registro_TurnoDao.Properties.TurnoId.eq(turnoAbierto.getId())).list();
 
         totalBuses = rlista.size();
-        for (Registro_Turno rx : rlista){
-            Date tadelantado = TimeHelper.separarString(rx.getMinAdelantado()) ;
-            Date tatrazado = TimeHelper.separarString(rx.getMinAdelantado());
-            Date tdespacho = TimeHelper.separarString(rx.getDespacho());
-
-            if (tadelantado != null && tatrazado != null) {
-                if (tadelantado.getTime() > tatrazado.getTime())
-                    if (tadelantado.getTime() < 180)
-                        adelantados++;
-                    else
-                        atiempo++;
-                else if (tatrazado.getTime() > 180)
-                    demorados++;
-                else
-                    atiempo++;
-            }
-        }
-
     }
 
     private void cargarTurnoInfo(){
+        Turno turnoAbierto = Configuraciones.getTurnoAbierto();
         Usuario ulog = Configuraciones.getUsuarioLog(vista.getContext());
         tusuario.setText(ulog.getNombre());
 
         tbuses.setText(String.valueOf(totalBuses));
-        tadelantados.setText(String.valueOf(adelantados));
-        tdemorados.setText(String.valueOf(demorados));
-        tatiempo.setText(String.valueOf(atiempo));
-        //tatiempo.setText(turno.get);
+        tadelantados.setText(String.valueOf(turnoAbierto.getTotalAdelantados()));
+        tdemorados.setText(String.valueOf(turnoAbierto.getTotalDemorados()));
+        tatiempo.setText(String.valueOf(turnoAbierto.getTotalAtiempo()));
     }
 }

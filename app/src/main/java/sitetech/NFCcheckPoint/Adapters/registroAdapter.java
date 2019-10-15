@@ -116,6 +116,11 @@ public class registroAdapter extends OmegaRecyclerView.Adapter<registroAdapter.V
 
             tregistro.setText(TimeHelper.getDate(rx.getFecha(), "dd MMM yyyy - HH:mm:ss"));
             tdespacho.setText(rx.getDespacho());
+            if (!rx.getMinAtrazado().equals("00:00:00"))
+                tdemorado.setText(rx.getMinAtrazado());
+            else
+                tdemorado.setText(rx.getMinAdelantado());
+            
         }
     }
 

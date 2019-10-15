@@ -33,7 +33,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"nfc-checkpoint-db-1.4.2"); //The users-db here is the name of our database.
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"nfc-checkpoint-db-1.4.5"); //The users-db here is the name of our database.
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
 
@@ -100,7 +100,12 @@ public class AppController extends Application {
             turno.setFechaCreacion(new Date());
             turno.setEliminada(false);
             turno.setFechaCierre(null);
+
             turno.setTotalBuses(new Long(0));
+            turno.setTotalAtiempo(0);
+            turno.setTotalAdelantados(0);
+            turno.setTotalDemorados(0);
+
             turnoManager.insert(turno);
         }
     }

@@ -22,9 +22,10 @@
             android:id="@+id/text_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Haz click en un registro para reimprimirlo."
+            android:text="Tap para reimprimir"
             android:textAlignment="center"
-            android:textSize="14sp"
+            android:textColor="#aaa"
+            android:textSize="11sp"
             android:visibility="visible" />
 
         <com.omega_r.libs.omegarecyclerview.OmegaRecyclerView

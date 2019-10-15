@@ -2,10 +2,12 @@ package sitetech.NFCcheckPoint.ui.historial;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -17,7 +19,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.greenrobot.greendao.query.WhereCondition;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,12 +37,14 @@ import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
+import sitetech.NFCcheckPoint.Helpers.printHelper;
 import sitetech.NFCcheckPoint.OperadorActivity;
 import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.NFCcheckPoint.db.Empresa;
 import sitetech.NFCcheckPoint.db.EmpresaDao;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
+import sitetech.NFCcheckPoint.db.Turno;
 import sitetech.routecheckapp.R;
 
 public class HistorySearchOP extends Fragment {
@@ -47,6 +54,7 @@ public class HistorySearchOP extends Fragment {
     private TextView tplaca;
     private TextView tdesde;
     private TextView thasta;
+    private TextView tinfo;
     private Spinner spempresa;
     private Spinner spsel;
     private View vista;
@@ -73,12 +81,16 @@ public class HistorySearchOP extends Fragment {
         tplaca = vista.findViewById(R.id.tplaca);
         tdesde = vista.findViewById(R.id.tdesde);
         thasta = vista.findViewById(R.id.thasta);
+        tinfo = vista.findViewById(R.id.tinfo);
         spempresa = vista.findViewById(R.id.spempresa);
         spsel = vista.findViewById(R.id.spsel);
         rlista = vista.findViewById(R.id.rlista);
 
         tdesde.setText(df.format(new Date()));
         thasta.setText(df.format(new Date()));
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.placa_interno_array, R.layout.spinner_item_white);
+        spsel.setAdapter(adapter);
     }
 
     private void Click(){
@@ -132,6 +144,20 @@ public class HistorySearchOP extends Fragment {
 
             }});
 
+        bbuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buscar();
+            }
+        });
+
+        bhoy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tdesde.setText(df.format(new Date()));
+                thasta.setText(df.format(new Date()));
+            }
+        });
     }
 
     private void cargarEmpresas(){
@@ -149,29 +175,73 @@ public class HistorySearchOP extends Fragment {
                 selEmpresa = null;
             }
         });
+
         customAdapter CustomAdapter = new customAdapter(AppController.getAppContext(), lempresas, R.layout.spinner_empresa_appbar);
+        spempresa.setSelection(0);
         spempresa.setAdapter(CustomAdapter);
     }
 
     registroAdapter dataAdapter;
     private void buscar(){
-        Date fdesde = df.parse(tdesde.getText().toString());
-        Date fhasta = df.parse(thasta.getText().toString());
+        try {
+            Date fdesde = df.parse(tdesde.getText().toString());
+            Date fhasta = df.parse(thasta.getText().toString());
 
-        List<Registro_Turno> lresultado = AppController.daoSession.getRegistro_TurnoDao().queryRawCreate(
-                "JOIN " + BusDao.TABLENAME + " B " + " ON T." + Registro_TurnoDao.Properties.Id.columnName +
-                        " = B." + BusDao.Properties.Id.columnName + " INNER JOIN " + EmpresaDao.TABLENAME + " E " +
-                        " ON B." + BusDao.Properties.EmpresaId + " = " + ""
-        )
+            String placa = "", interno = "";
+            if (spsel.getSelectedItem().equals("Placa")) placa = tplaca.getText().toString();
+            if (spsel.getSelectedItem().equals("Interno")) interno = tplaca.getText().toString();
+
+            if (selEmpresa != null) {
+                List<Registro_Turno> lresultado;
+                if (!fdesde.equals(fhasta)) {
+                    lresultado = AppController.daoSession.getRegistro_TurnoDao().queryBuilder()
+                            .where(Registro_TurnoDao.Properties.Fecha.between(fdesde, fhasta)
+                            ).orderAsc(Registro_TurnoDao.Properties.Fecha).list();
+                }
+                else {
+                    lresultado = AppController.daoSession.getRegistro_TurnoDao().queryBuilder()
+                            .where(Registro_TurnoDao.Properties.Fecha.between(fdesde, TimeHelper.sumarAfecha(fhasta, 1))
+                            ).orderAsc(Registro_TurnoDao.Properties.Fecha).list();
+                }
+
+                //ToastHelper.info("ELEMENTOS: " + lresultado.size());
+
+                List<Registro_Turno> ltemp = new ArrayList();
+                for (Registro_Turno rx : lresultado){
+                    if (placa != "") {
+                        if (rx.getBus().getPlaca().contains(placa))
+                            if (selEmpresa != null) {
+                                if (rx.getBus().getEmpresa().getId() == selEmpresa.getId())
+                                    ltemp.add(rx);
+                            } else ltemp.add(rx);
+                    }
+
+                    if (interno != "") {
+                        if (rx.getBus().getInterno().contains(interno))
+                            if (selEmpresa != null) {
+                                if (rx.getBus().getEmpresa().getId() == selEmpresa.getId())
+                                    ltemp.add(rx);
+                            } else ltemp.add(rx);
+                    }
+
+                }
+
+                actualizarLista(ltemp);
+            }
+        } catch (Exception e) {
+            Log.d("ERROR EXC", e.getMessage());
+        }
     }
 
-    public void actualizarRegistros(List<Registro_Turno> lista){
+    public void actualizarLista(List<Registro_Turno> lista){
         final List<Registro_Turno> lnueva = lista;
+
+        if (lnueva.size() == 0) tinfo.setVisibility(View.VISIBLE);
+        else tinfo.setVisibility(View.GONE);
 
         dataAdapter = new registroAdapter(lnueva, new onItemClick() {
             @Override
             public void onClickItemList(View v, final int position) {
-                ToastHelper.info("Desea Reimprimirlo" + lnueva.get(position).getBus().getPlaca());
                 DialogHelper.showAsk2(v, "¿Reimprimir comprobante?", "Desea Reimprimir este registro.", "Imprimir", "Cancelar", new myDialogInterface() {
                     @Override
                     public View onBuildDialog() {
@@ -184,7 +254,7 @@ public class HistorySearchOP extends Fragment {
 
                     @Override
                     public void onResult(View vista) {
-                        imprimir(lnueva.get(position));
+                        printHelper.imprimirRegistro(lnueva.get(position), true, true);
                     }
 
                 });

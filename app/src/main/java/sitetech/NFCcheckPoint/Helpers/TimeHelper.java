@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -99,5 +100,12 @@ public class TimeHelper {
         Calendar calendario = Calendar.getInstance(TimeZone.getTimeZone("America/Colombia"));
         calendario.setTime(fecha);
         return calendario;
+    }
+
+    public static Date sumarAfecha(Date fecha, int dias){
+        Calendar c = Calendar.getInstance();
+        c.setTime(fecha);
+        c.add(Calendar.DATE, dias);
+        return c.getTime();
     }
 }

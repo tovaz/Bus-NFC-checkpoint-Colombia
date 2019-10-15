@@ -48,6 +48,7 @@ import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.nfcData;
 import sitetech.NFCcheckPoint.Helpers.nfcHelper;
+import sitetech.NFCcheckPoint.Helpers.printHelper;
 import sitetech.NFCcheckPoint.MainActivity;
 import sitetech.NFCcheckPoint.OperadorActivity;
 import sitetech.NFCcheckPoint.db.Bus;
@@ -131,35 +132,7 @@ public class CheckFragment extends Fragment implements Listener {
                 if (!yaGuardo)
                     guardarRegistro();
 
-                try {
-                    BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-                    BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
-
-                    final BluetoothPrinter mPrinter = new BluetoothPrinter(mBtDevice);
-
-                    mPrinter.connectPrinter(new BluetoothPrinter.PrinterConnectListener() {
-
-                        @Override
-                        public void onConnected() {
-                            imprimir(mPrinter, ultimoRegistro);
-                            //limpiarInfo();
-                            //bimprimir.setVisibility(View.GONE);
-                            ToastHelper.exito("Registro impreso correctamente.");
-
-                        }
-
-                        @Override
-                        public void onFailed() {
-                            ToastHelper.error("Error al enviar la impresion, verifica la impresora.");
-                            Log.d("Impresora bluetooth", "Error de conexion");
-                        }
-
-                    });
-                }
-                catch (Exception e){
-                    ToastHelper.error("Error al intentar imprimir. " + e.getMessage());
-                }
-
+                printHelper.imprimirRegistro(ultimoRegistro, true, false);
                 limpiarInfo();
             }
         });
@@ -186,11 +159,12 @@ public class CheckFragment extends Fragment implements Listener {
     }
 
     private void guardarRegistro(){
+        Turno tn = Configuraciones.getTurnoAbierto();
         Registro_Turno nuevoRegistro = new Registro_Turno();
         nuevoRegistro.setFecha(fechaCheck);
         nuevoRegistro.setBus(infoTarjeta.getBus());
         nuevoRegistro.setRuta(rutaSeleccionada);
-        nuevoRegistro.setTurno(Configuraciones.getTurnoAbierto());
+        nuevoRegistro.setTurno(tn);
         nuevoRegistro.setUsuario(Configuraciones.getUsuarioLog(getContext()));
         nuevoRegistro.setDespacho(tdespacho.getText().toString());
 
@@ -198,10 +172,22 @@ public class CheckFragment extends Fragment implements Listener {
 
         nuevoRegistro.setMinAtrazado("00:00:00");
         nuevoRegistro.setMinAdelantado("00:00:00");
-        if (difTiempo > 0)
+        if (difTiempo > 0) {
+            if (difTiempo > 120)
+                tn.setTotalDemorados(tn.getTotalDemorados()+1);
+            else
+                tn.setTotalAtiempo(tn.getTotalAtiempo() + 1);
+
             nuevoRegistro.setMinAtrazado(TimeHelper.segundosahoras(difTiempo));
-        else
+        }
+        else {
+            if (difTiempo < 120)
+                tn.setTotalAdelantados(tn.getTotalAdelantados()+1); // Atrazados = Adelantado --- error de campos
+            else
+                tn.setTotalAtiempo(tn.getTotalAtiempo() + 1);
+
             nuevoRegistro.setMinAdelantado(TimeHelper.segundosahoras(difTiempo));
+        }
 
         nuevoRegistro.setEliminado(false);
         registrosManager.insert(nuevoRegistro);
@@ -211,78 +197,6 @@ public class CheckFragment extends Fragment implements Listener {
         bguardar.setVisibility(View.GONE);
 
         yaGuardo = true;
-    }
-
-    private void imprimir(BluetoothPrinter impresora, Registro_Turno registro){
-        //Bitmap logoEmpresa = BitmapFactory.decodeResource(getResources(), R.drawable.logo_empresa2);
-        impresora.setAlign(BluetoothPrinter.ALIGN_LEFT);
-        //impresora.printImage(logoEmpresa);
-        //impresora.addNewLine();
-
-        impresora.printLine();
-        impresora.addNewLine();
-
-        impresora.setBold(true);
-        impresora.printText("PUNTO DE CONTROL"); impresora.addNewLine();
-        impresora.setBold(false);
-        impresora.printText("Nombre del punto"); impresora.addNewLine();
-        //impresora.setAlign(BluetoothPrinter.ALIGN_LEFT);
-        //impresora.setBold(false);
-
-        //impresora.printText(registro.getRuta().getNombre().toUpperCase());
-
-        impresora.setBold(true);
-        imprimirValor(impresora, "TIEMPO AL PUNTO ",  registro.getDespacho()); impresora.addNewLine();
-
-        impresora.printText("DETALLE DE CONTROL");
-        impresora.setBold(false);
-        //impresora.setLineSpacing(1);
-        impresora.addNewLine();
-
-        String empresa = "ninguna";
-        try {
-            empresa = registro.getBus().getEmpresa().getNombre().toUpperCase();
-        } catch (Exception e){ empresa = "Error entity detached"; }
-
-        imprimirValor(impresora, "EMPRESA ", empresa);
-        impresora.addNewLine();
-        imprimirValor(impresora, "PLACA ", registro.getBus().getPlaca().toUpperCase());
-        impresora.addNewLine();
-        imprimirValor(impresora, "INTERNO ", registro.getBus().getInterno().toUpperCase());
-        impresora.addNewLine();
-        imprimirValor(impresora, "FECHA ", TimeHelper.getDate(registro.getFecha()));
-        impresora.addNewLine();
-        imprimirValor(impresora, "HORA DESPACHO ", registro.getDespacho());
-        impresora.addNewLine();
-        imprimirValor(impresora, "HORA REGISTRO ", TimeHelper.getTime(registro.getFecha()));
-
-        impresora.addNewLine();
-        if (registro.getMinAdelantado().equals("00:00:00"))
-            imprimirValor(impresora, "Demorado ", registro.getMinAtrazado());
-        else
-            imprimirValor(impresora, "Adelantado ", registro.getMinAdelantado());
-
-
-        impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
-        impresora.addNewLine();
-        impresora.printText("OPERARIO");
-        impresora.addNewLine();
-        impresora.printText(registro.getUsuario().getNombre().toUpperCase());
-
-
-        impresora.printLine();
-        impresora.feedPaper();
-
-        impresora.finish();
-    }
-
-    private void imprimirValor(BluetoothPrinter print, String campo, String valor){
-        print.writePrint(BluetoothPrinter.ESC_ALIGN_CENTER, "| " + campo + " : " + valor +" |");
-        print.setAlign(BluetoothPrinter.ALIGN_LEFT);
-        //print.setAlign(BluetoothPrinter.ALIGN_LEFT);
-        //print.printText(campo);
-        //print.setAlign(BluetoothPrinter.ALIGN_RIGHT);
-        //print.printText(valor);
     }
 
     private void pruebas(){

@@ -306,7 +306,6 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     }
 
     private HistorySearchOP hsp;
-    @SuppressLint("ResourceType")
     private void mostrarHistorial(){
         if (hsp == null)
             hsp = new HistorySearchOP();
@@ -317,6 +316,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.opcontenedor, hsp);
         transaction.addToBackStack(null);
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         transaction.commit();
 
         //activityHelper.cargarFragmento2(this, hsp.getTargetFragment(), R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
