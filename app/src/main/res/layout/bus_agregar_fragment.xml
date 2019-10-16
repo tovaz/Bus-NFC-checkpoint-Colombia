@@ -92,14 +92,28 @@
                 app:flv_ownerView="@+id/tuid"
                 app:flv_textDefault="Tarjeta NFC" />
 
-            <TextView
-                android:id="@+id/tuid"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/text_edit_sel"
-                android:ems="10"
-                android:hint="NFC UID"/>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tuid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/text_edit_sel"
+                    android:ems="10" />
+
+                <Button
+                    android:id="@+id/bdesasignar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/btn_default_sel"
+                    android:text="Desasignar"
+                    android:textColor="#333" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/bescribirNFC"

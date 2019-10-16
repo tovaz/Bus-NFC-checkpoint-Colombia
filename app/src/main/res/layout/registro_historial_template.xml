@@ -23,17 +23,20 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:id="@+id/beditar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_horizontal|center_vertical"
-                app:srcCompat="@drawable/record"
-                tools:srcCompat="@drawable/record" />
+                android:background="@drawable/btn_default_sel"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/edit_record"
+                tools:srcCompat="@drawable/edit_record" />
 
             <TextView
                 android:id="@+id/tindex"
-                android:layout_width="35dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="1000"
                 android:textAlignment="center"
                 android:textSize="15sp"

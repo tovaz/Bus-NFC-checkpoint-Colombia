@@ -42,6 +42,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
     private TextView ttitulo;
     private Spinner selempresa;
     private Button bescribirNFC;
+    private Button bdesasignar;
     private Button bcancelar;
     private Button bguardar;
     List<Empresa> listaEmpresas;
@@ -72,7 +73,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         cargarControles();
         onClick();
 
-        bescribirNFC.setVisibility(View.GONE);
+        //bescribirNFC.setVisibility(View.GONE);
         if (mainFragment.Itemseleccionado != null)
             cargarInfo();
         return vista;
@@ -89,7 +90,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
 
         if (bus.getTagNfc() != null) {
             tuid.setText(bus.getTagNfc());
-            bescribirNFC.setVisibility(View.GONE);
+            //bescribirNFC.setVisibility(View.GONE);
         }
 
         for (int i=0; i<=listaEmpresas.size()-1; i++)
@@ -104,6 +105,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         selempresa = vista.findViewById(R.id.selempresa);
         tuid = vista.findViewById(R.id.tuid);
 
+        bdesasignar = vista.findViewById(R.id.bdesasignar);
         bcancelar = vista.findViewById(R.id.bcancelar);
         bguardar = vista.findViewById(R.id.bguardar);
 
@@ -166,7 +168,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
                 bus.setEmpresa(empresa);
 
                 bus.setTagNfc(tuid.getText().toString());
-                if (tuid.getText().equals("N/A")) bus.setTagNfc(null);
+                if (tuid.getText().equals("N/A") ||tuid.getText().equals("")) bus.setTagNfc(null);
 
                 if (mainFragment.Itemseleccionado == null) {
                     bus.setEliminado(false);
@@ -192,12 +194,33 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
                 activity.escribirNFC(mainFragment.Itemseleccionado, fragment);
             }
         });
+
+        bdesasignar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tuid.setText("N/A");
+            }
+        });
+    }
+
+    public boolean buscarUid(String uid){
+        List<Bus> lbuses = AppController.daoSession.getBusDao().queryBuilder()
+                .where(BusDao.Properties.TagNfc.eq(uid), BusDao.Properties.Eliminado.eq(false)).list();
+        if (lbuses == null)
+            return true;
+
+        if (lbuses.size() == 0) return true;
+        return false;
     }
 
     public void asignarTarjeta(String uid){
-        tuid.setText(uid);
-        ToastHelper.info("Tarjeta asignada con exito.");
-        bescribirNFC.setVisibility(View.GONE);
+        if (buscarUid(uid)) {
+            tuid.setText(uid);
+            ToastHelper.info("Tarjeta asignada con exito.");
+            bescribirNFC.setVisibility(View.GONE);
+        }
+        else
+            ToastHelper.error("Error, tarjeta ya asignada a otro bus.");
     }
 
 }

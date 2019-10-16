@@ -34,6 +34,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
                     @Override
                     public void onResult(View vista) {
+                        Configuraciones.setUsuarioLog(getBaseContext(), null);
                         mainActivity.finish();
                     }
                 });

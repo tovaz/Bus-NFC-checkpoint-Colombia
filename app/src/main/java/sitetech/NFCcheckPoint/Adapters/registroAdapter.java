@@ -1,8 +1,12 @@
 package sitetech.NFCcheckPoint.Adapters;
 
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
 import com.omega_r.libs.omegarecyclerview.swipe_menu.SwipeViewHolder;
@@ -13,16 +17,18 @@ import sitetech.NFCcheckPoint.AppController;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.RutaDao;
+import sitetech.NFCcheckPoint.ui.operador.RegistroEditarFragment;
 import sitetech.routecheckapp.R;
 
 public class registroAdapter extends OmegaRecyclerView.Adapter<registroAdapter.ViewHolder>  {
     public List<Registro_Turno> lista;
     private onItemClick onItemClick;
+    private onEditClick onEditClick;
 
-
-    public registroAdapter(List<Registro_Turno> l, onItemClick onclick) {
+    public registroAdapter(List<Registro_Turno> l, onItemClick onclick, onEditClick onEditar) {
         lista = l;
         this.onItemClick = onclick;
+        this.onEditClick = onEditar;
     }
 
     @Override
@@ -43,18 +49,6 @@ public class registroAdapter extends OmegaRecyclerView.Adapter<registroAdapter.V
 
     public void updateData(Registro_Turno bx) {
         boolean nuevo = true;
-        /*for (Ruta rx : lista) {
-            if (rx.getId() == bx.getId()) {
-                lista.set(lista.indexOf(rx), bx);
-                nuevo = false;
-            }
-            ToastHelper.info("Se a modificado la ruta: " + bx.getNombre());
-        }*/
-
-        /*if (nuevo) {
-            lista.add(bx);
-            ToastHelper.exito("Se a creado la ruta: " + bx.getNombre());
-        }*/
 
         notifyDataSetChanged();
     }
@@ -64,7 +58,7 @@ public class registroAdapter extends OmegaRecyclerView.Adapter<registroAdapter.V
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends SwipeViewHolder implements View.OnClickListener {
+    public class ViewHolder extends SwipeViewHolder implements View.OnClickListener{
         private final TextView tindex;
         private final TextView truta;
         private final TextView tplaca;
@@ -73,6 +67,8 @@ public class registroAdapter extends OmegaRecyclerView.Adapter<registroAdapter.V
         private final TextView tregistro;
         private final TextView tdespacho;
         private final TextView tdemorado;
+        private final ImageView beditar;
+
         RutaDao empresaManager = AppController.daoSession.getRutaDao();
 
         private Registro_Turno currentItem;
@@ -88,6 +84,14 @@ public class registroAdapter extends OmegaRecyclerView.Adapter<registroAdapter.V
             tregistro = (findViewById(R.id.tregistro));
             tdespacho = (findViewById(R.id.tdespacho));
             tdemorado = (findViewById(R.id.tdemorado));
+            beditar = (findViewById(R.id.beditar));
+
+            beditar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onEditClick.onEditItemClick(v, getAdapterPosition());
+                }
+            });
 
             contentView.setOnClickListener(new View.OnClickListener() {
                 @Override

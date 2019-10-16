@@ -17,6 +17,7 @@ import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
 
 import java.util.List;
 
+import sitetech.NFCcheckPoint.Adapters.onEditClick;
 import sitetech.NFCcheckPoint.Adapters.onItemClick;
 import sitetech.NFCcheckPoint.Adapters.registroAdapter;
 import sitetech.NFCcheckPoint.Adapters.rutaSelAdapter;
@@ -28,6 +29,7 @@ import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.Helpers.printHelper;
+import sitetech.NFCcheckPoint.OperadorActivity;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
 import sitetech.NFCcheckPoint.db.Ruta;
@@ -68,6 +70,10 @@ public class HistoryFragment extends Fragment {
 
     }
 
+    public void itemEditado(Registro_Turno rx){
+        dataAdapter.updateData(rx);
+    }
+
     public void actualizarRegistros(List<Registro_Turno> lista){
         final List<Registro_Turno> lnueva = lista;
         //ToastHelper.aviso(String.valueOf(lista.size()));
@@ -93,7 +99,15 @@ public class HistoryFragment extends Fragment {
 
                 });
             }
+
+
+        }, new onEditClick() {
+            @Override
+            public void onEditItemClick(View v, int position) {
+                ((OperadorActivity)getActivity()).editarRegistro(lnueva.get(position));
+            }
         });
+
 
         if (rlista != null) {
             rlista.setHasFixedSize(true);

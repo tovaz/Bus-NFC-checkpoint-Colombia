@@ -27,11 +27,20 @@
 
                 <ImageView
                     android:id="@+id/bbuses"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/btn_default_sel"
                     app:srcCompat="@drawable/bus_azul"
                     tools:srcCompat="@drawable/bus_azul" />
+
+                <ImageView
+                    android:id="@+id/breimprimir"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/btn_default_sel"
+                    app:srcCompat="@drawable/printer"
+                    tools:srcCompat="@drawable/printer" />
 
                 <ImageView
                     android:id="@+id/button2"
@@ -79,8 +88,9 @@
                             android:text="Usuario"
                             android:textAlignment="textEnd"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="#eee"
-                            android:textSize="14sp" />
+                            android:textColor="#ccc"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -102,14 +112,15 @@
 
                         <Button
                             android:id="@+id/blogout"
-                            android:layout_width="110dp"
+                            android:layout_width="90dp"
                             android:layout_height="32dp"
                             android:layout_gravity="right"
                             android:layout_marginTop="5dp"
                             android:background="@drawable/btn_default_sel"
                             android:text="Salir"
                             android:textColor="#333"
-                            android:textSize="10sp" />
+                            android:textSize="10sp"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                 </LinearLayout>

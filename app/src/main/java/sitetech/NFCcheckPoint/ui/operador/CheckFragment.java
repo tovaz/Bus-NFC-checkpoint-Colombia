@@ -63,6 +63,9 @@ import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.ui.rutas.RutaAgregarFragment;
 import sitetech.routecheckapp.R;
 
+import static sitetech.NFCcheckPoint.Helpers.printHelper.imprimirUltimo;
+import static sitetech.NFCcheckPoint.dbHelpers.RegistrosManager.getRegistroAnterior;
+
 public class CheckFragment extends Fragment implements Listener {
     public RecyclerView rlista;
     public View vista;
@@ -137,13 +140,11 @@ public class CheckFragment extends Fragment implements Listener {
                         @Override
                         public void run() {
                             printHelper.imprimirRegistro(rx, true, false); //IMPRIME Y GUARDA EL REGISTRO
-                            imprimirUltimo();
-
                             final Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    imprimirUltimo();
+                                    imprimirUltimo(getRegistroAnterior());
                                     limpiarInfo();
                                 }
                             }, 500);
@@ -173,18 +174,6 @@ public class CheckFragment extends Fragment implements Listener {
                 }
             }
         });
-    }
-
-    private void imprimirUltimo(){
-        Turno tn = Configuraciones.getTurnoAbierto();
-        Registro_Turno regX = AppController.daoSession.getRegistro_TurnoDao().queryBuilder()
-                .where(Registro_TurnoDao.Properties.TurnoId.eq(tn.getId())).limit(1).orderDesc(Registro_TurnoDao.Properties.Id).unique();
-
-        if (regX != null)
-            printHelper.imprimirRegistro(regX, false, false);
-        else
-            printHelper.imprimirRegistro(null, false, false);
-
     }
 
     private Registro_Turno guardarRegistro(){
@@ -223,7 +212,6 @@ public class CheckFragment extends Fragment implements Listener {
         registrosManager.insert(nuevoRegistro);
 
         ToastHelper.exito("Bus registrado con exito.");
-        ultimoRegistro = nuevoRegistro;
         bguardar.setVisibility(View.GONE);
 
         yaGuardo = true;

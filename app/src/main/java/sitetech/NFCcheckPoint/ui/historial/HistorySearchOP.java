@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.Adapters.customAdapter;
+import sitetech.NFCcheckPoint.Adapters.onEditClick;
 import sitetech.NFCcheckPoint.Adapters.onItemClick;
 import sitetech.NFCcheckPoint.Adapters.registroAdapter;
 import sitetech.NFCcheckPoint.AppController;
@@ -260,6 +261,11 @@ public class HistorySearchOP extends Fragment {
                     }
 
                 });
+            }
+        }, new onEditClick() {
+            @Override
+            public void onEditItemClick(View v, int position) {
+
             }
         });
 

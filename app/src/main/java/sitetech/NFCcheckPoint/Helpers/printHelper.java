@@ -81,20 +81,13 @@ public class printHelper {
             //impresora.addNewLine();
 
 
-
+            impresora.setBold(true);
             impresora.setAlign(ALIGN_CENTER);
-            impresora.printText("█████ ███ ██   ██ ███    ██  ████   ███ ██   ██ ███   ███ ███   ███"); impresora.addNewLine();
-            impresora.printText("  █    █  █ █ █ █ █     █  █ █      █   █ █ █ █ █  █   █  █  █  █  "); impresora.addNewLine();
-            impresora.printText("  █    █  █  █  █ ███   █  █ ████   ███ █  █  █ ███    █  ███   ███"); impresora.addNewLine();
-            impresora.printText("  █    █  █  █  █ █     █  █ █      █   █  █  █ █      █  █  █  █  "); impresora.addNewLine();
-            impresora.printText("  █   ███ █     █ ███    ██  █      ███ █     █ █     ███ █   █ ███"); impresora.addNewLine();
-            impresora.printText("NIT: 1075679263-9"); impresora.addNewLine();
+            impresora.printText("   __________________  ");impresora.addNewLine();
+            impresora.printText(" _(  TIME OF EMPIRE  )_"); impresora.addNewLine();
+            impresora.printText("(_  NIT 1075679263-9  _)"); impresora.addNewLine();
+            impresora.printText("  (__________________)"); impresora.addNewLine();
 
-            //impresora.setBold(true);
-            //impresora.printFormat("TIME OF EMPIRE", FONT_DOBLE_HW); impresora.addNewLine();
-
-
-            //impresora.printText("");
         }
 
     }
@@ -120,13 +113,14 @@ public class printHelper {
             impresora.addNewLine();
         }
 
+        impresora.setAlign(ALIGN_CENTER);
         if (esPrimero)
             impresora.printText("DETALLE DE CONTROL");
     }
 
     private static void imprimirVehiculoAnterior(BluetoothPrinter impresora, Registro_Turno registro){
         impresora.setBold(true);
-        impresora.setAlign(BluetoothPrinter.ALIGN_LEFT);
+        impresora.setAlign(ALIGN_CENTER);
         impresora.printText("VEHICULO ANTERIOR");
 
         impresora.setBold(false);
@@ -176,6 +170,14 @@ public class printHelper {
         }
     }
 
+    public static void imprimirUltimo(Registro_Turno rx){
+        if (rx != null)
+            printHelper.imprimirRegistro(rx, false, false);
+        else
+            printHelper.imprimirRegistro(null, false, false);
+
+    }
+
     public static void imprimirPie(BluetoothPrinter impresora, Registro_Turno registro, boolean esPrimero){
         impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
         impresora.addNewLine();
@@ -184,8 +186,16 @@ public class printHelper {
         impresora.printText(registro.getUsuario().getNombre().toUpperCase());
         impresora.addNewLine();
 
-        impresora.printLine();
-        impresora.feedPaper();
+
+        if (!esPrimero) {
+            impresora.addNewLine();
+            impresora.printLine();
+        }
+        else{
+            impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
+            impresora.printText("--------------------");
+            impresora.addNewLine();
+        }
 
         impresora.finish();
     }

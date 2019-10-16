@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
@@ -46,7 +47,9 @@ import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.checkHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
+import sitetech.NFCcheckPoint.Helpers.printHelper;
 import sitetech.NFCcheckPoint.db.Bus;
+import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
 import sitetech.NFCcheckPoint.ui.historial.HistorySearchOP;
@@ -54,9 +57,13 @@ import sitetech.NFCcheckPoint.ui.nfc.NFCReadFragment;
 import sitetech.NFCcheckPoint.ui.nfc.NFCWriteFragment;
 import sitetech.NFCcheckPoint.ui.operador.CheckFragment;
 import sitetech.NFCcheckPoint.ui.operador.HistoryFragment;
+import sitetech.NFCcheckPoint.ui.operador.RegistroEditarFragment;
 import sitetech.routecheckapp.R;
 
 import static sitetech.NFCcheckPoint.Helpers.nfcHelper.getUid;
+import static sitetech.NFCcheckPoint.Helpers.printHelper.imprimirUltimo;
+import static sitetech.NFCcheckPoint.dbHelpers.RegistrosManager.getRegistroAnterior;
+import static sitetech.NFCcheckPoint.dbHelpers.RegistrosManager.getUltimoRegistro;
 
 public class OperadorActivity extends AppCompatActivity implements Listener, Serializable {
 
@@ -64,6 +71,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     private TextView tusuario;
     private Button blogout;
     private ImageView bbuses;
+    private ImageView breimprimir;
 
     private int mInterval = 2000; // 2 seconds by default, can be changed later
     private Handler mHandler;
@@ -116,6 +124,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         blogout = findViewById(R.id.blogout);
         contendor = findViewById(R.id.contenedor);
         bbuses = findViewById(R.id.bbuses);
+        breimprimir = findViewById(R.id.breimprimir);
         appbar = findViewById(R.id.appbar);
         contenedor = findViewById(R.id.opcontenedor);
         tpunto = findViewById(R.id.tpunto);
@@ -151,6 +160,21 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
                             }
                         })
                         .show();
+            }
+        });
+
+        breimprimir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printHelper.imprimirRegistro(getUltimoRegistro(), true, false); //IMPRIME Y GUARDA EL REGISTRO
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        imprimirUltimo(getRegistroAnterior());
+                    }
+                }, 500);
             }
         });
     }
@@ -386,9 +410,34 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         //activityHelper.cargarFragmento2(this, hsp.getTargetFragment(), R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
     }
 
+        public void editarRegistro(Registro_Turno registro){
+            RegistroEditarFragment editarF = new RegistroEditarFragment();
+
+        appbar.setVisibility(View.GONE);
+        contenedor.setVisibility(View.VISIBLE);
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("registro", registro.getId().intValue());
+        editarF.setArguments(bundle);
+
+        getFragmentManager().beginTransaction()
+        .replace(R.id.opcontenedor, editarF)
+        .addToBackStack(null)
+        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right)
+        .commit();
+    }
+
     public void cerrarHistorial() {
         appbar.setVisibility(View.VISIBLE);
         contenedor.setVisibility(View.GONE);
+    }
+
+    public void cerrarEditarHistorial(Registro_Turno rx){
+        getFragmentManager().popBackStack();
+        cerrarHistorial();
+        HistoryFragment hf = (HistoryFragment) tabsAdapter.getItem(1);
+        if (hf != null)
+            hf.itemEditado(rx);
     }
 
 
@@ -400,5 +449,9 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     @Override
     public void finish() {
         return ;
+    }
+
+    public void finalizar(){
+        super.finish();
     }
 }

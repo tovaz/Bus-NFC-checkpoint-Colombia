@@ -8,6 +8,7 @@
     tools:context="sitetech.NFCcheckPoint.LoginActivity">
 
     <ImageView
+        android:id="@+id/imageView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
@@ -28,9 +29,16 @@
             android:id="@+id/lcontenedor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center|center_horizontal|top"
             android:orientation="vertical">
 
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/logo_app2" />
 
             <Button
                 android:id="@+id/biniciar2"
@@ -93,10 +101,10 @@
                 android:layout_width="130dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
                 app:srcCompat="@drawable/logo_login" />
 
             <net.xpece.material.floatinglabel.FloatingLabelView
+                android:id="@+id/lusuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

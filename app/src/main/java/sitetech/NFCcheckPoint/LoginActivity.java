@@ -141,55 +141,71 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkLogin(){
-        List<Usuario> lusuarios = obtenerUsuarios();
         uLogeado = null;
         String contraseña= "", username = "";
         if (tcontraseña.getText() != null) contraseña = tcontraseña.getText().toString();
         if (tnombre.getText() != null) username = tnombre.getText().toString();
 
+        checkLogin(username, contraseña);
+    }
+
+    private void checkLogin(String usuario, String contraseña){
+        List<Usuario> lusuarios = obtenerUsuarios();
         for( Usuario u : lusuarios){
             //Log.d("USUARIO: ", u.getNombre() + " - " + u.getPassword());
-            if (u.getNombre().equals(username) && u.getPassword().equals(contraseña))
+            if (u.getNombre().equals(usuario) && u.getPassword().equals(contraseña))
                 uLogeado = u;
-            if (u.getCedula().equals(username) && u.getPassword().equals(contraseña))
+            if (u.getCedula().equals(usuario) && u.getPassword().equals(contraseña))
                 uLogeado = u;
         }
 
-        if (uLogeado != null) {
+        loginUser(uLogeado);
+    }
+
+    private void loginUser(Usuario ulog){
+        if (ulog != null) {
             Configuraciones.setPrimerUso(this, false);
             lnotificacion.setVisibility(View.GONE);
-            Configuraciones.setUsuarioLog(this, uLogeado);
+            Configuraciones.setUsuarioLog(this, ulog);
 
             tnombre.setText("");
             tcontraseña.setText("");
 
-            if (uLogeado.getRol().equals("Administrador"))
+            if (ulog.getRol().equals("Administrador"))
                 iniciarAdmin();
-            if (uLogeado.getRol().equals("Operador"))
+            if (ulog.getRol().equals("Operador"))
                 iniciarOperador();
         }
         else
             ToastHelper.error("Usuario o contraseña invalida");
-
     }
-
     private List<Usuario> obtenerUsuarios(){
         return   userD.queryBuilder().where(UsuarioDao.Properties.Eliminado.eq(false), UsuarioDao.Properties.Activo.eq(true)).list();
     }
 
     private void iniciarAdmin(){
-        ToastHelper.exito("Logiado como Administrador");
+        ToastHelper.exito("Bienvenido " + uLogeado.getNombre());
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("usuario", uLogeado.getId());
         startActivity(intent);
     }
 
     private void iniciarOperador(){
-        ToastHelper.exito("Logiado como Operador");
+        ToastHelper.exito("Bienvenido " + uLogeado.getNombre());
         Intent intent = new Intent(this, OperadorActivity.class);
         intent.putExtra("usuario", uLogeado.getId());
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Usuario logeado = Configuraciones.getUsuarioLog(this);
+        String contraseña= "", username = "";
 
+        if (logeado != null) {
+            uLogeado = logeado;
+            loginUser(logeado);
+        }
+    }
 }

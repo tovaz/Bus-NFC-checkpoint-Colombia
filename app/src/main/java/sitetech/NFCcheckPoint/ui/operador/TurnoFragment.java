@@ -19,6 +19,7 @@ import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
+import sitetech.NFCcheckPoint.OperadorActivity;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
 import sitetech.NFCcheckPoint.db.Turno;
@@ -61,7 +62,7 @@ public class TurnoFragment extends Fragment {
                     @Override
                     public void onResult(View vista) {
                         Configuraciones.setUsuarioLog(getContext(), null);
-                        getActivity().finish();
+                        ((OperadorActivity) getActivity()).finalizar();
 
                     }
 
@@ -119,8 +120,8 @@ public class TurnoFragment extends Fragment {
         AppController.daoSession.getTurnoDao().insert(turno);
         ToastHelper.exito("Turno cerrado.");
 
-        getActivity().finish();
         Configuraciones.setUsuarioLog(getContext(), null);
+        ((OperadorActivity) getActivity()).finalizar();
     }
 
     private void cargarControles(){
