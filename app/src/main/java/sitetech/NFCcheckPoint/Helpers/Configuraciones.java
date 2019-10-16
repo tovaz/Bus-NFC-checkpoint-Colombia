@@ -12,6 +12,8 @@ import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
 
 public class Configuraciones{
+    public static String dbName = "nfc_v1.0";
+
     public static Usuario getUsuarioLog(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
         Long id = sharedPref.getLong("usuarioId", -1);
@@ -78,6 +80,19 @@ public class Configuraciones{
         SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("primerUso", tag);
+        editor.commit();
+    }
+
+    public static String getPuntodeControl(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
+        String tag = sharedPref.getString("puntoControl", "No definido");
+        return tag;
+    }
+
+    public static void setPuntodeControl(Context context, String tag){
+        SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("puntoControl", tag);
         editor.commit();
     }
 }

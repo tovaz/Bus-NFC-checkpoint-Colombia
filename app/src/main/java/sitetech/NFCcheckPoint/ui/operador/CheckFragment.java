@@ -130,8 +130,26 @@ public class CheckFragment extends Fragment implements Listener {
             @Override
             public void onClick(View v) {
                 if (!yaGuardo) {
-                    printHelper.imprimirRegistro(guardarRegistro(), true, false); //IMPRIME Y GUARDA EL REGISTRO
-                    limpiarInfo();
+                    final Registro_Turno rx = guardarRegistro();
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            printHelper.imprimirRegistro(rx, true, false); //IMPRIME Y GUARDA EL REGISTRO
+                            imprimirUltimo();
+
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    imprimirUltimo();
+                                    limpiarInfo();
+                                }
+                            }, 500);
+                        }
+                    }, 1000);
+
                 }
             }
         });
@@ -178,6 +196,7 @@ public class CheckFragment extends Fragment implements Listener {
         nuevoRegistro.setTurno(tn);
         nuevoRegistro.setUsuario(Configuraciones.getUsuarioLog(getContext()));
         nuevoRegistro.setDespacho(tdespacho.getText().toString());
+        nuevoRegistro.setPuntoControl(Configuraciones.getPuntodeControl(getContext()));
 
         Long difTiempo = TimeHelper.calcularDiferencia(tdespacho.getText().toString(), thoraregistro.getText().toString());
 

@@ -1,7 +1,10 @@
 package sitetech.NFCcheckPoint;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PorterDuff;
@@ -13,6 +16,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,9 +38,11 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import sitetech.NFCcheckPoint.Adapters.TabsAdapter;
+import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
+import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.checkHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
@@ -70,6 +76,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     private CoordinatorLayout contendor;
     private AppBarLayout appbar;
     private LinearLayout contenedor;
+    private TextView tpunto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +86,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); //ACTIVAR ACTION BAR
 
-        tusuario = findViewById(R.id.tusuario);
-        blogout = findViewById(R.id.blogout);
-        contendor = findViewById(R.id.contenedor);
-        bbuses = findViewById(R.id.bbuses);
-        appbar = findViewById(R.id.appbar);
-        contenedor = findViewById(R.id.opcontenedor);
+        cargarControles();
 
         cargarTabs();
         cargarUsuario();
@@ -109,11 +111,46 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         }
     };
 
+    private void cargarControles(){
+        tusuario = findViewById(R.id.tusuario);
+        blogout = findViewById(R.id.blogout);
+        contendor = findViewById(R.id.contenedor);
+        bbuses = findViewById(R.id.bbuses);
+        appbar = findViewById(R.id.appbar);
+        contenedor = findViewById(R.id.opcontenedor);
+        tpunto = findViewById(R.id.tpunto);
+
+        tpunto.setText(Configuraciones.getPuntodeControl(this));
+    }
+
     private void Click() {
         bbuses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mostrarHistorial();
+            }
+        });
+        tpunto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText tinput = new EditText(v.getContext());
+                tinput.setText(tpunto.getText());
+                tinput.setInputType(View.AUTOFILL_TYPE_TEXT);
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle("Punto de Control")
+                        .setMessage("¿Desea Cambiar el nombre del punto de control?")
+                        .setView(tinput)
+                        .setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                tpunto.setText(tinput.getText());
+                                Configuraciones.setPuntodeControl(getBaseContext(), tinput.getText().toString());
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                            }
+                        })
+                        .show();
             }
         });
     }
@@ -302,12 +339,18 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         Log.d("NEW INTENT", "on New Intent: " + intent.getAction());
 
         if (tag != null) {
-            Toast.makeText(this, "Tarjeta detectada. ID: " + new BigInteger(1, tag.getId()).toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Tarjeta detectada. ID: " + new BigInteger(1, tag.getId()).toString(), Toast.LENGTH_SHORT).show();
+            ToastHelper.info("Tarjeta detectada, buscando registro ...");
             //ToastHelper.aviso(tag.toString());
             Ndef ndef = Ndef.get(tag);
 
             if (checkFragment != null) {
-                checkFragment.callBackNfcUid(getUid(tag));
+                if (Configuraciones.getUsuarioLog(this) != null)
+                    checkFragment.callBackNfcUid(getUid(tag));
+                else {
+                    ToastHelper.error("Debe de logearse para poder hacer registros.");
+                    finish();
+                }
             }
 
             /*if (isDialogDisplayed) {

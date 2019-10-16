@@ -35,7 +35,7 @@ public class AppController extends Application {
         super.onCreate();
 
         //DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"nfc-checkpoint-db-1.5.1"); //The users-db here is the name of our database.
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"nfc_db"); //The users-db here is the name of our database.
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Configuraciones.dbName); //The users-db here is the name of our database.
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
 

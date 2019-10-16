@@ -31,7 +31,9 @@ public class BusDao extends AbstractDao<Bus, Long> {
         public final static Property TagNfc = new Property(3, String.class, "tagNfc", false, "TAG_NFC");
         public final static Property Recorridos = new Property(4, Long.class, "recorridos", false, "RECORRIDOS");
         public final static Property Eliminado = new Property(5, boolean.class, "eliminado", false, "ELIMINADO");
-        public final static Property EmpresaId = new Property(6, long.class, "empresaId", false, "EMPRESA_ID");
+        public final static Property ExtraString = new Property(6, String.class, "extraString", false, "EXTRA_STRING");
+        public final static Property ExtraInt = new Property(7, Integer.class, "extraInt", false, "EXTRA_INT");
+        public final static Property EmpresaId = new Property(8, long.class, "empresaId", false, "EMPRESA_ID");
     }
 
     private DaoSession daoSession;
@@ -56,7 +58,9 @@ public class BusDao extends AbstractDao<Bus, Long> {
                 "\"TAG_NFC\" TEXT," + // 3: tagNfc
                 "\"RECORRIDOS\" INTEGER," + // 4: recorridos
                 "\"ELIMINADO\" INTEGER NOT NULL ," + // 5: eliminado
-                "\"EMPRESA_ID\" INTEGER NOT NULL );"); // 6: empresaId
+                "\"EXTRA_STRING\" TEXT," + // 6: extraString
+                "\"EXTRA_INT\" INTEGER," + // 7: extraInt
+                "\"EMPRESA_ID\" INTEGER NOT NULL );"); // 8: empresaId
     }
 
     /** Drops the underlying database table. */
@@ -90,7 +94,17 @@ public class BusDao extends AbstractDao<Bus, Long> {
             stmt.bindLong(5, recorridos);
         }
         stmt.bindLong(6, entity.getEliminado() ? 1L: 0L);
-        stmt.bindLong(7, entity.getEmpresaId());
+ 
+        String extraString = entity.getExtraString();
+        if (extraString != null) {
+            stmt.bindString(7, extraString);
+        }
+ 
+        Integer extraInt = entity.getExtraInt();
+        if (extraInt != null) {
+            stmt.bindLong(8, extraInt);
+        }
+        stmt.bindLong(9, entity.getEmpresaId());
     }
 
     @Override
@@ -118,7 +132,17 @@ public class BusDao extends AbstractDao<Bus, Long> {
             stmt.bindLong(5, recorridos);
         }
         stmt.bindLong(6, entity.getEliminado() ? 1L: 0L);
-        stmt.bindLong(7, entity.getEmpresaId());
+ 
+        String extraString = entity.getExtraString();
+        if (extraString != null) {
+            stmt.bindString(7, extraString);
+        }
+ 
+        Integer extraInt = entity.getExtraInt();
+        if (extraInt != null) {
+            stmt.bindLong(8, extraInt);
+        }
+        stmt.bindLong(9, entity.getEmpresaId());
     }
 
     @Override
@@ -141,7 +165,9 @@ public class BusDao extends AbstractDao<Bus, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // tagNfc
             cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // recorridos
             cursor.getShort(offset + 5) != 0, // eliminado
-            cursor.getLong(offset + 6) // empresaId
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // extraString
+            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // extraInt
+            cursor.getLong(offset + 8) // empresaId
         );
         return entity;
     }
@@ -154,7 +180,9 @@ public class BusDao extends AbstractDao<Bus, Long> {
         entity.setTagNfc(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setRecorridos(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
         entity.setEliminado(cursor.getShort(offset + 5) != 0);
-        entity.setEmpresaId(cursor.getLong(offset + 6));
+        entity.setExtraString(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setExtraInt(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
+        entity.setEmpresaId(cursor.getLong(offset + 8));
      }
     
     @Override

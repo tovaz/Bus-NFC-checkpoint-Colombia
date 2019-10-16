@@ -26,6 +26,8 @@ public class Turno {
     private Integer totalAtiempo;
     private Integer totalDemorados;
     private Integer totalAdelantados;
+    private String extraString;
+    private Integer extraInt;
     private boolean eliminada;
     private long operadorCierre;
 
@@ -55,7 +57,7 @@ public class Turno {
     }
 
     @Generated
-    public Turno(Long id, java.util.Date fechaCreacion, java.util.Date fechaCierre, Long totalBuses, Integer totalAtiempo, Integer totalDemorados, Integer totalAdelantados, boolean eliminada, long operadorCierre) {
+    public Turno(Long id, java.util.Date fechaCreacion, java.util.Date fechaCierre, Long totalBuses, Integer totalAtiempo, Integer totalDemorados, Integer totalAdelantados, String extraString, Integer extraInt, boolean eliminada, long operadorCierre) {
         this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.fechaCierre = fechaCierre;
@@ -63,6 +65,8 @@ public class Turno {
         this.totalAtiempo = totalAtiempo;
         this.totalDemorados = totalDemorados;
         this.totalAdelantados = totalAdelantados;
+        this.extraString = extraString;
+        this.extraInt = extraInt;
         this.eliminada = eliminada;
         this.operadorCierre = operadorCierre;
     }
@@ -130,6 +134,22 @@ public class Turno {
 
     public void setTotalAdelantados(Integer totalAdelantados) {
         this.totalAdelantados = totalAdelantados;
+    }
+
+    public String getExtraString() {
+        return extraString;
+    }
+
+    public void setExtraString(String extraString) {
+        this.extraString = extraString;
+    }
+
+    public Integer getExtraInt() {
+        return extraInt;
+    }
+
+    public void setExtraInt(Integer extraInt) {
+        this.extraInt = extraInt;
     }
 
     public boolean getEliminada() {

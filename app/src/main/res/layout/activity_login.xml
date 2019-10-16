@@ -4,14 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_fondo"
+    android:hapticFeedbackEnabled="false"
     tools:context="sitetech.NFCcheckPoint.LoginActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:tint="#ddd"
+        android:tintMode="screen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_wallpaper" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:backgroundTintMode="multiply">
 
         <LinearLayout
+            android:id="@+id/lcontenedor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -27,12 +41,14 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/btn_red_sel"
                 android:text="Login Admin"
-                android:textColor="#eee" />
+                android:textColor="#eee"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/b1"
@@ -74,17 +90,17 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="170dp"
-                android:layout_height="170dp"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/login_image2" />
+                app:srcCompat="@drawable/logo_login" />
 
             <net.xpece.material.floatinglabel.FloatingLabelView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:textSize="15sp"
                 app:flv_colorActivated="@color/colorLabelFloat"
                 app:flv_ownerView="@+id/tnombre"
@@ -95,10 +111,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/text_edit_sel"
+                android:background="@drawable/btn_default_sel"
                 android:ems="10"
                 android:hint="Usuario o Cedula"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textAlignment="center" />
 
             <net.xpece.material.floatinglabel.FloatingLabelView
                 android:layout_width="wrap_content"
@@ -115,14 +132,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/text_edit_sel"
+                android:background="@drawable/btn_default_sel"
                 android:ems="10"
                 android:hint="Contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textAlignment="center" />
 
             <Button
                 android:id="@+id/biniciar"
-                android:layout_width="250dp"
+                android:layout_width="225dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"

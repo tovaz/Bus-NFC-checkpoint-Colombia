@@ -27,6 +27,13 @@ public class BluetoothPrinter {
     private static final byte[] ESC_ALIGN_RIGHT = new byte[]{0x1b, 'a', 0x02};
     private static final byte[] ESC_ALIGN_LEFT = new byte[]{0x1b, 'a', 0x00};
 
+    public static final byte[] FONT_DEFAULT = new byte[]{0x1b, 0x21, 0x00};
+    public static final byte[] FONT_SMALL = new byte[]{0x1b, 0x21, 0x01};
+    public static final byte[] FONT_BOLD = new byte[]{0x1b, 0x21, 0x08};
+    public static final byte[] FONT_DOBLE_H = new byte[]{0x1b, 0x21, 0x10};
+    public static final byte[] FONT_DOBLE_W = new byte[]{0x1b, 0x21, 0x20};
+    public static final byte[] FONT_DOBLE_HW = new byte[]{0x1b, 0x21, 0x00};
+
     private BluetoothDevice printer;
     private BluetoothSocket btSocket = null;
     private OutputStream btOutputStream = null;
@@ -74,6 +81,18 @@ public class BluetoothPrinter {
     public boolean printText(String text) {
         try {
             btOutputStream.write(encodeNonAscii(text).getBytes());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean printFormat(String text, byte[] formato){
+        try {
+            printUnicode(formato);
+            btOutputStream.write(encodeNonAscii(text).getBytes());
+            printUnicode(FONT_DEFAULT);
             return true;
         } catch (IOException e) {
             e.printStackTrace();

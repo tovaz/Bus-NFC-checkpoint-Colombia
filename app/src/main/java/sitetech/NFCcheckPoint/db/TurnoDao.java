@@ -32,8 +32,10 @@ public class TurnoDao extends AbstractDao<Turno, Long> {
         public final static Property TotalAtiempo = new Property(4, Integer.class, "totalAtiempo", false, "TOTAL_ATIEMPO");
         public final static Property TotalDemorados = new Property(5, Integer.class, "totalDemorados", false, "TOTAL_DEMORADOS");
         public final static Property TotalAdelantados = new Property(6, Integer.class, "totalAdelantados", false, "TOTAL_ADELANTADOS");
-        public final static Property Eliminada = new Property(7, boolean.class, "eliminada", false, "ELIMINADA");
-        public final static Property OperadorCierre = new Property(8, long.class, "operadorCierre", false, "OPERADOR_CIERRE");
+        public final static Property ExtraString = new Property(7, String.class, "extraString", false, "EXTRA_STRING");
+        public final static Property ExtraInt = new Property(8, Integer.class, "extraInt", false, "EXTRA_INT");
+        public final static Property Eliminada = new Property(9, boolean.class, "eliminada", false, "ELIMINADA");
+        public final static Property OperadorCierre = new Property(10, long.class, "operadorCierre", false, "OPERADOR_CIERRE");
     }
 
     private DaoSession daoSession;
@@ -59,8 +61,10 @@ public class TurnoDao extends AbstractDao<Turno, Long> {
                 "\"TOTAL_ATIEMPO\" INTEGER," + // 4: totalAtiempo
                 "\"TOTAL_DEMORADOS\" INTEGER," + // 5: totalDemorados
                 "\"TOTAL_ADELANTADOS\" INTEGER," + // 6: totalAdelantados
-                "\"ELIMINADA\" INTEGER NOT NULL ," + // 7: eliminada
-                "\"OPERADOR_CIERRE\" INTEGER NOT NULL );"); // 8: operadorCierre
+                "\"EXTRA_STRING\" TEXT," + // 7: extraString
+                "\"EXTRA_INT\" INTEGER," + // 8: extraInt
+                "\"ELIMINADA\" INTEGER NOT NULL ," + // 9: eliminada
+                "\"OPERADOR_CIERRE\" INTEGER NOT NULL );"); // 10: operadorCierre
     }
 
     /** Drops the underlying database table. */
@@ -103,8 +107,18 @@ public class TurnoDao extends AbstractDao<Turno, Long> {
         if (totalAdelantados != null) {
             stmt.bindLong(7, totalAdelantados);
         }
-        stmt.bindLong(8, entity.getEliminada() ? 1L: 0L);
-        stmt.bindLong(9, entity.getOperadorCierre());
+ 
+        String extraString = entity.getExtraString();
+        if (extraString != null) {
+            stmt.bindString(8, extraString);
+        }
+ 
+        Integer extraInt = entity.getExtraInt();
+        if (extraInt != null) {
+            stmt.bindLong(9, extraInt);
+        }
+        stmt.bindLong(10, entity.getEliminada() ? 1L: 0L);
+        stmt.bindLong(11, entity.getOperadorCierre());
     }
 
     @Override
@@ -141,8 +155,18 @@ public class TurnoDao extends AbstractDao<Turno, Long> {
         if (totalAdelantados != null) {
             stmt.bindLong(7, totalAdelantados);
         }
-        stmt.bindLong(8, entity.getEliminada() ? 1L: 0L);
-        stmt.bindLong(9, entity.getOperadorCierre());
+ 
+        String extraString = entity.getExtraString();
+        if (extraString != null) {
+            stmt.bindString(8, extraString);
+        }
+ 
+        Integer extraInt = entity.getExtraInt();
+        if (extraInt != null) {
+            stmt.bindLong(9, extraInt);
+        }
+        stmt.bindLong(10, entity.getEliminada() ? 1L: 0L);
+        stmt.bindLong(11, entity.getOperadorCierre());
     }
 
     @Override
@@ -166,8 +190,10 @@ public class TurnoDao extends AbstractDao<Turno, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // totalAtiempo
             cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // totalDemorados
             cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // totalAdelantados
-            cursor.getShort(offset + 7) != 0, // eliminada
-            cursor.getLong(offset + 8) // operadorCierre
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // extraString
+            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // extraInt
+            cursor.getShort(offset + 9) != 0, // eliminada
+            cursor.getLong(offset + 10) // operadorCierre
         );
         return entity;
     }
@@ -181,8 +207,10 @@ public class TurnoDao extends AbstractDao<Turno, Long> {
         entity.setTotalAtiempo(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
         entity.setTotalDemorados(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
         entity.setTotalAdelantados(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
-        entity.setEliminada(cursor.getShort(offset + 7) != 0);
-        entity.setOperadorCierre(cursor.getLong(offset + 8));
+        entity.setExtraString(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setExtraInt(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
+        entity.setEliminada(cursor.getShort(offset + 9) != 0);
+        entity.setOperadorCierre(cursor.getLong(offset + 10));
      }
     
     @Override

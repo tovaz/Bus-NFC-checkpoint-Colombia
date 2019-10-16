@@ -87,7 +87,7 @@ public class Usuario_AgregarFragment extends Fragment implements Serializable {
         tnombre = vista.findViewById(R.id.tnombre);
         tcedula = vista.findViewById(R.id.tcedula);
         tpassword = vista.findViewById(R.id.tpassword);
-        ttelefono = vista.findViewById(R.id.tcedula);
+        ttelefono = vista.findViewById(R.id.ttelefono);
         sactivo = vista.findViewById(R.id.sactivo);
     }
 

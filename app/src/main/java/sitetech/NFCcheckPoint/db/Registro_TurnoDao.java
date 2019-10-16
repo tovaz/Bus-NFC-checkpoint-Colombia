@@ -32,10 +32,13 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         public final static Property MinAdelantado = new Property(4, String.class, "minAdelantado", false, "MIN_ADELANTADO");
         public final static Property Justificacion = new Property(5, String.class, "justificacion", false, "JUSTIFICACION");
         public final static Property Despacho = new Property(6, String.class, "despacho", false, "DESPACHO");
-        public final static Property BusId = new Property(7, long.class, "busId", false, "BUS_ID");
-        public final static Property RutaId = new Property(8, long.class, "rutaId", false, "RUTA_ID");
-        public final static Property TurnoId = new Property(9, long.class, "turnoId", false, "TURNO_ID");
-        public final static Property UserId = new Property(10, long.class, "userId", false, "USER_ID");
+        public final static Property PuntoControl = new Property(7, String.class, "puntoControl", false, "PUNTO_CONTROL");
+        public final static Property ExtraString = new Property(8, String.class, "extraString", false, "EXTRA_STRING");
+        public final static Property ExtraInt = new Property(9, Integer.class, "extraInt", false, "EXTRA_INT");
+        public final static Property BusId = new Property(10, long.class, "busId", false, "BUS_ID");
+        public final static Property RutaId = new Property(11, long.class, "rutaId", false, "RUTA_ID");
+        public final static Property TurnoId = new Property(12, long.class, "turnoId", false, "TURNO_ID");
+        public final static Property UserId = new Property(13, long.class, "userId", false, "USER_ID");
     }
 
     private DaoSession daoSession;
@@ -61,10 +64,13 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
                 "\"MIN_ADELANTADO\" TEXT," + // 4: minAdelantado
                 "\"JUSTIFICACION\" TEXT," + // 5: justificacion
                 "\"DESPACHO\" TEXT," + // 6: despacho
-                "\"BUS_ID\" INTEGER NOT NULL ," + // 7: busId
-                "\"RUTA_ID\" INTEGER NOT NULL ," + // 8: rutaId
-                "\"TURNO_ID\" INTEGER NOT NULL ," + // 9: turnoId
-                "\"USER_ID\" INTEGER NOT NULL );"); // 10: userId
+                "\"PUNTO_CONTROL\" TEXT," + // 7: puntoControl
+                "\"EXTRA_STRING\" TEXT," + // 8: extraString
+                "\"EXTRA_INT\" INTEGER," + // 9: extraInt
+                "\"BUS_ID\" INTEGER NOT NULL ," + // 10: busId
+                "\"RUTA_ID\" INTEGER NOT NULL ," + // 11: rutaId
+                "\"TURNO_ID\" INTEGER NOT NULL ," + // 12: turnoId
+                "\"USER_ID\" INTEGER NOT NULL );"); // 13: userId
     }
 
     /** Drops the underlying database table. */
@@ -111,10 +117,25 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         if (despacho != null) {
             stmt.bindString(7, despacho);
         }
-        stmt.bindLong(8, entity.getBusId());
-        stmt.bindLong(9, entity.getRutaId());
-        stmt.bindLong(10, entity.getTurnoId());
-        stmt.bindLong(11, entity.getUserId());
+ 
+        String puntoControl = entity.getPuntoControl();
+        if (puntoControl != null) {
+            stmt.bindString(8, puntoControl);
+        }
+ 
+        String extraString = entity.getExtraString();
+        if (extraString != null) {
+            stmt.bindString(9, extraString);
+        }
+ 
+        Integer extraInt = entity.getExtraInt();
+        if (extraInt != null) {
+            stmt.bindLong(10, extraInt);
+        }
+        stmt.bindLong(11, entity.getBusId());
+        stmt.bindLong(12, entity.getRutaId());
+        stmt.bindLong(13, entity.getTurnoId());
+        stmt.bindLong(14, entity.getUserId());
     }
 
     @Override
@@ -155,10 +176,25 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         if (despacho != null) {
             stmt.bindString(7, despacho);
         }
-        stmt.bindLong(8, entity.getBusId());
-        stmt.bindLong(9, entity.getRutaId());
-        stmt.bindLong(10, entity.getTurnoId());
-        stmt.bindLong(11, entity.getUserId());
+ 
+        String puntoControl = entity.getPuntoControl();
+        if (puntoControl != null) {
+            stmt.bindString(8, puntoControl);
+        }
+ 
+        String extraString = entity.getExtraString();
+        if (extraString != null) {
+            stmt.bindString(9, extraString);
+        }
+ 
+        Integer extraInt = entity.getExtraInt();
+        if (extraInt != null) {
+            stmt.bindLong(10, extraInt);
+        }
+        stmt.bindLong(11, entity.getBusId());
+        stmt.bindLong(12, entity.getRutaId());
+        stmt.bindLong(13, entity.getTurnoId());
+        stmt.bindLong(14, entity.getUserId());
     }
 
     @Override
@@ -182,10 +218,13 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // minAdelantado
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // justificacion
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // despacho
-            cursor.getLong(offset + 7), // busId
-            cursor.getLong(offset + 8), // rutaId
-            cursor.getLong(offset + 9), // turnoId
-            cursor.getLong(offset + 10) // userId
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // puntoControl
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // extraString
+            cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9), // extraInt
+            cursor.getLong(offset + 10), // busId
+            cursor.getLong(offset + 11), // rutaId
+            cursor.getLong(offset + 12), // turnoId
+            cursor.getLong(offset + 13) // userId
         );
         return entity;
     }
@@ -199,10 +238,13 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         entity.setMinAdelantado(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setJustificacion(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setDespacho(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setBusId(cursor.getLong(offset + 7));
-        entity.setRutaId(cursor.getLong(offset + 8));
-        entity.setTurnoId(cursor.getLong(offset + 9));
-        entity.setUserId(cursor.getLong(offset + 10));
+        entity.setPuntoControl(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setExtraString(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setExtraInt(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
+        entity.setBusId(cursor.getLong(offset + 10));
+        entity.setRutaId(cursor.getLong(offset + 11));
+        entity.setTurnoId(cursor.getLong(offset + 12));
+        entity.setUserId(cursor.getLong(offset + 13));
      }
     
     @Override

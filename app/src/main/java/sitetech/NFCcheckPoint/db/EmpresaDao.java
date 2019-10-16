@@ -26,6 +26,8 @@ public class EmpresaDao extends AbstractDao<Empresa, Long> {
         public final static Property Nombre = new Property(1, String.class, "nombre", false, "NOMBRE");
         public final static Property Telefono = new Property(2, String.class, "telefono", false, "TELEFONO");
         public final static Property Eliminado = new Property(3, boolean.class, "eliminado", false, "ELIMINADO");
+        public final static Property ExtraString = new Property(4, String.class, "extraString", false, "EXTRA_STRING");
+        public final static Property ExtraInt = new Property(5, Integer.class, "extraInt", false, "EXTRA_INT");
     }
 
 
@@ -44,7 +46,9 @@ public class EmpresaDao extends AbstractDao<Empresa, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NOMBRE\" TEXT NOT NULL ," + // 1: nombre
                 "\"TELEFONO\" TEXT," + // 2: telefono
-                "\"ELIMINADO\" INTEGER NOT NULL );"); // 3: eliminado
+                "\"ELIMINADO\" INTEGER NOT NULL ," + // 3: eliminado
+                "\"EXTRA_STRING\" TEXT," + // 4: extraString
+                "\"EXTRA_INT\" INTEGER);"); // 5: extraInt
     }
 
     /** Drops the underlying database table. */
@@ -68,6 +72,16 @@ public class EmpresaDao extends AbstractDao<Empresa, Long> {
             stmt.bindString(3, telefono);
         }
         stmt.bindLong(4, entity.getEliminado() ? 1L: 0L);
+ 
+        String extraString = entity.getExtraString();
+        if (extraString != null) {
+            stmt.bindString(5, extraString);
+        }
+ 
+        Integer extraInt = entity.getExtraInt();
+        if (extraInt != null) {
+            stmt.bindLong(6, extraInt);
+        }
     }
 
     @Override
@@ -85,6 +99,16 @@ public class EmpresaDao extends AbstractDao<Empresa, Long> {
             stmt.bindString(3, telefono);
         }
         stmt.bindLong(4, entity.getEliminado() ? 1L: 0L);
+ 
+        String extraString = entity.getExtraString();
+        if (extraString != null) {
+            stmt.bindString(5, extraString);
+        }
+ 
+        Integer extraInt = entity.getExtraInt();
+        if (extraInt != null) {
+            stmt.bindLong(6, extraInt);
+        }
     }
 
     @Override
@@ -98,7 +122,9 @@ public class EmpresaDao extends AbstractDao<Empresa, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // nombre
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // telefono
-            cursor.getShort(offset + 3) != 0 // eliminado
+            cursor.getShort(offset + 3) != 0, // eliminado
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // extraString
+            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5) // extraInt
         );
         return entity;
     }
@@ -109,6 +135,8 @@ public class EmpresaDao extends AbstractDao<Empresa, Long> {
         entity.setNombre(cursor.getString(offset + 1));
         entity.setTelefono(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setEliminado(cursor.getShort(offset + 3) != 0);
+        entity.setExtraString(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setExtraInt(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
      }
     
     @Override

@@ -24,6 +24,9 @@ public class Registro_Turno {
     private String minAdelantado;
     private String justificacion;
     private String despacho;
+    private String puntoControl;
+    private String extraString;
+    private Integer extraInt;
     private long busId;
     private long rutaId;
     private long turnoId;
@@ -73,7 +76,7 @@ public class Registro_Turno {
     }
 
     @Generated
-    public Registro_Turno(Long id, java.util.Date fecha, Boolean eliminado, String minAtrazado, String minAdelantado, String justificacion, String despacho, long busId, long rutaId, long turnoId, long userId) {
+    public Registro_Turno(Long id, java.util.Date fecha, Boolean eliminado, String minAtrazado, String minAdelantado, String justificacion, String despacho, String puntoControl, String extraString, Integer extraInt, long busId, long rutaId, long turnoId, long userId) {
         this.id = id;
         this.fecha = fecha;
         this.eliminado = eliminado;
@@ -81,6 +84,9 @@ public class Registro_Turno {
         this.minAdelantado = minAdelantado;
         this.justificacion = justificacion;
         this.despacho = despacho;
+        this.puntoControl = puntoControl;
+        this.extraString = extraString;
+        this.extraInt = extraInt;
         this.busId = busId;
         this.rutaId = rutaId;
         this.turnoId = turnoId;
@@ -148,6 +154,30 @@ public class Registro_Turno {
 
     public void setDespacho(String despacho) {
         this.despacho = despacho;
+    }
+
+    public String getPuntoControl() {
+        return puntoControl;
+    }
+
+    public void setPuntoControl(String puntoControl) {
+        this.puntoControl = puntoControl;
+    }
+
+    public String getExtraString() {
+        return extraString;
+    }
+
+    public void setExtraString(String extraString) {
+        this.extraString = extraString;
+    }
+
+    public Integer getExtraInt() {
+        return extraInt;
+    }
+
+    public void setExtraInt(Integer extraInt) {
+        this.extraInt = extraInt;
     }
 
     public long getBusId() {

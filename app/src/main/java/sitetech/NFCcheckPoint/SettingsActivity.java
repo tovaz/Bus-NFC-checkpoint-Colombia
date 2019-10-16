@@ -22,6 +22,7 @@ import java.util.Date;
 
 import sitetech.NFCcheckPoint.Core.GetPathUtils;
 import sitetech.NFCcheckPoint.Core.dbIExport;
+import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.routecheckapp.R;
@@ -90,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
                 String destino = getPath(this, docUri);
                 File destinoF = new File(destino);
 
-                String dbpath = "/data/sitetech.routecheckapp/databases/nfc_db";
+                String dbpath = "/data/sitetech.routecheckapp/databases/" + Configuraciones.dbName;
                 File dbFile = new File(dataDir, dbpath);
 
 
@@ -117,7 +118,7 @@ public class SettingsActivity extends AppCompatActivity {
                 String origenS = GetPathUtils.getFilePathFromUri(this, uri);
                 File origenF = new File(origenS);
 
-                String destinoS = "/data/sitetech.routecheckapp/databases/nfc_db";
+                String destinoS = "/data/sitetech.routecheckapp/databases/" + Configuraciones.dbName;
                 //File dbFile = new File(dataDir, dbpath);
 
 

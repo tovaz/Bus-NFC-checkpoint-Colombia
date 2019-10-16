@@ -6,13 +6,9 @@
         android:bottomRightRadius="100dp"
         android:bottomLeftRadius="100dp">
     </corners>
-    <stroke
-        android:width="1dp"
-        android:color="#0130A8">
-    </stroke>
     <gradient
-        android:startColor="#0130A8"
-        android:endColor="#8D45BB">
+        android:startColor="#0A4BEE"
+        android:endColor="#AB52E9">
     </gradient>
     <padding
         android:left="10dp"

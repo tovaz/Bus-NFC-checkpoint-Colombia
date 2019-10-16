@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText tcontraseña;
     private UsuarioDao userD;
     private Usuario uLogeado;
+    private LinearLayout lcontenedor;
 
     private Button b1, b2, b3, b4;
 
@@ -59,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         biniciar2 = findViewById(R.id.biniciar2);
         tnombre = findViewById(R.id.tnombre);
         tcontraseña = findViewById(R.id.tcontraseña);
+        lcontenedor = findViewById(R.id.lcontenedor);
 
         b1 = findViewById(R.id.b1);
         b2 = findViewById(R.id.b2);
@@ -67,6 +72,9 @@ public class LoginActivity extends AppCompatActivity {
 
         Click();
         checkDatabase();
+
+        Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+        lcontenedor.startAnimation(hyperspaceJumpAnimation);
     }
 
     private void requestPermisos() {

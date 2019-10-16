@@ -25,6 +25,8 @@ public class Bus {
     private String tagNfc;
     private Long recorridos;
     private boolean eliminado;
+    private String extraString;
+    private Integer extraInt;
     private long empresaId;
 
     /** Used to resolve relations */
@@ -53,13 +55,15 @@ public class Bus {
     }
 
     @Generated
-    public Bus(Long id, String placa, String interno, String tagNfc, Long recorridos, boolean eliminado, long empresaId) {
+    public Bus(Long id, String placa, String interno, String tagNfc, Long recorridos, boolean eliminado, String extraString, Integer extraInt, long empresaId) {
         this.id = id;
         this.placa = placa;
         this.interno = interno;
         this.tagNfc = tagNfc;
         this.recorridos = recorridos;
         this.eliminado = eliminado;
+        this.extraString = extraString;
+        this.extraInt = extraInt;
         this.empresaId = empresaId;
     }
 
@@ -118,6 +122,22 @@ public class Bus {
 
     public void setEliminado(boolean eliminado) {
         this.eliminado = eliminado;
+    }
+
+    public String getExtraString() {
+        return extraString;
+    }
+
+    public void setExtraString(String extraString) {
+        this.extraString = extraString;
+    }
+
+    public Integer getExtraInt() {
+        return extraInt;
+    }
+
+    public void setExtraInt(Integer extraInt) {
+        this.extraInt = extraInt;
     }
 
     public long getEmpresaId() {

@@ -6,9 +6,12 @@ import android.bluetooth.BluetoothDevice;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.apache.commons.codec.binary.Base64;
 
 import java.io.ByteArrayOutputStream;
 
@@ -18,15 +21,19 @@ import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.routecheckapp.R;
 
 import static sitetech.NFCcheckPoint.Core.BluetoothPrinter.ALIGN_CENTER;
+import static sitetech.NFCcheckPoint.Core.BluetoothPrinter.FONT_BOLD;
+import static sitetech.NFCcheckPoint.Core.BluetoothPrinter.FONT_DEFAULT;
+import static sitetech.NFCcheckPoint.Core.BluetoothPrinter.FONT_DOBLE_HW;
+import static sitetech.NFCcheckPoint.Core.BluetoothPrinter.FONT_DOBLE_W;
 import static sitetech.NFCcheckPoint.Core.BluetoothPrinter.decodeBitmap;
 
 public class printHelper {
-
     public static boolean imprimirRegistro(final Registro_Turno ultimoRegistro, final boolean esPrimero, final boolean reimpresion){
         final boolean[] result = {false};
         try {
             BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
             BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
+            //BluetoothDevice mBtDevice = btAdapter.getRemoteDevice("C4:9F:4C:11:45:D8");
 
             final BluetoothPrinter mPrinter = new BluetoothPrinter(mBtDevice);
 
@@ -72,20 +79,35 @@ public class printHelper {
             //impresora.setAlign(BluetoothPrinter.ALIGN_LEFT);
             //impresora.printImage(logoEmpresa);
             //impresora.addNewLine();
+
+
+
+            impresora.setAlign(ALIGN_CENTER);
+            impresora.printText("█████ ███ ██   ██ ███    ██  ████   ███ ██   ██ ███   ███ ███   ███"); impresora.addNewLine();
+            impresora.printText("  █    █  █ █ █ █ █     █  █ █      █   █ █ █ █ █  █   █  █  █  █  "); impresora.addNewLine();
+            impresora.printText("  █    █  █  █  █ ███   █  █ ████   ███ █  █  █ ███    █  ███   ███"); impresora.addNewLine();
+            impresora.printText("  █    █  █  █  █ █     █  █ █      █   █  █  █ █      █  █  █  █  "); impresora.addNewLine();
+            impresora.printText("  █   ███ █     █ ███    ██  █      ███ █     █ █     ███ █   █ ███"); impresora.addNewLine();
+            impresora.printText("NIT: 1075679263-9"); impresora.addNewLine();
+
+            //impresora.setBold(true);
+            //impresora.printFormat("TIME OF EMPIRE", FONT_DOBLE_HW); impresora.addNewLine();
+
+
+            //impresora.printText("");
         }
 
-
-        impresora.setBold(true);
-        impresora.printText("PUNTO DE CONTROL");
-        impresora.addNewLine();
-
-
-        impresora.setBold(false);
-        impresora.printText("Nombre del punto");
-        impresora.addNewLine();
     }
 
     private static void imprimirTopRegistro(BluetoothPrinter impresora, Registro_Turno registro, boolean esPrimero, boolean reimpresion){
+        impresora.setBold(true);
+        impresora.printText("PUNTO DE CONTROL"); impresora.addNewLine();
+
+        if (registro.getPuntoControl() != null)
+            impresora.printText(registro.getPuntoControl().toUpperCase());
+        //impresora.printFormat("PUNTO DE CONTROL", FONT_BOLD);
+        impresora.addNewLine();
+
         if (registro != null)
             imprimirValor(impresora, "TIEMPO AL PUNTO ", registro.getDespacho());
         else
@@ -174,15 +196,47 @@ public class printHelper {
         print.setAlign(BluetoothPrinter.ALIGN_LEFT);
     }
 
-    private static void imprimirRegistro(Registro_Turno registro){
-        
+    public static boolean imprimirRegistro2(final Registro_Turno ultimoRegistro, final boolean esPrimero, final boolean reimpresion){
+        final boolean[] result = {false};
+        try {
+            BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+            //BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
+            BluetoothDevice mBtDevice = btAdapter.getRemoteDevice("C4:9F:4C:11:45:D8");
+            //BluetoothDevice mBtDevice = btAdapter.getRemoteDevice("02:00:00:00:00:00");
+
+            //Log.d("PRINTER ", btAdapter.getRemoteDevice("C4:9F:4C:11:45:D8".getBytes()).getName());
+            final BluetoothPrinter mPrinter = new BluetoothPrinter(mBtDevice);
+
+            mPrinter.connectPrinter(new BluetoothPrinter.PrinterConnectListener() {
+
+                @Override
+                public void onConnected() {
+                    imprimir(mPrinter, ultimoRegistro, esPrimero, reimpresion);
+                    ToastHelper.exito("Registro impreso correctamente.");
+                    result[0] = true;
+                }
+
+                @Override
+                public void onFailed() {
+                    ToastHelper.error("Error al enviar la impresion, verifica la impresora.");
+                    Log.d("Impresora bluetooth", "Error de conexion");
+                }
+
+            });
+        }
+        catch (Exception e){
+            ToastHelper.error("Error al intentar imprimir. " + e.getMessage());
+        }
+
+        return result[0];
     }
 
     /*******************************************************************************************/
     public static void pruerba1(final Activity ac){
         try {
             BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-            BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
+            //BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
+            BluetoothDevice mBtDevice = btAdapter.getRemoteDevice("C4:9F:4C:11:45:D8");
 
             final BluetoothPrinter mPrinter = new BluetoothPrinter(mBtDevice);
 
@@ -192,15 +246,13 @@ public class printHelper {
                 public void onConnected() {
                     try {
                         Bitmap bmp = BitmapFactory.decodeResource(ac.getResources(),
-                                R.drawable.empresa_logox24);
+                                R.drawable.logoo);
                         if(bmp!=null){
-                            byte[] command = Utils.decodeBitmap(bmp);
-                            mPrinter.setAlign(ALIGN_CENTER);
-                            mPrinter.printUnicode(command);
+                            mPrinter.printImage(bmp);
                             mPrinter.feedPaper();
                             mPrinter.finish();
                         }else{
-                            ToastHelper.exito("Error al imprimir la foto " + " no existe el archivo");
+                            ToastHelper.normal("Error al imprimir la foto " + " no existe el archivo");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -225,7 +277,8 @@ public class printHelper {
     public static void pruerba2(final AppCompatActivity ax){
         try {
             BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-            BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
+            //BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
+            BluetoothDevice mBtDevice = btAdapter.getRemoteDevice("C4:9F:4C:11:45:D8");
 
             final BluetoothPrinter mPrinter = new BluetoothPrinter(mBtDevice);
 
@@ -235,16 +288,18 @@ public class printHelper {
                 public void onConnected() {
                     try {
                         Bitmap bmp = BitmapFactory.decodeResource(ax.getResources(),
-                                R.drawable.logo_empresa2);
-                        if(bmp!=null){
-                            byte[] command = Utils.decodeBitmap(bmp);
-                            mPrinter.setAlign(ALIGN_CENTER);
-                            mPrinter.printUnicode(command);
-                            mPrinter.feedPaper();
-                            mPrinter.finish();
-                        }else{
-                            ToastHelper.exito("Error al imprimir la foto " + " no existe el archivo");
-                        }
+                                R.drawable.logo_full);
+
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] bitmapdata = stream.toByteArray();
+
+
+                        mPrinter.setAlign(ALIGN_CENTER);
+                        mPrinter.printText(Base64.encodeBase64String( bitmapdata));
+                        mPrinter.feedPaper();
+                        mPrinter.finish();
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         ToastHelper.exito("Catch Exception " + e.getMessage());
@@ -268,7 +323,8 @@ public class printHelper {
     public static void pruerba3(final AppCompatActivity ax){
         try {
             BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-            BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
+            //BluetoothDevice mBtDevice = btAdapter.getBondedDevices().iterator().next();   // Get first paired device
+            BluetoothDevice mBtDevice = btAdapter.getRemoteDevice("C4:9F:4C:11:45:D8");
 
             final BluetoothPrinter mPrinter = new BluetoothPrinter(mBtDevice);
 
@@ -278,16 +334,17 @@ public class printHelper {
                 public void onConnected() {
                     try {
                         Bitmap bmp = BitmapFactory.decodeResource(ax.getResources(),
-                                R.drawable.empresa_logo_100);
-                        if(bmp!=null){
-                            byte[] command = Utils.decodeBitmap(bmp);
-                            mPrinter.setAlign(ALIGN_CENTER);
-                            mPrinter.printUnicode(command);
-                            mPrinter.feedPaper();
-                            mPrinter.finish();
-                        }else{
-                            ToastHelper.exito("Error al imprimir la foto " + " no existe el archivo");
-                        }
+                                R.drawable.logo_full);
+
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] bitmapdata = stream.toByteArray();
+
+
+                        mPrinter.setAlign(ALIGN_CENTER);
+                        mPrinter.printUnicode(Base64.encodeBase64String( bitmapdata).getBytes());
+                        mPrinter.feedPaper();
+                        mPrinter.finish();
                     } catch (Exception e) {
                         e.printStackTrace();
                         ToastHelper.exito("Catch Exception " + e.getMessage());

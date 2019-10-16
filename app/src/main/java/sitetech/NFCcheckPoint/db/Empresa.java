@@ -20,6 +20,8 @@ public class Empresa {
     private String nombre;
     private String telefono;
     private boolean eliminado;
+    private String extraString;
+    private Integer extraInt;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -33,11 +35,13 @@ public class Empresa {
     }
 
     @Generated
-    public Empresa(Long id, String nombre, String telefono, boolean eliminado) {
+    public Empresa(Long id, String nombre, String telefono, boolean eliminado, String extraString, Integer extraInt) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
         this.eliminado = eliminado;
+        this.extraString = extraString;
+        this.extraInt = extraInt;
     }
 
     public Long getId() {
@@ -72,6 +76,22 @@ public class Empresa {
 
     public void setEliminado(boolean eliminado) {
         this.eliminado = eliminado;
+    }
+
+    public String getExtraString() {
+        return extraString;
+    }
+
+    public void setExtraString(String extraString) {
+        this.extraString = extraString;
+    }
+
+    public Integer getExtraInt() {
+        return extraInt;
+    }
+
+    public void setExtraInt(Integer extraInt) {
+        this.extraInt = extraInt;
     }
 
     // KEEP METHODS - put your custom methods here

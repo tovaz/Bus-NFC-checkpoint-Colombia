@@ -59,6 +59,10 @@ public class daoGenerator {
         bus.addStringProperty("tagNfc");
         bus.addLongProperty("recorridos");
         bus.addBooleanProperty("eliminado").notNull();
+
+        bus.addStringProperty("extraString");
+        bus.addIntProperty("extraInt");
+
         Property empresaId = bus.addLongProperty("empresaId").notNull().getProperty();
 
         bus.addToOne(empresa, empresaId);
@@ -73,6 +77,10 @@ public class daoGenerator {
         empresa.addStringProperty("nombre").notNull();
         empresa.addStringProperty("telefono");
         empresa.addBooleanProperty("eliminado").notNull();
+
+        empresa.addStringProperty("extraString");
+        empresa.addIntProperty("extraInt");
+
         return empresa;
     }
 
@@ -143,6 +151,10 @@ public class daoGenerator {
         turno.addIntProperty("totalAtiempo");
         turno.addIntProperty("totalDemorados");
         turno.addIntProperty("totalAdelantados");
+
+        turno.addStringProperty("extraString");
+        turno.addIntProperty("extraInt");
+
         turno.addBooleanProperty("eliminada").notNull();
         Property operadorCierre = turno.addLongProperty("operadorCierre").notNull().getProperty();
 
@@ -161,6 +173,11 @@ public class daoGenerator {
         registroTurno.addStringProperty("minAdelantado");
         registroTurno.addStringProperty("justificacion");
         registroTurno.addStringProperty("despacho");
+
+        registroTurno.addStringProperty("puntoControl");
+        registroTurno.addStringProperty("extraString");
+        registroTurno.addIntProperty("extraInt");
+
         Property busId = registroTurno.addLongProperty("busId").notNull().getProperty();
         Property rutaId = registroTurno.addLongProperty("rutaId").notNull().getProperty();
         Property turnoId = registroTurno.addLongProperty("turnoId").notNull().getProperty();
