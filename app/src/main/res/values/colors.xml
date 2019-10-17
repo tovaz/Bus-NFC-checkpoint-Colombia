@@ -7,10 +7,5 @@
     <color name="colorLabelFloat">#2F6CE9</color>
     <color name="SuccessColor">#43D685</color>
     <color name="ErrorColor">#EB371D</color>
-    <color name="WarningColor">#E9CA31</color>
     <color name="Fondo1">#ECECEC</color>
-    <color name="Fondo2">#DDDDDD</color>
-    <color name="Texto1">#0F0F0F</color>
-    <color name="Texto2">#363636</color>
-    <color name="TextoMuted">#585858</color>
 </resources>

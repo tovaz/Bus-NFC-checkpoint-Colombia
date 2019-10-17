@@ -1,9 +1,7 @@
 package sitetech.NFCcheckPoint;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,8 +12,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
@@ -52,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
 
         activity = this;
         cargarControles();
-        requestPermisos();
     }
 
     private void cargarControles(){
@@ -77,15 +72,6 @@ public class LoginActivity extends AppCompatActivity {
         lcontenedor.startAnimation(hyperspaceJumpAnimation);
     }
 
-    private void requestPermisos() {
-        RxPermissions rxPermissions = new RxPermissions(this); // where this is an Activity instance // Must be done during an initialization phase like onCreate
-        rxPermissions.request(Manifest.permission.NFC);
-        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        rxPermissions.request(Manifest.permission.BLUETOOTH);
-        rxPermissions.request(Manifest.permission.BLUETOOTH_ADMIN);
-        rxPermissions.request(Manifest.permission.BLUETOOTH_PRIVILEGED);
-
-    }
 
     private void Click(){
         biniciar.setOnClickListener(new View.OnClickListener() {

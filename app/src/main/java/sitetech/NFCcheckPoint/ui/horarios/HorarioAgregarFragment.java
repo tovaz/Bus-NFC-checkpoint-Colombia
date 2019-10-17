@@ -1,9 +1,7 @@
 package sitetech.NFCcheckPoint.ui.horarios;
 
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,31 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
-import com.codetroopers.betterpickers.hmspicker.HmsPickerBuilder;
-import com.codetroopers.betterpickers.hmspicker.HmsPickerDialogFragment;
-import com.codetroopers.betterpickers.timepicker.TimePickerBuilder;
-import com.codetroopers.betterpickers.timepicker.TimePickerDialogFragment;
-import com.ikovac.timepickerwithseconds.MyTimePickerDialog;
-import com.vicmikhailau.maskededittext.MaskedEditText;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Core.TimePickerFragment;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.db.Horario;
 import sitetech.NFCcheckPoint.db.HorarioDao;
-import sitetech.NFCcheckPoint.db.Ruta;
-import sitetech.NFCcheckPoint.db.RutaDao;
 import sitetech.NFCcheckPoint.ui.empresas.EmpresaAgregarFragment;
 import sitetech.NFCcheckPoint.ui.empresas.EmpresasFragment;
-import sitetech.NFCcheckPoint.ui.rutas.RutasFragment;
 import sitetech.routecheckapp.R;
 
 public class HorarioAgregarFragment extends Fragment implements Serializable {
