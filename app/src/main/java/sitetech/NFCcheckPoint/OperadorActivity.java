@@ -1,7 +1,5 @@
 package sitetech.NFCcheckPoint;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
@@ -20,23 +18,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Date;
 
 import sitetech.NFCcheckPoint.Adapters.TabsAdapter;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
@@ -44,7 +36,6 @@ import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
-import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.checkHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.Helpers.printHelper;
@@ -61,7 +52,6 @@ import sitetech.NFCcheckPoint.ui.operador.RegistroEditarFragment;
 import sitetech.routecheckapp.R;
 
 import static sitetech.NFCcheckPoint.Helpers.nfcHelper.getUid;
-import static sitetech.NFCcheckPoint.Helpers.printHelper.imprimirUltimo;
 import static sitetech.NFCcheckPoint.dbHelpers.RegistrosManager.getRegistroAnterior;
 import static sitetech.NFCcheckPoint.dbHelpers.RegistrosManager.getUltimoRegistro;
 
@@ -401,13 +391,13 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
             hsp = new HistorySearchOP();
 
         appbar.setVisibility(View.GONE);
-        contenedor.setVisibility(View.VISIBLE);
+        //contenedor.setVisibility(View.VISIBLE);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.opcontenedor, hsp);
-        transaction.addToBackStack(null);
-        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-        transaction.commit();
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right)
+                .replace(R.id.nav_host_fragment2, hsp)
+                .addToBackStack(null)
+                .commit();
 
         //activityHelper.cargarFragmento2(this, hsp.getTargetFragment(), R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
     }
@@ -416,16 +406,16 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
             RegistroEditarFragment editarF = new RegistroEditarFragment();
 
         appbar.setVisibility(View.GONE);
-        contenedor.setVisibility(View.VISIBLE);
+        //contenedor.setVisibility(View.VISIBLE);
 
         Bundle bundle = new Bundle();
         bundle.putInt("registro", registro.getId().intValue());
         editarF.setArguments(bundle);
 
         getFragmentManager().beginTransaction()
-        .replace(R.id.opcontenedor, editarF)
+        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right)
+        .replace(R.id.nav_host_fragment2, editarF)
         .addToBackStack(null)
-        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
         .commit();
     }
 

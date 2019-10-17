@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fefefe"
     tools:context="sitetech.NFCcheckPoint.ui.buses.BusAgregarFragment">
 
 
@@ -11,41 +12,41 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" >
-
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme">
 
-            <ImageView
-                android:id="@+id/batraz"
-                android:layout_width="49dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:tint="#eee"
-                app:srcCompat="@drawable/back" />
-
-            <TextView
-                android:id="@+id/ttitulo"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:text="EDITAR REGISTRO"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="#eee"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-    </androidx.appcompat.widget.Toolbar>
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/batraz"
+                    android:layout_width="49dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="#eee"
+                    app:srcCompat="@drawable/back" />
+
+                <TextView
+                    android:id="@+id/ttitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:text="EDITAR REGISTRO"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="#eee"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
 
 
         <ScrollView

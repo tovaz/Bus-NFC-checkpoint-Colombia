@@ -13,7 +13,7 @@ import sitetech.NFCcheckPoint.db.Registro_Turno;
 import static sitetech.NFCcheckPoint.Core.BluetoothPrinter.ALIGN_CENTER;
 
 public class printHelper {
-    public static boolean imprimirRegistro(final Registro_Turno ultimoRegistro, final boolean esPrimero, final boolean reimpresion){
+    public static boolean imprimirRegistro(final Registro_Turno registro, final boolean esPrimero, final boolean reimpresion){
         final boolean[] result = {false};
         try {
             BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -26,7 +26,7 @@ public class printHelper {
 
                 @Override
                 public void onConnected() {
-                    imprimir(mPrinter, ultimoRegistro, esPrimero, reimpresion);
+                    imprimir(mPrinter, registro, esPrimero, reimpresion);
                     ToastHelper.exito("Registro impreso correctamente.");
                     result[0] = true;
                 }
@@ -80,10 +80,10 @@ public class printHelper {
     private static void imprimirTopRegistro(BluetoothPrinter impresora, Registro_Turno registro, boolean esPrimero, boolean reimpresion){
         impresora.setBold(true);
         impresora.printText("PUNTO DE CONTROL"); impresora.addNewLine();
+        if (registro != null)
+            if (registro.getPuntoControl() != null)
+                impresora.printText(registro.getPuntoControl().toUpperCase());
 
-        if (registro.getPuntoControl() != null)
-            impresora.printText(registro.getPuntoControl().toUpperCase());
-        //impresora.printFormat("PUNTO DE CONTROL", FONT_BOLD);
         impresora.addNewLine();
 
         if (registro != null)
@@ -164,7 +164,11 @@ public class printHelper {
         impresora.addNewLine();
         impresora.printText("OPERARIO");
         impresora.addNewLine();
-        impresora.printText(registro.getUsuario().getNombre().toUpperCase());
+        if (registro != null)
+            impresora.printText(registro.getUsuario().getNombre().toUpperCase());
+        else
+            impresora.printText("--");
+
         impresora.addNewLine();
 
 
