@@ -125,7 +125,7 @@ public class CheckFragment extends Fragment implements Listener {
                                     printHelper.imprimirRegistro(registroAnterior, false, false);
                                     limpiarInfo();
                                 }
-                            }, 500);
+                            }, 1500);
                         }
                     }, 1000);
 

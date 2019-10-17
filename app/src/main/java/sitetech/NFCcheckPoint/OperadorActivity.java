@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,9 +24,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
@@ -71,15 +78,16 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     private NFCReadFragment nfcReadF;
     private boolean isDialogDisplayed = false;
     private boolean isWrite = false;
-    private CoordinatorLayout contendor;
+    private CoordinatorLayout contenedor;
     private AppBarLayout appbar;
-    private LinearLayout contenedor;
     private TextView tpunto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operador);
+
+        overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); //ACTIVAR ACTION BAR
@@ -112,11 +120,11 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     private void cargarControles(){
         tusuario = findViewById(R.id.tusuario);
         blogout = findViewById(R.id.blogout);
-        contendor = findViewById(R.id.contenedor);
+        //contendor = findViewById(R.id.contenedor);
         bbuses = findViewById(R.id.bbuses);
         breimprimir = findViewById(R.id.breimprimir);
         appbar = findViewById(R.id.appbar);
-        contenedor = findViewById(R.id.opcontenedor);
+        contenedor = findViewById(R.id.contenedor);
         tpunto = findViewById(R.id.tpunto);
 
         tpunto.setText(Configuraciones.getPuntodeControl(this));
@@ -394,10 +402,10 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         //contenedor.setVisibility(View.VISIBLE);
 
         getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right)
-                .replace(R.id.nav_host_fragment2, hsp)
-                .addToBackStack(null)
-                .commit();
+        .setCustomAnimations(R.animator.slide_in, R.animator.slide_out)
+        .replace(R.id.contenedor, hsp)
+        .addToBackStack(null)
+        .commit();
 
         //activityHelper.cargarFragmento2(this, hsp.getTargetFragment(), R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
     }
@@ -413,20 +421,23 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         editarF.setArguments(bundle);
 
         getFragmentManager().beginTransaction()
-        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right)
-        .replace(R.id.nav_host_fragment2, editarF)
+        .setCustomAnimations(R.animator.slide_in, R.animator.slide_out)
+        .replace(R.id.contenedor, editarF)
         .addToBackStack(null)
         .commit();
     }
 
     public void cerrarHistorial() {
         appbar.setVisibility(View.VISIBLE);
-        contenedor.setVisibility(View.GONE);
+        //contenedor.setVisibility(View.GONE);
+
+        getFragmentManager().popBackStack();
     }
 
     public void cerrarEditarHistorial(Registro_Turno rx){
-        getFragmentManager().popBackStack();
+        //getFragmentManager().popBackStack();
         cerrarHistorial();
+
         HistoryFragment hf = (HistoryFragment) tabsAdapter.getItem(1);
         if (hf != null)
             hf.itemEditado(rx);

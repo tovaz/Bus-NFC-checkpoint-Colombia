@@ -3,23 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_usuarios">
+    app:startDestination="@+id/nav_operador">
 
     <fragment
         android:id="@+id/nav_operador"
-        android:name="sitetech.NFCcheckPoint.ui.usuarios.UsuariosFragment"
+        android:name="sitetech.NFCcheckPoint.OperadorActivity"
         android:label="@string/menu_home"
         tools:layout="@layout/activity_operador_content" />
 
     <fragment
         android:id="@+id/nav_operador_search"
-        android:name="sitetech.NFCcheckPoint.ui.usuarios.UsuariosFragment"
+        android:name="sitetech.NFCcheckPoint.ui.historial.HistorySearchOP"
         android:label="@string/menu_home"
         tools:layout="@layout/history_search_operador" />
 
     <fragment
         android:id="@+id/nav_operador_editar_registro"
-        android:name="sitetech.NFCcheckPoint.ui.usuarios.UsuariosFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/historial_editar_registro" />
+        android:name="sitetech.NFCcheckPoint.ui.operador.RegistroEditarFragment"
+        android:label="historial_editar_registro" />
 </navigation>

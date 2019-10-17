@@ -99,7 +99,7 @@ public class HistorySearchOP extends Fragment {
         batraz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityHelper.goBackStack(v);
+                onStop();
             }
         });
 

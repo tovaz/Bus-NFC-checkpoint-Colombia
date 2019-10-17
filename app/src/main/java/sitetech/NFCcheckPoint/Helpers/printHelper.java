@@ -162,15 +162,11 @@ public class printHelper {
     public static void imprimirPie(BluetoothPrinter impresora, Registro_Turno registro, boolean esPrimero){
         impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
         impresora.addNewLine();
-        impresora.printText("OPERARIO");
-        impresora.addNewLine();
+        impresora.printText("OPERARIO: ");
         if (registro != null)
             impresora.printText(registro.getUsuario().getNombre().toUpperCase());
         else
             impresora.printText("--");
-
-        impresora.addNewLine();
-
 
         if (!esPrimero) {
             impresora.addNewLine();
