@@ -20,20 +20,26 @@ public class RegistrosManager {
     public static Registro_Turno getUltimoRegistro(){
         List<Registro_Turno> lr = getUltimosRegistros();
         try {
-            return lr.get(0);
+            if (lr.size() > 0)
+                return lr.get(0);
         }
         catch (Exception e){
             ToastHelper.error("ULTIMO: " + e.getMessage());
+            return null;
         }
+
         return null;
     }
 
     public static Registro_Turno getRegistroAnterior(){
         List<Registro_Turno> lr = getUltimosRegistros();
         try {
-            return lr.get(1);
+            if (lr.size() > 1 )
+                return lr.get(1);
         }
-        catch (Exception e){ ToastHelper.error("ANTERIOR: " + e.getMessage()); }
+        catch (Exception e){
+            ToastHelper.error("ANTERIOR: " + e.getMessage()); return null;
+        }
         return null;
     }
 }
