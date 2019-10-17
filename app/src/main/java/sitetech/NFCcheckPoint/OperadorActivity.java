@@ -15,24 +15,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
@@ -393,15 +385,17 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     }
 
     private HistorySearchOP hsp;
-
+    boolean HistorialAbierto = false;
+    boolean EditarAbierto = false;
     private void mostrarHistorial() {
+        HistorialAbierto = true;
         if (hsp == null)
             hsp = new HistorySearchOP();
 
         appbar.setVisibility(View.GONE);
         //contenedor.setVisibility(View.VISIBLE);
 
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
         .setCustomAnimations(R.animator.slide_in, R.animator.slide_out)
         .replace(R.id.contenedor, hsp)
         .addToBackStack(null)
@@ -410,8 +404,9 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         //activityHelper.cargarFragmento2(this, hsp.getTargetFragment(), R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
     }
 
-        public void editarRegistro(Registro_Turno registro){
-            RegistroEditarFragment editarF = new RegistroEditarFragment();
+    public void editarRegistro(Registro_Turno registro){
+        EditarAbierto = true;
+        RegistroEditarFragment editarF = new RegistroEditarFragment();
 
         appbar.setVisibility(View.GONE);
         //contenedor.setVisibility(View.VISIBLE);
@@ -427,20 +422,38 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         .commit();
     }
 
-    public void cerrarHistorial() {
-        appbar.setVisibility(View.VISIBLE);
-        //contenedor.setVisibility(View.GONE);
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if (!HistorialAbierto && !EditarAbierto)
+            appbar.setVisibility(View.VISIBLE);
 
-        getFragmentManager().popBackStack();
+        if (HistorialAbierto && !EditarAbierto) cerrarHistorial();
+        if (EditarAbierto) cerrarEditarHistorial(null);
+    }
+
+    public void cerrarHistorial() {
+        HistorialAbierto = false;
+        appbar.setVisibility(View.VISIBLE);
+        getSupportFragmentManager().popBackStack();
     }
 
     public void cerrarEditarHistorial(Registro_Turno rx){
-        //getFragmentManager().popBackStack();
-        cerrarHistorial();
+        EditarAbierto = false;
+        getFragmentManager().popBackStack();
 
-        HistoryFragment hf = (HistoryFragment) tabsAdapter.getItem(1);
-        if (hf != null)
-            hf.itemEditado(rx);
+        if (rx !=null) {
+            HistoryFragment hf = (HistoryFragment) tabsAdapter.getItem(1);
+            if (hf != null)
+                hf.itemEditado(rx);
+
+            if (HistorialAbierto) {
+                if (hsp != null)
+                    hsp.itemEditado(rx);
+            }
+            else
+                appbar.setVisibility(View.VISIBLE);
+        }
     }
 
 

@@ -15,11 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.greenrobot.greendao.query.WhereCondition;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,20 +30,15 @@ import sitetech.NFCcheckPoint.Adapters.onEditClick;
 import sitetech.NFCcheckPoint.Adapters.onItemClick;
 import sitetech.NFCcheckPoint.Adapters.registroAdapter;
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
-import sitetech.NFCcheckPoint.Helpers.ToastHelper;
-import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.Helpers.printHelper;
 import sitetech.NFCcheckPoint.OperadorActivity;
-import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.NFCcheckPoint.db.Empresa;
 import sitetech.NFCcheckPoint.db.EmpresaDao;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
-import sitetech.NFCcheckPoint.db.Turno;
 import sitetech.routecheckapp.R;
 
 public class HistorySearchOP extends Fragment {
@@ -99,7 +92,8 @@ public class HistorySearchOP extends Fragment {
         batraz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onStop();
+                if (getActivity().getClass().equals(OperadorActivity.class))
+                    ((OperadorActivity)getActivity()).cerrarHistorial();
             }
         });
 
@@ -265,7 +259,8 @@ public class HistorySearchOP extends Fragment {
         }, new onEditClick() {
             @Override
             public void onEditItemClick(View v, int position) {
-
+                if (getActivity().getClass().equals(OperadorActivity.class))
+                    ((OperadorActivity)getActivity()).editarRegistro(lnueva.get(position));
             }
         });
 
@@ -277,10 +272,12 @@ public class HistorySearchOP extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-
         if (getActivity().getClass().equals(OperadorActivity.class))
             ((OperadorActivity)getActivity()).cerrarHistorial();
     }
 
 
+    public void itemEditado(Registro_Turno rx){
+        dataAdapter.updateData(rx);
+    }
 }

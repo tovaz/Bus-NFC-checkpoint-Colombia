@@ -83,6 +83,8 @@ public class printHelper {
         if (registro != null)
             if (registro.getPuntoControl() != null)
                 impresora.printText(registro.getPuntoControl().toUpperCase());
+            else
+                impresora.printText("----");
 
         impresora.addNewLine();
 
@@ -141,6 +143,7 @@ public class printHelper {
                 imprimirValor(impresora, "Adelantado ", registro.getMinAdelantado());
         }
         else {
+            impresora.addNewLine();
             imprimirValor(impresora, "EMPRESA ", " ");
             impresora.addNewLine();
             imprimirValor(impresora, "PLACA ", " ");
@@ -168,15 +171,12 @@ public class printHelper {
         else
             impresora.printText("--");
 
-        if (!esPrimero) {
-            impresora.addNewLine();
-            impresora.printLine();
-        }
-        else{
-            impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
-            impresora.printText("--------------------");
-            impresora.addNewLine();
-        }
+        impresora.addNewLine();
+        impresora.printLine();
+        if (!esPrimero) impresora.addNewLine();
+
+        impresora.addNewLine();
+
 
         impresora.finish();
     }

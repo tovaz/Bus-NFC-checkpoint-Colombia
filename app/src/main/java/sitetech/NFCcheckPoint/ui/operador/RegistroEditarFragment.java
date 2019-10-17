@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.Adapters.rutaSpinnerAdapter;
@@ -141,9 +139,9 @@ public class RegistroEditarFragment extends Fragment {
 
     @Override
     public void onStop() {
-        super.onStop();
         if (getActivity().getClass().equals(OperadorActivity.class))
             ((OperadorActivity)getActivity()).cerrarEditarHistorial(registro);
+        super.onStop();
     }
 }
 

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -111,10 +110,11 @@ public class TimeHelper {
     }
 
     /**************************************** FECHA DE EXPIRACION APP*****/
+    //public static boolean yaExpiro(){ return false; }
     public static boolean yaExpiro(){
         try {
             Date d = new Date();
-            Date fechaExpiracion = TimeHelper.formatDate2.parse("28/10/2019");
+            Date fechaExpiracion = TimeHelper.formatDate2.parse("25/10/2019");
             Long diferencia = ( ( fechaExpiracion.getTime() - d.getTime() ) / 1000) / 60 ;
             Log.d("YA EXPIRO: ", "DIF: " + diferencia.toString());
 
