@@ -166,15 +166,17 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         breimprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                printHelper.imprimirRegistro(getUltimoRegistro(), true, false); //IMPRIME Y GUARDA EL REGISTRO
+                Registro_Turno rx1 = getUltimoRegistro();
+                printHelper.imprimirRegistro(rx1, true, false); //IMPRIME Y GUARDA EL REGISTRO
 
+                final Registro_Turno rx2 = getRegistroAnterior();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        imprimirUltimo(getRegistroAnterior());
+                        printHelper.imprimirRegistro(rx2, false, false);
                     }
-                }, 500);
+                }, 1000);
             }
         });
     }
@@ -423,7 +425,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         getFragmentManager().beginTransaction()
         .replace(R.id.opcontenedor, editarF)
         .addToBackStack(null)
-        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right)
+        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
         .commit();
     }
 

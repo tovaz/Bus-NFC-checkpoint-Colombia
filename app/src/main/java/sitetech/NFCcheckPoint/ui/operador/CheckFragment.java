@@ -1,55 +1,35 @@
 package sitetech.NFCcheckPoint.ui.operador;
 
-import android.app.Activity;
 import android.app.TimePickerDialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.codetroopers.betterpickers.hmspicker.HmsPickerBuilder;
-import com.codetroopers.betterpickers.hmspicker.HmsPickerDialogFragment;
-import com.omega_r.libs.omegarecyclerview.OmegaRecyclerView;
-import com.omega_r.libs.omegarecyclerview.expandable_recycler_view.OmegaExpandableRecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import sitetech.NFCcheckPoint.Adapters.onItemClick;
-import sitetech.NFCcheckPoint.Adapters.rutaAdapter;
 import sitetech.NFCcheckPoint.Adapters.rutaSelAdapter;
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Core.BluetoothPrinter;
 import sitetech.NFCcheckPoint.Core.calculos;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.TimeHelper;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
-import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.Helpers.nfcData;
 import sitetech.NFCcheckPoint.Helpers.nfcHelper;
 import sitetech.NFCcheckPoint.Helpers.printHelper;
-import sitetech.NFCcheckPoint.MainActivity;
 import sitetech.NFCcheckPoint.OperadorActivity;
 import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.BusDao;
@@ -59,11 +39,8 @@ import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
 import sitetech.NFCcheckPoint.db.Ruta;
 import sitetech.NFCcheckPoint.db.RutaDao;
 import sitetech.NFCcheckPoint.db.Turno;
-import sitetech.NFCcheckPoint.db.Usuario;
-import sitetech.NFCcheckPoint.ui.rutas.RutaAgregarFragment;
 import sitetech.routecheckapp.R;
 
-import static sitetech.NFCcheckPoint.Helpers.printHelper.imprimirUltimo;
 import static sitetech.NFCcheckPoint.dbHelpers.RegistrosManager.getRegistroAnterior;
 
 public class CheckFragment extends Fragment implements Listener {
@@ -140,14 +117,15 @@ public class CheckFragment extends Fragment implements Listener {
                         @Override
                         public void run() {
                             printHelper.imprimirRegistro(rx, true, false); //IMPRIME Y GUARDA EL REGISTRO
-                            final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
+                            final Registro_Turno registroAnterior = getRegistroAnterior();
+                            final Handler handler2 = new Handler();
+                            handler2.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    imprimirUltimo(getRegistroAnterior());
+                                    printHelper.imprimirRegistro(registroAnterior, false, false);
                                     limpiarInfo();
                                 }
-                            }, 500);
+                            }, 1000);
                         }
                     }, 1000);
 
