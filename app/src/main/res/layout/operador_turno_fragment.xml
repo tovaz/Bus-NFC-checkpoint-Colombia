@@ -136,6 +136,8 @@
                     android:id="@+id/bcerrarTurno"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_red_sel"
                     android:text="Cerrar Turno"
                     android:textColor="#eee" />
@@ -145,6 +147,8 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_default_sel"
                     android:text="Cerrar Sesion" />
 

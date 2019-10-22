@@ -1,8 +1,6 @@
 package sitetech.NFCcheckPoint;
 
-import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PorterDuff;
@@ -13,9 +11,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,8 +27,10 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
+import java.util.List;
 
 import sitetech.NFCcheckPoint.Adapters.TabsAdapter;
+import sitetech.NFCcheckPoint.Adapters.puntoSpinnerAdapter;
 import sitetech.NFCcheckPoint.Helpers.Configuraciones;
 import sitetech.NFCcheckPoint.Helpers.DialogHelper;
 import sitetech.NFCcheckPoint.Helpers.Listener;
@@ -39,6 +40,8 @@ import sitetech.NFCcheckPoint.Helpers.checkHelper;
 import sitetech.NFCcheckPoint.Helpers.myDialogInterface;
 import sitetech.NFCcheckPoint.Helpers.printHelper;
 import sitetech.NFCcheckPoint.db.Bus;
+import sitetech.NFCcheckPoint.db.Punto;
+import sitetech.NFCcheckPoint.db.PuntoDao;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
@@ -61,6 +64,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     private Button blogout;
     private ImageView bbuses;
     private ImageView breimprimir;
+    private Spinner sppunto;
 
     private int mInterval = 2000; // 2 seconds by default, can be changed later
     private Handler mHandler;
@@ -72,7 +76,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
     private boolean isWrite = false;
     private CoordinatorLayout contenedor;
     private AppBarLayout appbar;
-    private TextView tpunto;
+    //private TextView tpunto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +92,7 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
 
         cargarTabs();
         cargarUsuario();
+        cargarPuntos();
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         mHandler = new Handler();
@@ -117,9 +122,17 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         breimprimir = findViewById(R.id.breimprimir);
         appbar = findViewById(R.id.appbar);
         contenedor = findViewById(R.id.contenedor);
-        tpunto = findViewById(R.id.tpunto);
+        sppunto = findViewById(R.id.sppunto);
 
-        tpunto.setText(Configuraciones.getPuntodeControl(this));
+        sppunto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                Punto item = (Punto)parent.getItemAtPosition(pos);
+                Configuraciones.setPuntodeControl(getBaseContext(), item.getId().intValue());
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
     }
 
     private void Click() {
@@ -127,29 +140,6 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
             @Override
             public void onClick(View v) {
                 mostrarHistorial();
-            }
-        });
-        tpunto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final EditText tinput = new EditText(v.getContext());
-                tinput.setText(tpunto.getText());
-                tinput.setInputType(View.AUTOFILL_TYPE_TEXT);
-                new AlertDialog.Builder(v.getContext())
-                        .setTitle("Punto de Control")
-                        .setMessage("¿Desea Cambiar el nombre del punto de control?")
-                        .setView(tinput)
-                        .setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                tpunto.setText(tinput.getText());
-                                Configuraciones.setPuntodeControl(getBaseContext(), tinput.getText().toString());
-                            }
-                        })
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                            }
-                        })
-                        .show();
             }
         });
 
@@ -275,6 +265,19 @@ public class OperadorActivity extends AppCompatActivity implements Listener, Ser
         });
     }
 
+
+    private void cargarPuntos(){
+        List<Punto> listaRutas = AppController.daoSession.getPuntoDao().queryBuilder().where(PuntoDao.Properties.Eliminada.eq(false)).list();
+
+        puntoSpinnerAdapter spinnerAdapter=new puntoSpinnerAdapter(AppController.getAppContext(), listaRutas, R.layout.spinner_punto);
+        sppunto.setAdapter(spinnerAdapter);
+        int i=0;
+
+        Punto p = Configuraciones.getPuntodeControl(this);
+        if (p != null)
+            sppunto.setSelection(listaRutas.indexOf(p));
+
+    }
 
     @Override
     public void onDestroy() { // AL FINALIZAR LA ACTIVIDAD

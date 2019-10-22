@@ -41,6 +41,7 @@ public class AppController extends Application {
 
         Configuracion = new Configuraciones();
         //AgregarColumna(db, "HORARIO", "NOMBRE", "TEXT");
+        AgregarColumna(db, "BUS", "CONDUCTOR", "TEXT");
         AppController.context = getApplicationContext();
         checkTurno(); // PRIMORDIAL PARA CREAR EL PRIMER TURNO.
 
@@ -87,8 +88,14 @@ public class AppController extends Application {
     }
 
     public void AgregarColumna(Database db, String tabla, String columna, String tipo){
-        Log.d("ALTERANDO TABLA " + tabla, "ALTERANDO TABLE " + tabla + ", AGREGANDO " + columna + " tipo " + tipo);
-        db.execSQL("ALTER TABLE " + tabla + " ADD " + columna + " " + tipo);
+        try {
+            Log.d("ALTERANDO TABLA " + tabla, "ALTERANDO TABLE " + tabla + ", AGREGANDO " + columna + " tipo " + tipo);
+            if (tipo.equals("TEXT"))
+                db.execSQL("ALTER TABLE " + tabla + " ADD " + columna + " " + tipo + " default ''");
+            else
+                db.execSQL("ALTER TABLE " + tabla + " ADD " + columna + " " + tipo);
+        }
+        catch (Exception e){}
     }
 
     public DaoSession getDaoSession() {

@@ -14,6 +14,7 @@ import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.Ruta;
 import sitetech.NFCcheckPoint.db.Horario;
 import sitetech.NFCcheckPoint.db.horarioPorRuta;
+import sitetech.NFCcheckPoint.db.Punto;
 import sitetech.NFCcheckPoint.db.Turno;
 import sitetech.NFCcheckPoint.db.Registro_Turno;
 import sitetech.NFCcheckPoint.db.DiaFestivo;
@@ -24,6 +25,7 @@ import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.NFCcheckPoint.db.RutaDao;
 import sitetech.NFCcheckPoint.db.HorarioDao;
 import sitetech.NFCcheckPoint.db.horarioPorRutaDao;
+import sitetech.NFCcheckPoint.db.PuntoDao;
 import sitetech.NFCcheckPoint.db.TurnoDao;
 import sitetech.NFCcheckPoint.db.Registro_TurnoDao;
 import sitetech.NFCcheckPoint.db.DiaFestivoDao;
@@ -43,6 +45,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig rutaDaoConfig;
     private final DaoConfig horarioDaoConfig;
     private final DaoConfig horarioPorRutaDaoConfig;
+    private final DaoConfig puntoDaoConfig;
     private final DaoConfig turnoDaoConfig;
     private final DaoConfig registro_TurnoDaoConfig;
     private final DaoConfig diaFestivoDaoConfig;
@@ -53,6 +56,7 @@ public class DaoSession extends AbstractDaoSession {
     private final RutaDao rutaDao;
     private final HorarioDao horarioDao;
     private final horarioPorRutaDao horarioPorRutaDao;
+    private final PuntoDao puntoDao;
     private final TurnoDao turnoDao;
     private final Registro_TurnoDao registro_TurnoDao;
     private final DiaFestivoDao diaFestivoDao;
@@ -79,6 +83,9 @@ public class DaoSession extends AbstractDaoSession {
         horarioPorRutaDaoConfig = daoConfigMap.get(horarioPorRutaDao.class).clone();
         horarioPorRutaDaoConfig.initIdentityScope(type);
 
+        puntoDaoConfig = daoConfigMap.get(PuntoDao.class).clone();
+        puntoDaoConfig.initIdentityScope(type);
+
         turnoDaoConfig = daoConfigMap.get(TurnoDao.class).clone();
         turnoDaoConfig.initIdentityScope(type);
 
@@ -94,6 +101,7 @@ public class DaoSession extends AbstractDaoSession {
         rutaDao = new RutaDao(rutaDaoConfig, this);
         horarioDao = new HorarioDao(horarioDaoConfig, this);
         horarioPorRutaDao = new horarioPorRutaDao(horarioPorRutaDaoConfig, this);
+        puntoDao = new PuntoDao(puntoDaoConfig, this);
         turnoDao = new TurnoDao(turnoDaoConfig, this);
         registro_TurnoDao = new Registro_TurnoDao(registro_TurnoDaoConfig, this);
         diaFestivoDao = new DiaFestivoDao(diaFestivoDaoConfig, this);
@@ -104,6 +112,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(Ruta.class, rutaDao);
         registerDao(Horario.class, horarioDao);
         registerDao(horarioPorRuta.class, horarioPorRutaDao);
+        registerDao(Punto.class, puntoDao);
         registerDao(Turno.class, turnoDao);
         registerDao(Registro_Turno.class, registro_TurnoDao);
         registerDao(DiaFestivo.class, diaFestivoDao);
@@ -116,6 +125,7 @@ public class DaoSession extends AbstractDaoSession {
         rutaDaoConfig.clearIdentityScope();
         horarioDaoConfig.clearIdentityScope();
         horarioPorRutaDaoConfig.clearIdentityScope();
+        puntoDaoConfig.clearIdentityScope();
         turnoDaoConfig.clearIdentityScope();
         registro_TurnoDaoConfig.clearIdentityScope();
         diaFestivoDaoConfig.clearIdentityScope();
@@ -143,6 +153,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public horarioPorRutaDao getHorarioPorRutaDao() {
         return horarioPorRutaDao;
+    }
+
+    public PuntoDao getPuntoDao() {
+        return puntoDao;
     }
 
     public TurnoDao getTurnoDao() {

@@ -6,7 +6,7 @@ import org.greenrobot.greendao.generator.Property;
 import org.greenrobot.greendao.generator.Schema;
 
 public class daoGenerator {
-    private Entity user, empresa, bus, ruta, horario, horarioPorRuta, turno, registroTurno, diaFestivo;
+    private Entity user, empresa, bus, ruta, horario, horarioPorRuta, turno, registroTurno, diaFestivo, punto;
 
     public  static void main(String[] args) {
         Schema schema = new Schema(1, "sitetech.NFCcheckPoint.db"); // Your app package name and the (.db) is the folder where the DAO files will be generated into.
@@ -29,6 +29,7 @@ public class daoGenerator {
         rutaEntity(schema);
         horarioEntity(schema);
         horariosPorRutaEntity(schema);
+        puntoEntity(schema);
         turnoEntity(schema);
         registroEntity(schema);
         diasFestivosEntity(schema);
@@ -59,6 +60,8 @@ public class daoGenerator {
         bus.addStringProperty("tagNfc");
         bus.addLongProperty("recorridos");
         bus.addBooleanProperty("eliminado").notNull();
+
+        bus.addStringProperty("conductor");
 
         bus.addStringProperty("extraString");
         bus.addIntProperty("extraInt");
@@ -114,6 +117,15 @@ public class daoGenerator {
         ruta.addStringProperty("nombre").notNull();
         ruta.addBooleanProperty("eliminada").notNull();
         return ruta;
+    }
+
+    private Entity puntoEntity(final Schema schema) {
+        punto = schema.addEntity("Punto");
+
+        punto.addIdProperty().primaryKey().autoincrement();
+        punto.addStringProperty("nombre").notNull();
+        punto.addBooleanProperty("eliminada").notNull();
+        return punto;
     }
 
     private Entity horariosPorRutaEntity(final Schema schema){ // TABLA INTERMEDIA PARA GUARDAR INFO RELACIONADA
@@ -182,11 +194,13 @@ public class daoGenerator {
         Property rutaId = registroTurno.addLongProperty("rutaId").notNull().getProperty();
         Property turnoId = registroTurno.addLongProperty("turnoId").notNull().getProperty();
         Property userId = registroTurno.addLongProperty("userId").notNull().getProperty();
+        Property puntoId = registroTurno.addLongProperty("puntoId").notNull().getProperty();
 
         registroTurno.addToOne(bus, busId);
         registroTurno.addToOne(ruta, rutaId);
         registroTurno.addToOne(turno, turnoId);
         registroTurno.addToOne(user, userId);
+        registroTurno.addToOne(punto, puntoId);
         return registroTurno;
     }
 }

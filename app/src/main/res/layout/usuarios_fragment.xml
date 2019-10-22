@@ -40,7 +40,7 @@
             android:layout_height="match_parent"
             android:divider="#888"
             android:dividerHeight="0dp"
-            app:itemSpace="0dp"
+            app:itemSpace="2dp"
             tools:listitem="@layout/usuario_template" />
 
         <TextView

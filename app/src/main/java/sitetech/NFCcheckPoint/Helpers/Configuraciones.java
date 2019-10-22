@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import sitetech.NFCcheckPoint.AppController;
+import sitetech.NFCcheckPoint.db.Punto;
+import sitetech.NFCcheckPoint.db.PuntoDao;
 import sitetech.NFCcheckPoint.db.Ruta;
 import sitetech.NFCcheckPoint.db.RutaDao;
 import sitetech.NFCcheckPoint.db.Turno;
@@ -12,7 +14,7 @@ import sitetech.NFCcheckPoint.db.Usuario;
 import sitetech.NFCcheckPoint.db.UsuarioDao;
 
 public class Configuraciones{
-    public static String dbName = "nfc_v1.0";
+    public static String dbName = "nfc_v1.1";
 
     public static Usuario getUsuarioLog(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
@@ -83,16 +85,21 @@ public class Configuraciones{
         editor.commit();
     }
 
-    public static String getPuntodeControl(Context context){
+    public static Punto getPuntodeControl(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
-        String tag = sharedPref.getString("puntoControl", "No definido");
-        return tag;
+        int puntoId = sharedPref.getInt("puntoC", -1);
+
+        if (puntoId != -1)
+            return AppController.daoSession.getPuntoDao().queryBuilder().where(PuntoDao.Properties.Id.eq(puntoId)).unique();
+        else
+            return null;
     }
 
-    public static void setPuntodeControl(Context context, String tag){
+    public static void setPuntodeControl(Context context, int id){
         SharedPreferences sharedPref = context.getSharedPreferences("confApp", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("puntoControl", tag);
+        editor.putInt("puntoC", id);
         editor.commit();
     }
+
 }

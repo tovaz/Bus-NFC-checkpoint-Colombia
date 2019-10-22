@@ -39,6 +39,7 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         public final static Property RutaId = new Property(11, long.class, "rutaId", false, "RUTA_ID");
         public final static Property TurnoId = new Property(12, long.class, "turnoId", false, "TURNO_ID");
         public final static Property UserId = new Property(13, long.class, "userId", false, "USER_ID");
+        public final static Property PuntoId = new Property(14, long.class, "puntoId", false, "PUNTO_ID");
     }
 
     private DaoSession daoSession;
@@ -70,7 +71,8 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
                 "\"BUS_ID\" INTEGER NOT NULL ," + // 10: busId
                 "\"RUTA_ID\" INTEGER NOT NULL ," + // 11: rutaId
                 "\"TURNO_ID\" INTEGER NOT NULL ," + // 12: turnoId
-                "\"USER_ID\" INTEGER NOT NULL );"); // 13: userId
+                "\"USER_ID\" INTEGER NOT NULL ," + // 13: userId
+                "\"PUNTO_ID\" INTEGER NOT NULL );"); // 14: puntoId
     }
 
     /** Drops the underlying database table. */
@@ -136,6 +138,7 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         stmt.bindLong(12, entity.getRutaId());
         stmt.bindLong(13, entity.getTurnoId());
         stmt.bindLong(14, entity.getUserId());
+        stmt.bindLong(15, entity.getPuntoId());
     }
 
     @Override
@@ -195,6 +198,7 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         stmt.bindLong(12, entity.getRutaId());
         stmt.bindLong(13, entity.getTurnoId());
         stmt.bindLong(14, entity.getUserId());
+        stmt.bindLong(15, entity.getPuntoId());
     }
 
     @Override
@@ -224,7 +228,8 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
             cursor.getLong(offset + 10), // busId
             cursor.getLong(offset + 11), // rutaId
             cursor.getLong(offset + 12), // turnoId
-            cursor.getLong(offset + 13) // userId
+            cursor.getLong(offset + 13), // userId
+            cursor.getLong(offset + 14) // puntoId
         );
         return entity;
     }
@@ -245,6 +250,7 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         entity.setRutaId(cursor.getLong(offset + 11));
         entity.setTurnoId(cursor.getLong(offset + 12));
         entity.setUserId(cursor.getLong(offset + 13));
+        entity.setPuntoId(cursor.getLong(offset + 14));
      }
     
     @Override
@@ -286,11 +292,14 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
             SqlUtils.appendColumns(builder, "T2", daoSession.getTurnoDao().getAllColumns());
             builder.append(',');
             SqlUtils.appendColumns(builder, "T3", daoSession.getUsuarioDao().getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T4", daoSession.getPuntoDao().getAllColumns());
             builder.append(" FROM REGISTRO__TURNO T");
             builder.append(" LEFT JOIN BUS T0 ON T.\"BUS_ID\"=T0.\"_id\"");
             builder.append(" LEFT JOIN RUTA T1 ON T.\"RUTA_ID\"=T1.\"_id\"");
             builder.append(" LEFT JOIN TURNO T2 ON T.\"TURNO_ID\"=T2.\"_id\"");
             builder.append(" LEFT JOIN USUARIO T3 ON T.\"USER_ID\"=T3.\"_id\"");
+            builder.append(" LEFT JOIN PUNTO T4 ON T.\"PUNTO_ID\"=T4.\"_id\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }
@@ -322,6 +331,12 @@ public class Registro_TurnoDao extends AbstractDao<Registro_Turno, Long> {
         Usuario usuario = loadCurrentOther(daoSession.getUsuarioDao(), cursor, offset);
          if(usuario != null) {
             entity.setUsuario(usuario);
+        }
+        offset += daoSession.getUsuarioDao().getAllColumns().length;
+
+        Punto punto = loadCurrentOther(daoSession.getPuntoDao(), cursor, offset);
+         if(punto != null) {
+            entity.setPunto(punto);
         }
 
         return entity;    

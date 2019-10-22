@@ -27,6 +27,7 @@ public class DaoMaster extends AbstractDaoMaster {
         RutaDao.createTable(db, ifNotExists);
         HorarioDao.createTable(db, ifNotExists);
         horarioPorRutaDao.createTable(db, ifNotExists);
+        PuntoDao.createTable(db, ifNotExists);
         TurnoDao.createTable(db, ifNotExists);
         Registro_TurnoDao.createTable(db, ifNotExists);
         DiaFestivoDao.createTable(db, ifNotExists);
@@ -40,6 +41,7 @@ public class DaoMaster extends AbstractDaoMaster {
         RutaDao.dropTable(db, ifExists);
         HorarioDao.dropTable(db, ifExists);
         horarioPorRutaDao.dropTable(db, ifExists);
+        PuntoDao.dropTable(db, ifExists);
         TurnoDao.dropTable(db, ifExists);
         Registro_TurnoDao.dropTable(db, ifExists);
         DiaFestivoDao.dropTable(db, ifExists);
@@ -67,6 +69,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(RutaDao.class);
         registerDaoClass(HorarioDao.class);
         registerDaoClass(horarioPorRutaDao.class);
+        registerDaoClass(PuntoDao.class);
         registerDaoClass(TurnoDao.class);
         registerDaoClass(Registro_TurnoDao.class);
         registerDaoClass(DiaFestivoDao.class);

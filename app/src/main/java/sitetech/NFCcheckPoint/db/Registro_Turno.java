@@ -31,6 +31,7 @@ public class Registro_Turno {
     private long rutaId;
     private long turnoId;
     private long userId;
+    private long puntoId;
 
     /** Used to resolve relations */
     @Generated
@@ -64,6 +65,12 @@ public class Registro_Turno {
     @Generated
     private transient Long usuario__resolvedKey;
 
+    @ToOne(joinProperty = "puntoId")
+    private Punto punto;
+
+    @Generated
+    private transient Long punto__resolvedKey;
+
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
 
@@ -76,7 +83,7 @@ public class Registro_Turno {
     }
 
     @Generated
-    public Registro_Turno(Long id, java.util.Date fecha, Boolean eliminado, String minAtrazado, String minAdelantado, String justificacion, String despacho, String puntoControl, String extraString, Integer extraInt, long busId, long rutaId, long turnoId, long userId) {
+    public Registro_Turno(Long id, java.util.Date fecha, Boolean eliminado, String minAtrazado, String minAdelantado, String justificacion, String despacho, String puntoControl, String extraString, Integer extraInt, long busId, long rutaId, long turnoId, long userId, long puntoId) {
         this.id = id;
         this.fecha = fecha;
         this.eliminado = eliminado;
@@ -91,6 +98,7 @@ public class Registro_Turno {
         this.rutaId = rutaId;
         this.turnoId = turnoId;
         this.userId = userId;
+        this.puntoId = puntoId;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -212,6 +220,14 @@ public class Registro_Turno {
         this.userId = userId;
     }
 
+    public long getPuntoId() {
+        return puntoId;
+    }
+
+    public void setPuntoId(long puntoId) {
+        this.puntoId = puntoId;
+    }
+
     /** To-one relationship, resolved on first access. */
     @Generated
     public Bus getBus() {
@@ -321,6 +337,34 @@ public class Registro_Turno {
             this.usuario = usuario;
             userId = usuario.getId();
             usuario__resolvedKey = userId;
+        }
+    }
+
+    /** To-one relationship, resolved on first access. */
+    @Generated
+    public Punto getPunto() {
+        long __key = this.puntoId;
+        if (punto__resolvedKey == null || !punto__resolvedKey.equals(__key)) {
+            __throwIfDetached();
+            PuntoDao targetDao = daoSession.getPuntoDao();
+            Punto puntoNew = targetDao.load(__key);
+            synchronized (this) {
+                punto = puntoNew;
+            	punto__resolvedKey = __key;
+            }
+        }
+        return punto;
+    }
+
+    @Generated
+    public void setPunto(Punto punto) {
+        if (punto == null) {
+            throw new DaoException("To-one property 'puntoId' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.punto = punto;
+            puntoId = punto.getId();
+            punto__resolvedKey = puntoId;
         }
     }
 

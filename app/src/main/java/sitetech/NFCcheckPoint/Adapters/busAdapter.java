@@ -72,6 +72,7 @@ public class busAdapter extends OmegaRecyclerView.Adapter<busAdapter.ViewHolder>
         private final TextView interno;
         private final TextView empresa;
         private final ImageView beliminar;
+        private final ImageView itarjeta;
 
         BusDao busManager = AppController.daoSession.getBusDao();
 
@@ -80,9 +81,11 @@ public class busAdapter extends OmegaRecyclerView.Adapter<busAdapter.ViewHolder>
         public ViewHolder(ViewGroup itemView) {
             super(itemView, R.layout.bus_template, SwipeViewHolder.NO_ID, R.layout.swipe_menu);
 
-            placa = (findViewById(R.id.tnombre));
-            interno = (findViewById(R.id.tcedula));
+            placa = (findViewById(R.id.tplaca));
+            interno = (findViewById(R.id.tinterno));
             empresa = (findViewById(R.id.empresa));
+            itarjeta = (findViewById(R.id.itarjeta));
+
             beliminar = (findViewById(R.id.beliminar));
             beliminar.setOnClickListener(this);
 
@@ -129,6 +132,8 @@ public class busAdapter extends OmegaRecyclerView.Adapter<busAdapter.ViewHolder>
             placa.setText(rx.getPlaca());
             interno.setText("Interno: " + rx.getInterno());
             empresa.setText("Empresa: " + rx.getEmpresa().getNombre());
+            itarjeta.setVisibility(View.GONE);
+            if (rx.getTagNfc() != null) itarjeta.setVisibility(View.VISIBLE);
         }
     }
 }

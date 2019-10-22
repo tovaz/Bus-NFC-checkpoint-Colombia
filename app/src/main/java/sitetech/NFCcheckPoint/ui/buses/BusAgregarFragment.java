@@ -1,18 +1,17 @@
 package sitetech.NFCcheckPoint.ui.buses;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import java.util.List;
 
 import sitetech.NFCcheckPoint.Adapters.customAdapter;
 import sitetech.NFCcheckPoint.AppController;
-import sitetech.NFCcheckPoint.Helpers.Listener;
 import sitetech.NFCcheckPoint.Helpers.ToastHelper;
 import sitetech.NFCcheckPoint.Helpers.activityHelper;
 import sitetech.NFCcheckPoint.MainActivity;
@@ -28,7 +26,6 @@ import sitetech.NFCcheckPoint.db.Bus;
 import sitetech.NFCcheckPoint.db.BusDao;
 import sitetech.NFCcheckPoint.db.Empresa;
 import sitetech.NFCcheckPoint.db.EmpresaDao;
-import sitetech.NFCcheckPoint.ui.nfc.NFCWriteFragment;
 import sitetech.routecheckapp.R;
 
 public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSelectedListener, Serializable {
@@ -40,6 +37,9 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
     private TextView tuid;
     private TextView tinterno;
     private TextView ttitulo;
+
+    private EditText tconductor;
+
     private Spinner selempresa;
     private Button bescribirNFC;
     private Button bdesasignar;
@@ -84,13 +84,14 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         ttitulo.setText("Modificar Bus");
         tplaca.setText(bus.getPlaca());
         tinterno.setText(bus.getInterno());
+        tconductor.setText(bus.getConductor());
 
         bescribirNFC.setVisibility(View.VISIBLE);
         tuid.setText("N/A");
 
         if (bus.getTagNfc() != null) {
             tuid.setText(bus.getTagNfc());
-            //bescribirNFC.setVisibility(View.GONE);
+            bescribirNFC.setVisibility(View.GONE);
         }
 
         for (int i=0; i<=listaEmpresas.size()-1; i++)
@@ -102,6 +103,8 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
         ttitulo = vista.findViewById(R.id.ttitulo);
         tplaca = vista.findViewById(R.id.tnombre);
         tinterno = vista.findViewById(R.id.tinterno);
+        tconductor = vista.findViewById(R.id.tconductor);
+
         selempresa = vista.findViewById(R.id.selempresa);
         tuid = vista.findViewById(R.id.tuid);
 
@@ -132,7 +135,6 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
     private Empresa empresa;
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position,long id) {
-        //Toast.makeText(AppController.getAppContext(), listaEmpresas.get(position).getNombre(), Toast.LENGTH_LONG).show();
         empresa = listaEmpresas.get(position);
     }
 
@@ -166,9 +168,12 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
                 bus.setPlaca(tplaca.getText().toString());
                 bus.setInterno(tinterno.getText().toString());
                 bus.setEmpresa(empresa);
+                bus.setConductor(tconductor.getText().toString());
 
-                bus.setTagNfc(tuid.getText().toString());
-                if (tuid.getText().equals("N/A") ||tuid.getText().equals("")) bus.setTagNfc(null);
+                bus.setTagNfc(null);
+                if (!tuid.getText().toString().equals("N/A"))
+                    bus.setTagNfc(tuid.getText().toString());
+
 
                 if (mainFragment.Itemseleccionado == null) {
                     bus.setEliminado(false);
@@ -199,6 +204,7 @@ public class BusAgregarFragment extends Fragment implements AdapterView.OnItemSe
             @Override
             public void onClick(View v) {
                 tuid.setText("N/A");
+                bescribirNFC.setVisibility(View.VISIBLE);
             }
         });
     }

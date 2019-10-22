@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:tint="#ddd"
+        android:tint="#aaa"
         android:tintMode="screen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,10 +119,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/btn_default_sel"
+                android:background="@drawable/text_edit_sel"
                 android:ems="10"
                 android:hint="Usuario o Cedula"
-                android:inputType="textPersonName"
+                android:inputType="text"
+                android:padding="10dp"
                 android:textAlignment="center" />
 
             <net.xpece.material.floatinglabel.FloatingLabelView
@@ -140,10 +141,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/btn_default_sel"
+                android:background="@drawable/text_edit_sel"
                 android:ems="10"
                 android:hint="Contraseña"
                 android:inputType="textPassword"
+                android:padding="10dp"
                 android:textAlignment="center" />
 
             <Button
@@ -152,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/btn_blue_sel"
                 android:text="Iniciar Sesion"
                 android:textColor="#eee" />

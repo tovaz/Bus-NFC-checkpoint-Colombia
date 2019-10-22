@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
         // Passing each menu ID as a set of Ids because each
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_usuarios, R.id.nav_empresas, R.id.nav_buses,
-                R.id.nav_rutas, R.id.nav_historial, R.id.nav_horarios, R.id.nav_dias_festivos, R.id.nav_configuracion)
+                R.id.nav_rutas, R.id.nav_historial, R.id.nav_horarios, R.id.nav_dias_festivos, R.id.nav_puntos, R.id.nav_configuracion)
                 .setDrawerLayout(drawer)
                 .build();
 

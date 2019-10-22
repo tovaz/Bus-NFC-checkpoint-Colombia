@@ -163,7 +163,9 @@ public class CheckFragment extends Fragment implements Listener {
         nuevoRegistro.setTurno(tn);
         nuevoRegistro.setUsuario(Configuraciones.getUsuarioLog(getContext()));
         nuevoRegistro.setDespacho(tdespacho.getText().toString());
-        nuevoRegistro.setPuntoControl(Configuraciones.getPuntodeControl(getContext()));
+
+        nuevoRegistro.setPunto(Configuraciones.getPuntodeControl(getContext()));
+        nuevoRegistro.setPuntoControl(Configuraciones.getPuntodeControl(getContext()).getNombre());
 
         Long difTiempo = TimeHelper.calcularDiferencia(tdespacho.getText().toString(), thoraregistro.getText().toString());
 

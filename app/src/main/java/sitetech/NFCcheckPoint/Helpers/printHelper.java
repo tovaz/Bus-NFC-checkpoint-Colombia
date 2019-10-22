@@ -78,27 +78,33 @@ public class printHelper {
     }
 
     private static void imprimirTopRegistro(BluetoothPrinter impresora, Registro_Turno registro, boolean esPrimero, boolean reimpresion){
-        impresora.setBold(true);
-        impresora.printText("PUNTO DE CONTROL"); impresora.addNewLine();
-        if (registro != null)
-            if (registro.getPuntoControl() != null)
-                impresora.printText(registro.getPuntoControl().toUpperCase());
+        if (esPrimero) {
+            impresora.setBold(true);
+            impresora.printText("PUNTO DE CONTROL");
+            impresora.addNewLine();
+
+            if (registro != null)
+                if (registro.getPuntoControl() != null)
+                    impresora.printText(registro.getPuntoControl().toUpperCase());
+                else
+                    impresora.printText("----");
+
+            impresora.addNewLine();
+
+            if (registro != null)
+                imprimirValor(impresora, "TIEMPO AL PUNTO ", registro.getDespacho());
             else
-                impresora.printText("----");
+                imprimirValor(impresora, "TIEMPO AL PUNTO ", " ");
 
-        impresora.addNewLine();
+            impresora.addNewLine();
+        }
 
-        if (registro != null)
-            imprimirValor(impresora, "TIEMPO AL PUNTO ", registro.getDespacho());
-        else
-            imprimirValor(impresora, "TIEMPO AL PUNTO ", " ");
-
-        impresora.addNewLine();
         if (reimpresion){
             impresora.setAlign(BluetoothPrinter.ALIGN_RIGHT);
             impresora.printText("** reimpresion **");
             impresora.addNewLine();
         }
+
 
         impresora.setAlign(ALIGN_CENTER);
         if (esPrimero)
@@ -130,6 +136,8 @@ public class printHelper {
             impresora.addNewLine();
             imprimirValor(impresora, "INTERNO ", registro.getBus().getInterno().toUpperCase());
             impresora.addNewLine();
+            imprimirValor(impresora, "CONDUCTOR ", registro.getBus().getConductor().toUpperCase());
+            impresora.addNewLine();
             imprimirValor(impresora, "FECHA ", TimeHelper.getDate(registro.getFecha()));
             impresora.addNewLine();
             imprimirValor(impresora, "HORA DESPACHO ", registro.getDespacho());
@@ -150,6 +158,8 @@ public class printHelper {
             impresora.addNewLine();
             imprimirValor(impresora, "INTERNO ", " ");
             impresora.addNewLine();
+            imprimirValor(impresora, "CONDUCTOR ", " ");
+            impresora.addNewLine();
             imprimirValor(impresora, "FECHA ", " ");
             impresora.addNewLine();
             imprimirValor(impresora, "HORA DESPACHO ", " ");
@@ -163,21 +173,21 @@ public class printHelper {
     }
 
     public static void imprimirPie(BluetoothPrinter impresora, Registro_Turno registro, boolean esPrimero){
-        impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
-        impresora.addNewLine();
-        impresora.printText("OPERARIO: ");
-        if (registro != null)
-            impresora.printText(registro.getUsuario().getNombre().toUpperCase());
-        else
-            impresora.printText("--");
+        if (!esPrimero) {
+            impresora.setAlign(BluetoothPrinter.ALIGN_CENTER);
+            impresora.addNewLine();
+            impresora.printText("OPERARIO: ");
+            if (registro != null)
+                impresora.printText(registro.getUsuario().getNombre().toUpperCase());
+            else
+                impresora.printText("--");
+
+            impresora.addNewLine();
+            impresora.printLine();
+            impresora.addNewLine();
+        }
 
         impresora.addNewLine();
-        impresora.printLine();
-        if (!esPrimero) impresora.addNewLine();
-
-        impresora.addNewLine();
-
-
         impresora.finish();
     }
     /****************************************************************************************************/

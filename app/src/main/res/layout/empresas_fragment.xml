@@ -52,7 +52,7 @@
             android:layout_height="match_parent"
             android:divider="#888"
             android:dividerHeight="0dp"
-            app:itemSpace="3dp"
+            app:itemSpace="2dp"
             tools:listitem="@layout/empresa_template" />
 
         <TextView

@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     private UsuarioDao userD;
     private Usuario uLogeado;
     private LinearLayout lcontenedor;
-
     private Button b1, b2, b3, b4;
 
     private AppCompatActivity activity;

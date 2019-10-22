@@ -21,6 +21,12 @@
                 android:id="@+id/nav_horarios"
                 android:icon="@drawable/horario"
                 android:title="Horarios" />
+
+            <item
+                android:id="@+id/nav_puntos"
+                android:icon="@drawable/ruta"
+                android:title="Puntos de Control" />
+
             <item
                 android:id="@+id/nav_rutas"
                 android:icon="@drawable/ruta"

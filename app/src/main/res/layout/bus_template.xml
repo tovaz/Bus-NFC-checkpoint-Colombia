@@ -27,11 +27,20 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
                     app:srcCompat="@mipmap/bus"
                     tools:srcCompat="@mipmap/bus" />
+
+                <ImageView
+                    android:id="@+id/itarjeta"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@drawable/nfc_card" />
 
             </LinearLayout>
 
@@ -42,17 +51,19 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tnombre"
+                    android:id="@+id/tplaca"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#333"
+                    android:textSize="20sp"
                     android:textStyle="bold"></TextView>
 
                 <TextView
-                    android:id="@+id/tcedula"
+                    android:id="@+id/tinterno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

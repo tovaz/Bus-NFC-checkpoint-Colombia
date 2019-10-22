@@ -61,10 +61,27 @@
                 android:id="@+id/tinterno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/text_edit_sel"
                 android:ems="10"
                 android:hint="Numero Interno"
                 android:inputType="phone" />
+
+            <net.xpece.material.floatinglabel.FloatingLabelView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:flv_colorActivated="@color/colorLabelFloat"
+                app:flv_ownerView="@+id/tconductor"
+                app:flv_textDefault="Nombre del Conductor" />
+
+            <EditText
+                android:id="@+id/tconductor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_edit_sel"
+                android:ems="10"
+                android:hint="Nombre del Conductor"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -110,6 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_default_sel"
                     android:text="Desasignar"
                     android:textColor="#333" />
@@ -121,6 +139,7 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/btn_blue_sel"
                 android:drawableLeft="@drawable/nfc_card_35x352"
                 android:drawablePadding="10dp"
@@ -135,7 +154,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -147,6 +165,7 @@
             android:id="@+id/bguardar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:layout_weight="2"
             android:background="@drawable/btn_save_sel"
             android:text="Guardar" />
@@ -156,6 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:background="@drawable/btn_default_sel"
             android:text="Cancelar" />
