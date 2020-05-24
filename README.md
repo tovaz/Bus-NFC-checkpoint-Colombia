@@ -25,6 +25,7 @@ Segun requerimientos la aplicacion es **offline**
 Pero tiene opcion para exportar e importar informacion para poder gestionar la informacion de cada punto de control y cotejar los registros con los tickets impresos que se le da a el conductor.
 
 Proyecto realizado para [InduSystem Colombia](https://indusystemsolutions.com/)
+
 [Ver imagenes del proyecto](https://www.behance.net/gallery/87704027/NFC-Punto-de-Registro-Aplicacion-para-Buses-Android)
 
 ![Image](https://mir-s3-cdn-cf.behance.net/project_modules/disp/cc8cd087704027.5dc088aae516b.jpeg)
